@@ -14,27 +14,31 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
       - name: Install Cordova
-        run: npm install -g cordova
-
-      - name: Build Cordova Project
         run: |
-          # প্রজেক্ট ফোল্ডার তৈরি
-          cordova create my_build com.writer.sheshjosna "Shesh Josna"
+          npm install -g cordova
+          # লেটেস্ট নোড এনভায়রনমেন্ট সেটআপ
+
+      - name: Create and Build Project
+        run: |
+          # ১. পুরনো ফাইল থাকলে পরিষ্কার করা
+          rm -rf build_dir
           
-          # আপনার সব ফাইল কপি করা (index, welcome, সব html ও ছবি)
-          cp -r *.html my_build/www/ || true
-          cp -r *.png my_build/www/ || true
-          cp -r *.jpg my_build/www/ || true
-          cp config.xml my_build/config.xml || true
+          # ২. নতুন প্রজেক্ট তৈরি
+          cordova create build_dir com.writer.sheshjosna "Shesh Josna"
           
-          cd my_build
+          # ৩. আপনার সব ফাইল কপি করা
+          cp -r *.html build_dir/www/ || true
+          cp -r *.png build_dir/www/ || true
+          cp -r *.jpg build_dir/www/ || true
+          cp config.xml build_dir/config.xml || true
+          
+          cd build_dir
+          
+          # ৪. লিঙ্ক সচল করার প্লাগইন যোগ করা
           cordova plugin add cordova-plugin-inappbrowser
+          
+          # ৫. অ্যান্ড্রয়েড বিল্ড
           cordova platform add android
           cordova build android --debug
 
@@ -42,4 +46,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Shesh-Josna-App
-          path: my_build/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          path: build_dir/platforms/android/app/build/outputs/apk/debug/app-debug.apk

@@ -24,29 +24,31 @@ jobs:
 
       - name: Create and Build Cordova Project
         run: |
-          # ১. পুরনো বিল্ড ডিরেক্টরি থাকলে তা মুছে নতুন করে তৈরি করা
+          # ১. পুরনো ডিরেক্টরি থাকলে মুছে ফেলা
           rm -rf my_build_dir
+          
+          # ২. কর্ডোভা প্রজেক্ট তৈরি (নিজস্ব নামে)
           cordova create my_build_dir com.writer.sheshjosna "Shesh Josna"
           
-          # ২. আপনার সব ফাইল (HTML, ছবি) কর্ডোভার www ফোল্ডারে কপি করা
-          # এখানে '*' ব্যবহার করা হয়েছে যাতে সব ফাইল যায়
+          # ৩. আপনার সব ফাইল (HTML, ছবি) কর্ডোভার www ফোল্ডারে কপি করা
+          # এখানে সবগুলো ফাইল আলাদাভাবে কপি করার চেষ্টা করবে যাতে ভুল না হয়
           cp -v welcome.html my_build_dir/www/ || true
           cp -v index.html my_build_dir/www/ || true
           cp -v *.html my_build_dir/www/ || true
           cp -v *.png my_build_dir/www/ || true
           cp -v *.jpg my_build_dir/www/ || true
           
-          # ৩. আপনার config.xml ফাইলটি কপি করা
-          cp -v config.xml my_build_dir/config.xml || echo "config.xml not found, using default"
+          # ৪. আপনার দেওয়া config.xml ফাইলটি নির্দিষ্ট জায়গায় বসানো
+          cp -v config.xml my_build_dir/config.xml || echo "config.xml not found!"
 
-          # ৪. বিল্ড ডিরেক্টরির ভেতরে যাওয়া
+          # ৫. বিল্ড ডিরেক্টরির ভেতরে গিয়ে কাজ শুরু করা
           cd my_build_dir
           
-          # ৫. প্রয়োজনীয় প্লাগইন এবং অ্যান্ড্রয়েড প্ল্যাটফর্ম যোগ করা
+          # ৬. বাইরের লিঙ্ক (রকমারি) সচল করার প্লাগইন ও অ্যান্ড্রয়েড প্ল্যাটফর্ম যোগ করা
           cordova plugin add cordova-plugin-inappbrowser
           cordova platform add android
           
-          # ৬. ফাইনাল APK বিল্ড করা
+          # ৭. ফাইনাল APK বিল্ড করা
           cordova build android --debug
 
       - name: Upload APK

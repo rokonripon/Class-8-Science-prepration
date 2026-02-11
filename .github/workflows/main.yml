@@ -14,30 +14,42 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Install Cordova
         run: npm install -g cordova
 
-      - name: Create and Build Project
+      - name: Build Cordova Project
         run: |
-          # বিল্ড ডিরেক্টরি তৈরি
-          cordova create build_dir com.writer.sheshjosna "ScienceHelper"
+          # ১. প্রজেক্ট তৈরি
+          cordova create my_build com.writer.sheshjosna "Shesh Josna"
           
-          # আপনার সব ফাইল কপি করা
-          cp -r * build_dir/www/ || true
-          cp icon.png build_dir/www/icon.png || true
-          cp config.xml build_dir/config.xml || true
+          # ২. সব ফাইল কপি করা
+          cp -r *.html my_build/www/ || true
+          cp -r *.png my_build/www/ || true
+          cp -r *.jpg my_build/www/ || true
           
-          cd build_dir
+          # ৩. config.xml কপি করা
+          cp config.xml my_build/config.xml || true
           
-          # লিঙ্ক সচল করার জন্য প্লাগইন
+          cd my_build
+          
+          # ৪. icon.png কে অ্যাপ আইকন হিসেবে সেট করা
+          mkdir -p res/icon
+          cp ../icon.png res/icon/icon.png || true
+          
+          # ৫. প্লাগইন যোগ করা
           cordova plugin add cordova-plugin-inappbrowser
           
-          # প্ল্যাটফর্ম যোগ ও বিল্ড
+          # ৬. প্ল্যাটফর্ম যোগ ও বিল্ড
           cordova platform add android
-          cordova build android --debug --device
+          cordova build android --debug
 
-      - name: Upload APK Artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Science-Helper-App
-          path: build_dir/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          name: Shesh-Josna-App
+          path: my_build/platforms/android/app/build/outputs/apk/debug/app-debug.apk

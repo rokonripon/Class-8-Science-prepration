@@ -1,22 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget id="com.example.myapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
-    <name>My Offline App</name>
-    <description>An offline Android app built from HTML.</description>
-    <author email="you@example.com">Your Name</author>
-
-    <!-- আইকন -->
-    <icon src="icon.png" />
-
-    <!-- প্ল্যাটফর্ম -->
-    <platform name="android">
-        <allow-intent href="https://*/*" />
-        <allow-intent href="http://*/*" />
-    </platform>
-
-    <!-- কনটেন্ট এন্ট্রি পয়েন্ট -->
-    <content src="index.html" />
-
-    <!-- অফলাইন অ্যাপের জন্য ইন্টারনেট ছাড়াই চলবে -->
-    <preference name="AndroidXEnabled" value="true" />
-    <preference name="GradlePluginKotlinEnabled" value="true" />
-</widget>
+name: Build APK
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - run: npm install -g cordova
+      - run: |
+          cordova create build_dir com.writer.sheshjosna "Shesh Josna"
+          cp -r * build_dir/www/ || true
+          cp config.xml build_dir/config.xml
+          cd build_dir
+          cordova platform add android
+          cordova build android --debug
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-app
+          path: build_dir/platforms/android/app/build/outputs/apk/debug/app-debug.apk

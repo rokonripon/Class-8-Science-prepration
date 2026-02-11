@@ -5,18 +5,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4 # লেটেস্ট ভার্সন
 
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17 # অ্যান্ড্রয়েড বিল্ডের জন্য এখন ১৭ বেশি ভালো
+        uses: actions/setup-java@v4
         with:
-          java-version: '11'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'temurin'
 
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'
 
       - name: Install Cordova
         run: npm install -g cordova
@@ -35,9 +35,8 @@ jobs:
           # ৪. তোমার দেওয়া config.xml ফাইলটি রিপ্লেস করা
           cp ../config.xml .
           
-          # ৫. বাইরের লিঙ্ক (রকমারি, মেসেঞ্জার) সচল করার প্লাগইন যোগ করা
+          # ৫. প্লাগইন যোগ করা (লিঙ্ক সচল করার জন্য)
           cordova plugin add cordova-plugin-inappbrowser
-          cordova plugin add cordova-plugin-whitelist || true
           
           # ৬. অ্যান্ড্রয়েড প্ল্যাটফর্ম যোগ করা
           cordova platform add android
@@ -46,7 +45,7 @@ jobs:
           cordova build android --debug
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4 # এই ভার্সনটি লেটেস্ট, তাই আর ফেইল করবে না
         with:
           name: shesh-josna-app
           path: build_dir/platforms/android/app/build/outputs/apk/debug/app-debug.apk

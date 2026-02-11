@@ -1,41 +1,9 @@
-name: Build Cordova Android APK
-
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:  # ম্যানুয়ালি "Run workflow" অপশন দেবে
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install Cordova CLI
-        run: npm install -g cordova
-
-      - name: Create Cordova project
-        run: |
-          cordova create temp-app com.example.myapp "MyApp"
-          cd temp-app
-          cp -r $GITHUB_WORKSPACE/* www/
-          cp $GITHUB_WORKSPACE/config.xml .
-          cordova platform add android@12.0.0
-
-      - name: Build APK
-        run: |
-          cd temp-app
-          cordova build android --release --no-telemetry
-
-      - name: Upload APK as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release-unsigned
-          path: temp-app/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.writer.sheshjosna" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
+    <name>Class 8 Science prepration</name>
+    <description> এর বইয়ের অ্যাপ</description>
+    <author email="rokonripon1@gmail.com">Rokonuzzaman Ripon</author>
+    <content src="welcome.html" />
+    <icon src="icon.png" />
+    <access origin="*" />
+</widget>

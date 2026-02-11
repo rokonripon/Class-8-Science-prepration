@@ -1,40 +1,22 @@
-name: Build APK
-on: [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-      - run: npm install -g cordova
-      - run: |
-          # ১. প্রজেক্ট তৈরি ও ফাইল কপি
-          cordova create build_dir com.writer.sheshjosna "ScienceHelper"
-          cp -r * build_dir/www/ || true
-          cp icon.png build_dir/www/icon.png || true
-          cp config.xml build_dir/config.xml || true
-          
-          cd build_dir
-          
-          # ২. প্লাগইন যোগ (লিঙ্ক ও ইন-অ্যাপ ব্রাউজার সচল করার জন্য)
-          cordova plugin add cordova-plugin-inappbrowser
-          
-          # ৩. শক্তিশালী অটো-প্যাচ (সব ধরণের লিঙ্ক ফিক্স করবে)
-          # 'window.location.href' কে বদলে 'cordova.InAppBrowser.open' এ রূপান্তর
-          find www/ -name "*.html" -exec sed -i "s|window.location.href='|window.open('|g" {} +
-          find www/ -name "*.html" -exec sed -i "s|window.location.href = '|window.open('|g" {} +
-          
-          # HTML এর সাধারণ <a href> লিঙ্কগুলোকে ব্রাউজারে খোলার ব্যবস্থা
-          find www/ -name "*.html" -exec sed -i 's/<a /<a onclick="window.open(this.href, '"'_system'"'); return false;" /g' {} +
-          
-          # ৪. প্ল্যাটফর্ম যোগ ও বিল্ড
-          cordova platform add android
-          cordova build android --debug --device
-          
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Science-Helper-App
-          path: build_dir/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.example.myapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
+    <name>My Offline App</name>
+    <description>An offline Android app built from HTML.</description>
+    <author email="you@example.com">Your Name</author>
+
+    <!-- আইকন -->
+    <icon src="icon.png" />
+
+    <!-- প্ল্যাটফর্ম -->
+    <platform name="android">
+        <allow-intent href="https://*/*" />
+        <allow-intent href="http://*/*" />
+    </platform>
+
+    <!-- কনটেন্ট এন্ট্রি পয়েন্ট -->
+    <content src="index.html" />
+
+    <!-- অফলাইন অ্যাপের জন্য ইন্টারনেট ছাড়াই চলবে -->
+    <preference name="AndroidXEnabled" value="true" />
+    <preference name="GradlePluginKotlinEnabled" value="true" />
+</widget>

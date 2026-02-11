@@ -17,7 +17,7 @@ jobs:
           cd build_dir
           cordova plugin add cordova-plugin-inappbrowser
           cordova platform add android
-          cordova build android --debug --device
+          cordova build android --debug
       - uses: actions/upload-artifact@v4
         with:
           name: shesh-josna-app

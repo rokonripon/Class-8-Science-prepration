@@ -4,6 +4,6 @@
     <description>For class 8. Science prepration.Note and Exam.Allin one app.</description>
     <author email="your@email.com">Rokonuzzaman Ripon</author>
     <content src="welcome.html" />
-    <icon src="icon.png" />
+   <icon src="www/icon.png" />
     <access origin="*" />
 </widget>

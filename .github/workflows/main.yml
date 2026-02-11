@@ -11,6 +11,7 @@ jobs:
           distribution: 'temurin'
       - run: npm install -g cordova
       - run: |
+          # ১. প্রজেক্ট তৈরি ও ফাইল কপি
           cordova create build_dir com.writer.sheshjosna "SheshJosna"
           cp -r * build_dir/www/ || true
           cp icon.png build_dir/www/icon.png || true
@@ -18,13 +19,14 @@ jobs:
           
           cd build_dir
           
-          # ১. লিঙ্ক সচল করার জন্য প্লাগইন যোগ করা
+          # ২. লিঙ্ক সচল করার প্লাগইন যোগ
           cordova plugin add cordova-plugin-inappbrowser
           
-          # ২. অটো-স্ক্রিপ্ট: এটি আপনার সব ফাইলের লিঙ্ককে অটোমেটিক ব্রাউজারে ওপেন করার ব্যবস্থা করবে
-          # এটি করলে আপনাকে ৩২টি ফাইলের একটিও এডিট করতে হবে না
-          find www/ -name "*.html" -exec sed -i 's/<a /<a onclick="window.open(this.href, '"'_system'"'); return false;" /g' {} +
+          # ৩. অটো-লিঙ্ক ফিক্সার (আপনার ৩২টি ফাইলের লিঙ্ক ব্রাউজারে ওপেন করার ম্যাজিক লাইন)
+          # এটি সব <a href="..."> কে ব্রাউজারে খোলার উপযোগী করে দেবে
+          find www/ -name "*.html" -exec sed -i 's/<a href="http/<a onclick="window.open(this.href, '"'_system'"'); return false;" href="http/g' {} +
 
+          # ৪. প্ল্যাটফর্ম যোগ ও বিল্ড
           cordova platform add android
           cordova build android --debug --device
           

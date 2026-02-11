@@ -26,9 +26,7 @@ jobs:
           cordova create build_dir com.writer.sheshjosna "Shesh Josna"
           
           # ৩. আপনার সব ফাইল (HTML, PNG, JPG) কপি করা
-          cp -r *.html build_dir/www/ || true
-          cp -r *.png build_dir/www/ || true
-          cp -r *.jpg build_dir/www/ || true
+          cp icon.png build_dir/www/icon.png || true
           cp config.xml build_dir/config.xml || true
           
           cd build_dir

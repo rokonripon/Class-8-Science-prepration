@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় কুইজ - অষ্টম শ্রেণি</title>
+    <style>
+        :root { --primary: #8e44ad; --secondary: #3498db; --success: #27ae60; --danger: #e74c3c; }
+        body { background-color: #f4f7f6; margin: 0; padding: 10px; }
+        .quiz-container { max-width: 750px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-family: 'SolaimanLipi', Arial, sans-serif; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        input[type="text"], select { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; }
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.4s; }
+        .option { display: block; background: #f9f9f9; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .option:hover { background: #f0f4f8; border-color: var(--secondary); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; }
+        .score-box { font-size: 24px; font-weight: bold; color: var(--success); text-align: center; margin: 15px 0; padding: 20px; background: #f1f9f1; border-radius: 10px; border: 1px solid #d4edda; }
+        .time-box { text-align: center; font-size: 18px; color: #e67e22; margin-bottom: 15px; font-weight: bold; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fafafa; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e8f4fd; border-radius: 5px; font-size: 14px; color: #444; border-left: 3px solid var(--secondary); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2 id="chapter-title">অধ্যায় ৩: ব্যাপন, অভিস্রবণ ও প্রস্বেদন</h2>
+        <p style="text-align:center; color:#666;">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার নাম লিখুন...">
+        <button type="button" class="btn" onclick="startQuiz()">কুইজ শুরু করুন</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color:#7f8c8d;"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div class="score-box" id="final-score"></div>
+        <p id="db-status" style="text-align:center; color: #27ae60; font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" onclick="location.reload()" style="background:#7f8c8d; margin-top:20px;">আবার শুরু করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "পদার্থের অণুগুলো বেশি ঘনত্বের স্থান থেকে কম ঘনত্বের দিকে ছড়িয়ে পড়াকে কী বলে?", a: ["অভিস্রবণ", "ব্যাপন", "প্রস্বেদন", "ইমবাইবিশন"], c: 1, e: "ব্যাপন হলো পদার্থের অণুগুলোর স্বতঃস্ফূর্তভাবে বেশি ঘনত্বের স্থান থেকে কম ঘনত্বের দিকে ছড়িয়ে পড়ার প্রক্রিয়া।" },
+    { q: "ব্যাপন ততক্ষণ চলতে থাকে যতক্ষণ না দুই স্থানের অণুর ঘনত্ব—", a: ["শূন্য হয়", "দ্বিগুণ হয়", "সমান হয়", "অর্ধেক হয়"], c: 2, e: "ঘনত্ব সমান না হওয়া পর্যন্ত ব্যাপন প্রক্রিয়া চলতে থাকে।" },
+    { q: "কোন পর্দার মধ্য দিয়ে শুধুমাত্র দ্রাবক অণু চলাচল করতে পারে?", a: ["ভেদ্য পর্দা", "অভেদ্য পর্দা", "অর্ধভেদ্য পর্দা", "পলিথিন"], c: 2, e: "অর্ধভেদ্য পর্দার মধ্য দিয়ে কেবল দ্রাবক অণু (পানি) চলাচল করতে পারে।" },
+    { q: "কিশমিশ পানিতে রাখলে ফুলে ওঠে কেন?", a: ["ব্যাপন", "অন্তঃঅভিস্রবণ", "বহিঃঅভিস্রবণ", "প্রস্বেদন"], c: 1, e: "কিশমিশের ভেতরের ঘন চিনি স্তরের টানে পানি ভেতরে প্রবেশ করে, যা অন্তঃঅভিস্রবণ।" },
+    { q: "উদ্ভিদ মাটি থেকে পানি ও খনিজ লবণ শোষণ করে কোন প্রক্রিয়ায়?", a: ["ব্যাপন ও প্রস্বেদন", "অভিস্রবণ ও ব্যাপন", "শ্বসন", "রেচন"], c: 1, e: "পানি শোষিত হয় অভিস্রবণ প্রক্রিয়ায় এবং খনিজ লবণ শোষিত হয় ব্যাপন বা সক্রিয় শোষণ প্রক্রিয়ায়।" },
+    { q: "উদ্ভিদের দেহাভ্যন্তর থেকে বাষ্পাকারে পানি বের করে দেওয়ার প্রক্রিয়াকে কী বলে?", a: ["ব্যাপন", "অভিস্রবণ", "প্রস্বেদন", "আত্তীকরণ"], c: 2, e: "উদ্ভিদ তার অতিরিক্ত পানি পত্ররন্ধ্র দিয়ে বাষ্পাকারে বের করে দেওয়াকে প্রস্বেদন বলে।" },
+    { q: "প্রস্বেদন প্রধানত উদ্ভিদের কোন অঙ্গে ঘটে?", a: ["মূলে", "কাণ্ডে", "পাতায়", "ফুলে"], c: 2, e: "পাতার পত্ররন্ধ্র বা স্টোমাটার মাধ্যমে প্রস্বেদনের ৯৫% কাজ সম্পন্ন হয়।" },
+    { q: "প্রস্বেদনকে 'প্রয়োজনীয় ক্ষতি' (Necessary Evil) বলেছেন কে?", a: ["কার্টিস", "মেন্ডেল", "হেকেল", "ডারউইন"], c: 0, e: "বিজ্ঞানী কার্টিস প্রস্বেদনকে উদ্ভিদের জন্য একটি প্রয়োজনীয় ক্ষতি হিসেবে বর্ণনা করেছেন।" },
+    { q: "কোন পর্দা দিয়ে দ্রাব ও দ্রাবক উভয়ই চলাচল করতে পারে?", a: ["অভেদ্য", "অর্ধভেদ্য", "ভেদ্য", "চিনি"], c: 2, e: "ভেদ্য পর্দা (যেমন কোষ প্রাচীর) দিয়ে উভয়ই চলাচল করতে পারে।" },
+    { q: "শুকনো কাঠের পানি শোষণের প্রক্রিয়াকে কী বলে?", a: ["ব্যাপন", "ইমবাইবিশন", "অভিস্রবণ", "শোষণ"], c: 1, e: "কলয়েডধর্মী শুকনো পদার্থ পানি শুষে নেওয়াকে ইমবাইবিশন বলে।" },
+    { q: "উদ্ভিদের রস উত্তোলন (Ascent of sap) কার মাধ্যমে ঘটে?", a: ["জাইলেম", "ফ্লোয়েম", "মজ্জা", "ত্বক"], c: 0, e: "জাইলেম বাহিকার মাধ্যমেই পানি ও খনিজ লবণ উপরের দিকে পরিবাহিত হয়।" },
+    { q: "পাতায় তৈরি খাদ্য উদ্ভিদের সারা দেহে ছড়িয়ে দেয় কোনটি?", a: ["জাইলেম", "ফ্লোয়েম", "মূলরোম", "পত্ররন্ধ্র"], c: 1, e: "ফ্লোয়েম টিস্যু পাতায় তৈরি শর্করা জাতীয় খাদ্য সারা দেহে পরিবহন করে।" },
+    { q: "কোষে ব্যাপন চাপ ঘাটতি (Diffusion Pressure Deficit) পূরণ করে কোনটি?", a: ["সূর্যালোক", "প্রস্বেদন টান", "অক্সিজেন", "তাপমাত্রা"], c: 1, e: "প্রস্বেদন টান জাইলেম বাহিকায় পানির ঘাটতি পূরণ করে মূল থেকে পানি তুলতে সাহায্য করে।" },
+    { q: "মাছের পটকা কোন ধরনের পর্দা?", a: ["ভেদ্য", "অভেদ্য", "অর্ধভেদ্য", "স্বচ্ছ"], c: 2, e: "মাছের পটকা একটি প্রাকৃতিক অর্ধভেদ্য পর্দা।" },
+    { q: "বায়ুমণ্ডলে জলীয় বাষ্প বেশি থাকলে প্রস্বেদনের হার কেমন হয়?", a: ["বাড়ে", "কমে", "বন্ধ হয়", "একই থাকে"], c: 1, e: "বাতাসে আর্দ্রতা বেশি হলে বাষ্পীভবন কম হয়, ফলে প্রস্বেদন কমে যায়।" },
+    { q: "উদ্ভিদের কাষ্ঠল কাণ্ডের ছোট ছিদ্রকে কী বলে?", a: ["পত্ররন্ধ্র", "লেন্টিসেল", "মজ্জা", "মূলরোম"], c: 1, e: "কাণ্ডের ত্বকে থাকা ছিদ্রগুলোকে লেন্টিসেল বলে, যার মাধ্যমে লেন্টিকুলার প্রস্বেদন হয়।" },
+    { q: "কোষ রসের ঘনত্ব বাইরের দ্রবণের চেয়ে বেশি হলে পানি কোথায় যাবে?", a: ["কোষের ভেতরে", "কোষের বাইরে", "যাবে না", "ফেটে যাবে"], c: 0, e: "অভিস্রবণ অনুযায়ী পানি কম ঘনত্বের স্থান থেকে বেশি ঘনত্বের দিকে (কোষের ভেতরে) যায়।" },
+    { q: "লবণাক্ত পানি কোষে প্রবেশ করলে কোষটি কেমন হবে?", a: ["স্ফীত", "কুঁচকে যাবে", "বড় হবে", "একই থাকবে"], c: 1, e: "লবণাক্ত পানির ঘনত্ব বেশি হলে বহিঃঅভিস্রবণের ফলে কোষ থেকে পানি বেরিয়ে কোষটি কুঁচকে যায়।" },
+    { q: "পানির অপর নাম জীবন বলা হয় কেন?", a: ["পানির রঙ নেই", "জৈব রাসায়নিক বিক্রিয়া ও পরিবহনের মাধ্যম", "পানির স্বাদ আছে", "জলজ প্রাণীর ঘর"], c: 1, e: "কোষের প্রোটোপ্লাজমের সজীবতা রক্ষা ও পরিবহনের জন্য পানি অত্যাবশ্যক।" },
+    { q: "কোষ প্রাচীর কোন ধরনের পর্দা?", a: ["অভেদ্য", "ভেদ্য", "অর্ধভেদ্য", "সজীব"], c: 1, e: "কোষ প্রাচীর একটি মৃত ও ভেদ্য পর্দা।" },
+    { q: "পত্ররন্ধ্র কখন খোলা থাকে?", a: ["সব সময়", "শুধুমাত্র রাতে", "সাধারণত দিনের বেলায়", "বৃষ্টির সময়"], c: 2, e: "অধিকাংশ উদ্ভিদের পত্ররন্ধ্র দিনের বেলায় খোলা থাকে।" },
+    { q: "প্রস্বেদন কমে গেলে উদ্ভিদের পাতায় কী ঘটে?", a: ["সতেজ হয়", "গরম হয়ে যায়", "সবুজ হয়", "বড় হয়"], c: 1, e: "প্রস্বেদন পাতাকে শীতল রাখে; এটি না হলে পাতার তাপমাত্রা বিপজ্জনকভাবে বেড়ে যেতে পারে।" },
+    { q: "তরমুজ গাছ দ্রুত বাড়ে কেন?", a: ["প্রস্বেদন বেশি বলে", "পানি শোষণ বেশি বলে", "উভয়ই", "কোনোটি নয়"], c: 2, e: "দ্রুত পরিবহনের জন্য পানি শোষণ ও প্রস্বেদন উভয়ই উচ্চ হারে হওয়া জরুরি।" },
+    { q: "অভিস্রবণের শর্ত কোনটি?", a: ["দুটি ভিন্ন ঘনত্বের দ্রবণ", "একটি অর্ধভেদ্য পর্দা", "উভয়ই", "কোনোটিই নয়"], c: 2, e: "দুটি ভিন্ন ঘনত্বের দ্রবণ একটি অর্ধভেদ্য পর্দা দ্বারা পৃথক থাকা অভিস্রবণের মূল শর্ত।" },
+    { q: "গ্যাসীয় পদার্থের ব্যাপন কোথায় ঘটে?", a: ["বাতাসে", "জলে", "কাঠে", "লোহায়"], c: 0, e: "বাতাসে সুগন্ধি বা কার্বন ডাই-অক্সাইডের ছড়িয়ে পড়া হলো গ্যাসীয় ব্যাপন।" },
+    { q: "মূলে পানি প্রবেশের পথ কোনটি?", a: ["পত্ররন্ধ্র", "মূলরোম", "জাইলেম", "ফ্লোয়েম"], c: 1, e: "মূলরোম দিয়েই মাটি থেকে পানি অন্তঃঅভিস্রবণ প্রক্রিয়ায় প্রবেশ করে।" },
+    { q: "রক্তের প্লাজমা মেমব্রেন কোন ধরনের পর্দা?", a: ["ভেদ্য", "অভেদ্য", "অর্ধভেদ্য", "নির্জীব"], c: 2, e: "প্রাণিকোষের প্লাজমা মেমব্রেন একটি অর্ধভেদ্য পর্দা।" },
+    { q: "চিনির সিরায় আঙুর রাখলে সেটি কুঁচকে যায় কেন?", a: ["অন্তঃঅভিস্রবণ", "বহিঃঅভিস্রবণ", "ব্যাপন", "প্রস্বেদন"], c: 1, e: "বাইরের ঘন সিরা আঙুর থেকে পানি টেনে বের করে নেয় (বহিঃঅভিস্রবণ)।" },
+    { q: "জাইলেম বাহিকা দিয়ে রস উপরে ওঠাকে কী বলে?", a: ["ডিফিউশন", "অসমোসিস", "রসারোহণ", "ট্রান্সপিরেশন"], c: 2, e: "মূল থেকে পাতায় পানি ও খনিজ লবণের উর্ধ্বমুখী পরিবহনকে রসারোহণ বলে।" },
+    { q: "কোনটি কলয়েডধর্মী পদার্থ?", a: ["লোহা", "জেলি", "চিনি", "লবণ"], c: 1, e: "স্টার্চ, সেলুলোজ, জেলি, আঠা ইত্যাদি হলো কলয়েডধর্মী পদার্থ যা পানি শোষণ করে।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m}:${s < 10 ? '0'+s : s}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<div class="question-box active"><h3>${qData.q}</h3>${opts}</div>`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds / 60)}m ${totalSeconds % 60}s`;
+
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName} | <b>শ্রেণি:</b> অষ্টম`;
+    document.getElementById("final-score").innerText = `স্কোর: ${score} / ${quizData.length}`;
+    
+    saveToHistory(score, quizData.length);
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরপত্র:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><strong>ব্যাখ্যা:</strong> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function saveToHistory(got, total) {
+    let resultData = { subject: "অধ্যায় ৩: ব্যাপন, অভিস্রবণ ও প্রস্বেদন", score: got + " / " + total, date: new Date().toLocaleString('bn-BD') };
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push(resultData);
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => { document.getElementById("db-status").innerText = "✓ ফলাফল সার্ভারে সংরক্ষিত হয়েছে।"; })
+    .catch(() => { document.getElementById("db-status").innerText = "⚠ ডাটা সেভ করতে সমস্যা হয়েছে।"; });
+}
+</script>
+</body>
+</html>

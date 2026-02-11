@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রাসায়নিক বিক্রিয়া - স্মার্ট মাস্টার নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0984e3;
+            --secondary-teal: #00cec9;
+            --accent-orange: #e67e22;
+            --danger-red: #d63031;
+            --bg-light: #f5f6fa;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            color: #2d3436;
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0984e3, #6c5ce7);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.2);
+            animation: fadeInDown 1s ease;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-left: 10px solid var(--primary-blue);
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        h1 { margin: 0; font-size: 35px; }
+        h2 { color: var(--primary-blue); border-bottom: 3px solid #dfe6e9; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: var(--accent-orange); margin-top: 25px; font-size: 22px; border-left: 4px solid var(--accent-orange); padding-left: 10px; }
+        h4 { color: #2d3436; margin-top: 15px; font-size: 19px; }
+
+        .definition-box {
+            background: #f0f3ff;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #d1d8ff;
+            margin: 15px 0;
+        }
+
+        .equation-box {
+            background: #2d3436;
+            color: #fab1a0;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; border-radius: 15px; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th { background: var(--primary-blue); color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border: 1px solid #f1f2f6; }
+        tr:nth-child(even) { background-color: #f9f9ff; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e1f5fe;
+            color: #0277bd;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 3px;
+        }
+
+        /* অ্যানিমেশন */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 40px; color: #636e72; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+            .section-card { padding: 20px; }
+            table { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>রাসায়নিক বিক্রিয়া</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | অধ্যায় ৮ (সম্পূর্ণ বিস্তারিত নোট)</p>
+    <div style="font-size: 45px; margin-top: 15px;">⚗️🧪💥</div>
+</header>
+
+<div class="container">
+
+    <div class="section-card" style="animation-delay: 0.1s;">
+        <h2>১. রাসায়নিক বিক্রিয়া: সম্পূর্ণ ধারণা</h2>
+        <div class="definition-box">
+            <strong>মৌলিক সংজ্ঞা:</strong> রাসায়নিক বিক্রিয়া হল এমন একটি প্রক্রিয়া যাতে এক বা একাধিক পদার্থ (বিক্রিয়ক) রাসায়নিক পরিবর্তনের মাধ্যমে সম্পূর্ণ নতুন ধর্মবিশিষ্ট এক বা একাধিক পদার্থে (উৎপাদ) পরিণত হয়।
+        </div>
+        <p><strong>বিস্তারিত ব্যাখ্যা:</strong></p>
+        <ul>
+            <li><strong>রাসায়নিক পরিবর্তন:</strong> পরমাণুগুলোর মধ্যে ইলেকট্রনের বিনিময় বা পুনর্বিন্যাস ঘটে।</li>
+            <li><strong>বিক্রিয়ক (Reactants):</strong> বিক্রিয়ায় অংশগ্রহণকারী প্রাথমিক পদার্থসমূহ।</li>
+            <li><strong>উৎপাদ (Products):</strong> বিক্রিয়ার শেষে সৃষ্ট নতুন পদার্থসমূহ।</li>
+            <li><strong>রাসায়নিক বন্ধন:</strong> বিক্রিয়ায় পুরনো বন্ধন ভাঙে এবং নতুন বন্ধন গঠিত হয়।</li>
+        </ul>
+        <p><strong>অপরিবর্তনীয় নীতি:</strong><br>
+        ১. ভরের সংরক্ষণ সূত্র: মোট ভর অপরিবর্তিত থাকে।<br>
+        ২. পরমাণুর সংরক্ষণ: পরমাণু সৃষ্টি বা ধ্বংস হয় না, শুধু পুনর্বিন্যাস ঘটে।</p>
+    </div>
+
+    <div class="section-card" style="border-left-color: var(--secondary-teal); animation-delay: 0.2s;">
+        <h2 style="color: var(--secondary-teal);">২. রাসায়নিক বিক্রিয়া চেনার সহজ উপায়</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>বৈশিষ্ট্য</th><th>শারীরিক পরিবর্তন</th><th>রাসায়নিক পরিবর্তন</th></tr>
+                <tr><td>পদার্থের প্রকৃতি</td><td>অপরিবর্তিত</td><td>সম্পূর্ণ পরিবর্তিত</td></tr>
+                <tr><td>স্থায়িত্ব</td><td>অস্থায়ী</td><td>স্থায়ী</td></tr>
+                <tr><td>শক্তি পরিবর্তন</td><td>সাধারণত না</td><td>সাধারণত হয়</td></tr>
+                <tr><td>উদাহরণ</td><td>বরফ গলা, কাগজ কাটা</td><td>লোহায় মরিচা, খাদ্য পচন</td></tr>
+            </table>
+        </div>
+        <h4>নিশ্চিত চিহ্নসমূহ:</h4>
+        <p><span class="badge">রঙের পরিবর্তন</span> <span class="badge">গ্যাসের উদ্গিরণ</span> <span class="badge">অবক্ষেপ সৃষ্টি</span> <span class="badge">তাপের পরিবর্তন</span> <span class="badge">গন্ধের পরিবর্তন</span></p>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.3s;">
+        <h2>৩. রাসায়নিক বিক্রিয়ার প্রকারভেদ: গভীর বিশ্লেষণ</h2>
+        
+        <h3>প্রকার ১: সংযোজন বিক্রিয়া (Combination Reaction)</h3>
+        <p>দুই বা ততোধিক সরল পদার্থ মিলিত হয়ে একটি যৌগ গঠন করে। উদা:</p>
+        <div class="equation-box">2H2 + O2 → 2H2O (পানি তৈরি)</div>
+        <div class="equation-box">CaO + H2O → Ca(OH)2 + তাপ (স্লেকড লাইম)</div>
+
+        <h3>প্রকার ২: বিয়োজন বিক্রিয়া (Decomposition Reaction)</h3>
+        <p>একটি যৌগ ভেঙে দুই বা ততোধিক সরল পদার্থে পরিণত হয়।</p>
+        <div class="table-container">
+            <table>
+                <tr><th>মাধ্যম</th><th>উদাহরণ</th></tr>
+                <tr><td>তাপীয়</td><td>CaCO3 → CaO + CO2</td></tr>
+                <tr><td>তড়িৎ</td><td>2H2O → 2H2 + O2</td></tr>
+                <tr><td>আলোক</td><td>2AgBr → 2Ag + Br2</td></tr>
+            </table>
+        </div>
+
+        <h3>প্রকার ৩: প্রতিস্থাপন বিক্রিয়া (Displacement Reaction)</h3>
+        <p>অধিক সক্রিয় মৌল কম সক্রিয় মৌলকে যৌগ থেকে সরিয়ে দেয়।</p>
+        <div class="equation-box">Zn(s) + CuSO4(aq) → ZnSO4(aq) + Cu(s)</div>
+        <p><strong>সক্রিয়তা ক্রম:</strong> K > Na > Ca > Mg > Al > Zn > Fe > Pb > H > Cu > Ag > Au</p>
+
+        <h3>প্রকার ৪: দ্বি-প্রতিস্থাপন বিক্রিয়া (Double Displacement)</h3>
+        <div class="table-container">
+            <table>
+                <tr><th>প্রকার</th><th>উদাহরণ</th></tr>
+                <tr><td>অবক্ষেপণ</td><td>AgNO3 + NaCl → AgCl↓ + NaNO3</td></tr>
+                <tr><td>নিরপেক্ষকরণ</td><td>HCl + NaOH → NaCl + H2O</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-card" style="border-left-color: var(--danger-red); animation-delay: 0.4s;">
+        <h2 style="color: var(--danger-red);">৪. বিশেষ রাসায়নিক বিক্রিয়াসমূহ</h2>
+        <h4>৪.১ দহন বিক্রিয়া:</h4>
+        <p>অক্সিজেনের সাথে দ্রুত বিক্রিয়ায় তাপ ও আলো নির্গত হওয়া। উদা: <b>CH4 + 2O2 → CO2 + 2H2O</b></p>
+        
+        <h4>৪.২ নিরপেক্ষকরণ বিক্রিয়া:</h4>
+        <div class="definition-box">অম্ল + ক্ষার → লবণ + পানি (HX + MOH → MX + H2O)</div>
+        
+        <h4>৪.৩ জারণ-বিজারণ (Redox):</h4>
+        <p><b>জারণ:</b> ইলেকট্রন ত্যাগ (OIL)। <b>বিজারণ:</b> ইলেকট্রন গ্রহণ (RIG)।</p>
+        
+        <h4>৪.৪ ভাঙন (Corrosion):</h4>
+        <p>লোহার মরিচা: <b>4Fe + 3O2 + xH2O → 2Fe2O3.xH2O</b></p>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.5s;">
+        <h2>৫. রাসায়নিক সমীকরণ ও ৬. তড়িৎ বিশ্লেষণ</h2>
+        <p><strong>সমতাকরণ পদ্ধতি:</strong> ১. পরিদর্শন পদ্ধতি ২. বীজগাণিতিক পদ্ধতি।</p>
+        
+        <h3>তড়িৎ বিশ্লেষণ:</h3>
+        <ul>
+            <li><strong>অ্যানোড:</strong> ধনাত্মক, জারণ ঘটে।</li>
+            <li><strong>ক্যাথোড:</strong> ঋণাত্মক, বিজারণ ঘটে।</li>
+        </ul>
+        <div class="table-container">
+            <table>
+                <tr><th>বিশ্লেষ্য</th><th>অ্যানোডে</th><th>ক্যাথোডে</th></tr>
+                <tr><td>তরল NaCl</td><td>Cl2 গ্যাস</td><td>Na ধাতু</td></tr>
+                <tr><td>পানি</td><td>O2 গ্যাস</td><td>H2 গ্যাস</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.6s;">
+        <h2>৭. শক্তি পরিবর্তন ও ৮. বিক্রিয়ার হার</h2>
+        <p><strong>তাপোৎপাদী:</strong> তাপ নির্গত হয় (ΔH ঋণাত্মক)। উদা: দহন।<br>
+        <strong>তাপহারী:</strong> তাপ শোষিত হয় (ΔH ধনাত্মক)। উদা: সালোকসংশ্লেষণ।</p>
+        
+        <h3>বিক্রিয়ার হারের প্রভাবকসমূহ:</h3>
+        <div class="table-container">
+            <table>
+                <tr><th>প্রভাবক</th><th>প্রভাব</th><th>কারণ</th></tr>
+                <tr><td>তাপমাত্রা</td><td>হার বৃদ্ধি</td><td>গতিশক্তি বৃদ্ধি</td></tr>
+                <tr><td>উত্প্রেরক</td><td>হার বৃদ্ধি</td><td>সক্রিয়ণ শক্তি হ্রাস</td></tr>
+                <tr><td>ঘনমাত্রা</td><td>হার বৃদ্ধি</td><td>বেশি সংঘর্ষ</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.7s;">
+        <h2>৯. শিল্পে ও পরিবেশে রাসায়নিক বিক্রিয়া</h2>
+        <p><strong>১. হেবার পদ্ধতি (অ্যামোনিয়া):</strong> N2 + 3H2 ⇌ 2NH3</p>
+        <p><strong>২. সালোকসংশ্লেষণ:</strong> 6CO2 + 12H2O → C6H12O6 + 6O2 + 6H2O</p>
+        <p><strong>৩. অ্যাসিড বৃষ্টি:</strong> SO2 + H2O → H2SO3</p>
+    </div>
+
+    <div class="section-card" style="background: #fff5f5; border-left-color: var(--danger-red); animation-delay: 0.8s;">
+        <h2>১০. পরীক্ষাগারে নিরাপত্তা বিধি</h2>
+        <ul>
+            <li>সুরক্ষা চশমা ও ল্যাব কোট পরা।</li>
+            <li>রাসায়নিকের লেবেল পড়া।</li>
+            <li><strong>সতর্কতা:</strong> অ্যাসিডে সর্বদা পানি যোগ করবেন না, পানিতে ধীরে ধীরে অ্যাসিড যোগ করবেন।</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং ড্যাশবোর্ড © ২০২৬ | বিজ্ঞান হোক সহজ ও আনন্দময় ✨</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মহাকাশ ও উপগ্রহ - স্মার্ট স্টাডি নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --space-black: #0b0d17;
+            --galaxy-purple: #6c5ce7;
+            --star-gold: #fdcb6e;
+            --earth-blue: #0984e3;
+            --text-light: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--space-black);
+            margin: 0;
+            padding: 0;
+            color: var(--text-light);
+            line-height: 1.8;
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                              radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+            background-size: 550px 550px, 350px 350px;
+        }
+
+        header {
+            background: linear-gradient(rgba(108, 92, 231, 0.8), rgba(11, 13, 23, 0.9)), url('https://www.transparenttextures.com/patterns/stardust.png');
+            text-align: center;
+            padding: 70px 20px;
+            border-bottom: 3px solid var(--galaxy-purple);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        h1 { margin: 0; font-size: 38px; color: var(--star-gold); text-shadow: 0 0 15px rgba(253, 203, 110, 0.5); }
+        h2 { color: var(--earth-blue); border-left: 5px solid var(--galaxy-purple); padding-left: 15px; margin-top: 0; }
+        h3 { color: var(--star-gold); margin-top: 25px; }
+
+        .definition-box {
+            background: rgba(108, 92, 231, 0.15);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px dashed var(--galaxy-purple);
+            margin: 15px 0;
+        }
+
+        .highlight-text { color: var(--star-gold); font-weight: bold; }
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; border-radius: 15px; border: 1px solid #444; }
+        table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.02); }
+        th { background: var(--galaxy-purple); color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border: 1px solid rgba(255,255,255,0.1); }
+        tr:hover { background-color: rgba(255,255,255,0.05); }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--galaxy-purple);
+            color: white;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 4px;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 50px; color: #636e72; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 26px; }
+            .section-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>অধ্যায় ১২: মহাকাশ ও উপগ্রহ</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | ডিজিটাল স্টাডি গাইড</p>
+    <div style="font-size: 45px; margin-top: 15px;">🚀🛰️👨‍🚀</div>
+</header>
+
+<div class="container">
+
+    <div class="section-card">
+        <h2>১. মহাকাশ (Space)</h2>
+        <div class="definition-box">
+            <strong>সংজ্ঞা:</strong> পৃথিবীর বায়ুমণ্ডলের বাইরের অসীম বিস্তৃত ফাঁকা স্থানকে মহাকাশ বলে। এতে গ্রহ, নক্ষত্র, গ্যালাক্সি ইত্যাদি অবস্থিত।
+        </div>
+        
+        <p><strong>বৈশিষ্ট্য:</strong></p>
+        <ul>
+            <li>বায়ুশূন্য (ভ্যাকুয়াম) ও চরম তাপমাত্রা।</li>
+            <li>বিভিন্ন বিকিরণ (কসমিক রে, ইউভি রশ্মি) উপস্থিত।</li>
+        </ul>
+    </div>
+
+    <div class="section-card">
+        <h2>২ & ৩. উপগ্রহ ও কৃত্রিম উপগ্রহ</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>প্রকার</th><th>বৈশিষ্ট্য</th><th>উদাহরণ</th></tr>
+                <tr><td>প্রাকৃতিক উপগ্রহ</td><td>প্রাকৃতিকভাবে গঠিত</td><td>চাঁদ, টাইটান, গ্যানিমিড</td></tr>
+                <tr><td>কৃত্রিম উপগ্রহ</td><td>মানুষের তৈরি ও উৎক্ষেপিত</td><td>বঙ্গবন্ধু স্যাটেলাইট-১, ISS</td></tr>
+            </table>
+        </div>
+        
+        <h3>ইতিহাসের মাইলফলক:</h3>
+        <p><span class="badge">স্পুটনিক-১: ১৯৫৭ (প্রথম)</span> <span class="badge">স্পুটনিক-২: লাইকা (কুকুর)</span> <span class="badge">ভস্টক-১: ইউরি গ্যাগারিন (১৯৬১)</span></p>
+    </div>
+
+    <div class="section-card">
+        <h2>৪. কৃত্রিম উপগ্রহের কক্ষপথ ও নীতি</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>কক্ষপথ</th><th>উচ্চতা (কিমি)</th><th>ব্যবহার</th></tr>
+                <tr><td>LEO (নিম্ন)</td><td>১৬০–২০০০</td><td>আবহাওয়া, স্পেস স্টেশন</td></tr>
+                <tr><td>MEO (মধ্যম)</td><td>২০০০–৩৫,৭৮৬</td><td>জিপিএস, নেভিগেশন</td></tr>
+                <tr><td>GEO (ভূ-স্থির)</td><td>৩৫,৭৮৬</td><td>যোগাযোগ, টিভি</td></tr>
+            </table>
+        </div>
+        
+        <p><strong>নীতি:</strong> মাধ্যাকর্ষণ বল কেন্দ্রমুখী বল হিসেবে কাজ করে। উপগ্রহের ভেতরে <span class="highlight-text">ওজনহীনতা</span> অনুভূত হয় কারণ এটি মুক্ত পতনের মধ্যে থাকে।</p>
+    </div>
+
+    <div class="section-card">
+        <h2>৫ & ৬. উপগ্রহের ব্যবহার ও তালিকা</h2>
+        <p>কৃত্রিম উপগ্রহ যোগাযোগ, আবহাওয়া পূর্বাভাস, নেভিগেশন (GPS) এবং বৈজ্ঞানিক গবেষণায় অপরিহার্য।</p>
+        <div class="table-container">
+            <table>
+                <tr><th>নাম</th><th>দেশ/সংস্থা</th><th>উদ্দেশ্য</th></tr>
+                <tr><td>বঙ্গবন্ধু স্যাটেলাইট-১</td><td>বাংলাদেশ (২০১৮)</td><td>যোগাযোগ ও সম্প্রচার</td></tr>
+                <tr><td>হাবল টেলিস্কোপ</td><td>নাসা/ইএসএ</td><td>মহাকাশ পর্যবেক্ষণ</td></tr>
+                <tr><td>ISS</td><td>আন্তর্জাতিক</td><td>মহাকাশ গবেষণা</td></tr>
+            </table>
+        </div>
+        
+    </div>
+
+    <div class="section-card">
+        <h2>৭ & ৮. মহাকাশ যাত্রা ও বাংলাদেশ</h2>
+        <p><strong>বাংলাদেশের অর্জন:</strong> ২০১৭ সালে প্রথম ন্যানো উপগ্রহ <span class="highlight-text">ব্র্যাক অন্বেষা</span> এবং ২০১৮ সালে যোগাযোগ উপগ্রহ <span class="highlight-text">বঙ্গবন্ধু স্যাটেলাইট-১</span> উৎক্ষেপণ করা হয়।</p>
+        <h3>মহাকাশযানের অংশ:</h3>
+        <ul>
+            <li><strong>রকেট:</strong> প্রয়োজনীয় গতি প্রদানকারী ইঞ্জিন।</li>
+            <li><strong>ল্যান্ডার:</strong> অন্য গ্রহে অবতরণকারী অংশ।</li>
+            <li><strong>অরবিটার:</strong> কক্ষপথে অবস্থানকারী অংশ।</li>
+        </ul>
+        
+    </div>
+
+    <div class="section-card">
+        <h2>৯ & ১০. চ্যালেঞ্জ ও ভবিষ্যৎ অভিযান</h2>
+        <p><strong>মহাকাশ আবর্জনা (Space Debris):</strong> অকেজো উপগ্রহ ও রকেটের অংশ যা সক্রিয় উপগ্রহের জন্য হুমকিস্বরূপ।</p>
+        
+
+[attachment_0](attachment)
+
+        <h3>ভবিষ্যৎ মিশন:</h3>
+        <p>নাসার <span class="highlight-text">আর্টেমিস প্রোগ্রাম</span> (চাঁদে মানুষ পাঠানো) এবং স্পেসএক্স-এর মঙ্গল অভিযান পরিকল্পনা মহাকাশ বিজ্ঞানের নতুন দিগন্ত উন্মোচন করছে।</p>
+    </div>
+
+    <div class="section-card" style="background: rgba(253, 203, 110, 0.05);">
+        <h2>১১. গুরুত্বপূর্ণ পরিভাষা</h2>
+        <div style="columns: 2;">
+            <p>🔹 <b>অরবিট:</b> নির্দিষ্ট কক্ষপথ।</p>
+            <p>🔹 <b>থ্রাস্টার:</b> দিক পরিবর্তনের যন্ত্র।</p>
+            <p>🔹 <b>পেলোড:</b> বহনকৃত যন্ত্রপাতি।</p>
+            <p>🔹 <b>লঞ্চ ভেহিকল:</b> উৎক্ষেপণ যান।</p>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং ড্যাশবোর্ড ২০২৬ | মহাকাশের অজানাকে জানো ✨</p>
+</footer>
+
+</body>
+</html>

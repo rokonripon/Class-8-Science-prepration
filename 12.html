@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় ১২: মহাকাশ ও কৃত্রিম উপগ্রহ</title>
+    <style>
+        :root { --primary: #8e44ad; --secondary: #9b59b6; --bg: #f4f0f7; --text: #2c3e50; --success: #27ae60; }
+        body { font-family: 'SolaimanLipi', Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .quiz-container { max-width: 750px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 8px solid var(--primary); }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 5px; }
+        p.sub-title { text-align: center; color: #666; margin-bottom: 25px; }
+        input[type="text"] { width: 100%; padding: 14px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .option { display: block; background: #fff; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; font-size: 17px; }
+        .option:hover { background: #f5eef8; border-color: var(--primary); transform: translateX(5px); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; margin-bottom: 10px; }
+        .btn:hover { background: var(--secondary); }
+        .time-box { text-align: center; font-weight: bold; color: #8e44ad; margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #eee; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fdfdfd; }
+        .explanation { margin-top: 10px; padding: 10px; background: #f4f0f7; border-radius: 5px; font-size: 14px; color: #555; border-left: 3px solid var(--primary); }
+        .history-box { margin-top: 20px; background: #fff; padding: 15px; border-radius: 10px; border: 1px solid #ddd; }
+        .history-item { padding: 8px; border-bottom: 1px dashed #eee; font-size: 14px; display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2>অধ্যায় ১২: মহাকাশ ও কৃত্রিম উপগ্রহ</h2>
+        <p class="sub-title">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ পরিমার্জিত সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার পূর্ণ নাম লিখুন">
+        <button class="btn" style="width:100%" onclick="startQuiz()">কুইজ শুরু করুন</button>
+        
+        <div class="history-box" id="history-box" style="display:none;">
+            <strong style="color:var(--primary)">আগের পরীক্ষার রেকর্ড:</strong>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color: var(--primary);"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div id="final-score" style="font-size: 26px; text-align: center; font-weight: bold; color: var(--primary); margin: 15px 0;"></div>
+        <p id="db-status" style="text-align:center; color: var(--success); font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" style="width:100%; background:#7f8c8d; margin-top:20px;" onclick="location.reload()">আবার চেষ্টা করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "বায়ুমণ্ডলের শেষ সীমানার পর যে অসীম ফাঁকা জায়গা শুরু হয় তাকে কী বলে?", a: ["আকাশ", "মহাকাশ", "ছায়াপথ", "গ্রহজগৎ"], c: 1, e: "মহাকাশ হলো বায়ুমণ্ডলের বাইরের অসীম শূন্যস্থান।" },
+    { q: "মহাবিশ্বের উৎপত্তি সংক্রান্ত সবচেয়ে গ্রহণযোগ্য তত্ত্ব কোনটি?", a: ["স্থির অবস্থা তত্ত্ব", "বিগ ব্যাং তত্ত্ব", "বিবর্তন তত্ত্ব", "আপেক্ষিক তত্ত্ব"], c: 1, e: "বিগ ব্যাং বা মহাবিস্ফোরণ তত্ত্বের মাধ্যমে মহাবিশ্বের সৃষ্টি ব্যাখ্যা করা হয়।" },
+    { q: "পৃথিবীর একমাত্র প্রাকৃতিক উপগ্রহ কোনটি?", a: ["সূর্য", "চাঁদ", "বঙ্গবন্ধু-১", "ধূমকেতু"], c: 1, e: "চাঁদ পৃথিবীর চারদিকে নির্দিষ্ট কক্ষপথে ঘোরে।" },
+    { q: "মানুষের তৈরি যেসব যন্ত্র পৃথিবীর চারদিকে ঘোরে তাদের কী বলে?", a: ["গ্রহ", "মহাকাশযান", "কৃত্রিম উপগ্রহ", "রকেট"], c: 2, e: "এদের কৃত্রিম উপগ্রহ বা স্যাটেলাইট বলা হয়।" },
+    { q: "বিশ্বের প্রথম কৃত্রিম উপগ্রহের নাম কী?", a: ["অ্যাপোলো-১১", "স্পুটনিক-১", "এক্সপ্লোরার-১", "ভোস্টক-১"], c: 1, e: "১৯৫৭ সালে সোভিয়েত ইউনিয়ন প্রথম স্পুটনিক-১ মহাকাশে পাঠায়।" },
+    { q: "বঙ্গবন্ধু স্যাটেলাইট-১ কত সালে মহাকাশে উৎক্ষেপণ করা হয়?", a: ["২০১৫", "২০১৬", "২০১৮", "২০২০"], c: 2, e: "২০১৮ সালের ১২ মে এটি মহাকাশে পাঠানো হয়।" },
+    { q: "বঙ্গবন্ধু স্যাটেলাইট-১ কোন রকেটের মাধ্যমে পাঠানো হয়েছিল?", a: ["ফ্যালকন ৯", "এরিয়ান ৫", "পিএসএলভি", "অ্যাটলাস"], c: 0, e: "স্পেসএক্স কোম্পানির ফ্যালকন ৯ রকেটের মাধ্যমে এটি উৎক্ষেপণ করা হয়।" },
+    { q: "ভূ-স্থির উপগ্রহের পৃথিবীর চারদিকে একবার ঘুরে আসতে কত সময় লাগে?", a: ["১২ ঘণ্টা", "২৪ ঘণ্টা", "৩৬ ঘণ্টা", "এক মাস"], c: 1, e: "ভূ-স্থির উপগ্রহের আবর্তনকাল পৃথিবীর আবর্তনের সমান।" },
+    { q: "যোগাযোগ উপগ্রহ প্রধানত কোন কাজে ব্যবহৃত হয়?", a: ["যুদ্ধ করতে", "টেলিভিশন ও ইন্টারনেট সংকেত পাঠাতে", "বৃষ্টি নামাতে", "মাছ ধরতে"], c: 1, e: "এগুলো রেডিও, টিভি ও ইন্টারনেট সিগন্যাল রিলে করে।" },
+    { q: "আবহাওয়া পূর্বাভাস পাওয়ার জন্য কোন উপগ্রহ কাজ করে?", a: ["মেটিওরোলোজিক্যাল স্যাটেলাইট", "জিপিএস", "রিমোট সেন্সিং", "স্পাই স্যাটেলাইট"], c: 0, e: "এই উপগ্রহগুলো বায়ুমণ্ডলের তথ্য পাঠিয়ে ঝড়ের পূর্বাভাস দেয়।" },
+    { q: "জিপিএস (GPS) এর পূর্ণরূপ কী?", a: ["Global Positioning System", "General Power Source", "Global Path Service", "Geocentric Point System"], c: 0, e: "জিপিএস অবস্থান নির্ণয়ে সাহায্য করে।" },
+    { q: "মহাকাশে প্রথম ভ্রমণকারী প্রাণীর নাম কী ছিল?", a: ["লাইকা (কুকুর)", "হ্যাম (শিম্পাঞ্জি)", "ফেলিসেট (বিড়াল)", "একটি ইঁদুর"], c: 0, e: "সোভিয়েত ইউনিয়নের লাইকা কুকুরটি প্রথম মহাকাশ পাড়ি দেয়।" },
+    { q: "মহাকাশে প্রথম মানুষ হিসেবে কে যান?", a: ["নীল আর্মস্ট্রং", "ইউরি গ্যাগারিন", "ভ্যালেন্তিনা তেরেশকোভা", "জন গ্লেন"], c: 1, e: "১৯৬১ সালে ইউরি গ্যাগারিন প্রথম মহাকাশ ভ্রমণ করেন।" },
+    { q: "চাঁদের বুকে প্রথম পা রাখেন কে?", a: ["ইউরি গ্যাগারিন", "নীল আর্মস্ট্রং", "বাজ অলড্রিন", "মাইকেল কলিন্স"], c: 1, e: "১৯৬৯ সালে নীল আর্মস্ট্রং চাঁদের মাটিতে পা রাখেন।" },
+    { q: "আন্তর্জাতিক মহাকাশ স্টেশন (ISS) কী?", a: ["একটি রকেট", "একটি গবেষণাগার", "একটি গ্রহ", "একটি তারা"], c: 1, e: "এটি মহাকাশে ভাসমান একটি বিশাল গবেষণাগার।" },
+    { q: "সূর্য থেকে পৃথিবীতে আলো আসতে কত সময় লাগে?", a: ["৫ মিনিট", "৮ মিনিট ২০ সেকেন্ড", "১০ মিনিট", "১২ মিনিট"], c: 1, e: "আলোর বেগ বেশি হলেও বিশাল দূরত্বের কারণে এই সময় লাগে।" },
+    { q: "মহাবিশ্বের বেশিরভাগ অংশ কী দিয়ে গঠিত?", a: ["গ্যাস", "ধুলিকণা", "অন্ধকার বস্তু ও শক্তি", "পানি"], c: 2, e: "ডার্ক ম্যাটার ও ডার্ক এনার্জিই মহাবিশ্বের প্রধান অংশ।" },
+    { q: "আমাদের ছায়াপথের নাম কী?", a: ["অ্যান্ড্রোমিডা", "মিল্কি ওয়ে", "মেগেলানিক ক্লাউড", "ব্ল্যাক হোল"], c: 1, e: "সূর্য এবং পৃথিবী মিল্কি ওয়ে ছায়াপথের অন্তর্ভুক্ত।" },
+    { q: "রকেট কেন মহাকাশে জ্বলতে পারে যেখানে বাতাস নেই?", a: ["এটি ইলেকট্রিক", "এটি নিজস্ব অক্সিজেন বহন করে", "সেখানে আসলে বাতাস আছে", "রকেট জ্বলে না"], c: 1, e: "রকেট জ্বালানি পোড়াতে নিজস্ব অক্সিজেন বা অক্সিডাইজার বহন করে।" },
+    { q: "বঙ্গবন্ধু স্যাটেলাইট-১ এর কক্ষপথের অবস্থান কত ডিগ্রি দ্রাঘিমাংশে?", a: ["৯৩.২° পূর্ব", "১১৯.১° পূর্ব", "১১৯.১° পশ্চিম", "৮০° পূর্ব"], c: 1, e: "এটি ১১৯.১ ডিগ্রি পূর্ব দ্রাঘিমাংশে অবস্থিত।" },
+    { q: "মহাকাশে শব্দের গতিবেগ কত?", a: ["৩৩০ মি/সে", "১০০০ মি/সে", "শুন্য", "আলোর বেগের সমান"], c: 2, e: "মহাকাশে মাধ্যম না থাকায় শব্দ চলাচল করতে পারে না।" },
+    { q: "মহাকাশ ভ্রমণে ওজনহীনতা কেন অনুভব হয়?", a: ["বাতাস নেই বলে", "অভিকর্ষজ ত্বরণের অভাবের কারণে", "সেখানে অন্ধকার বলে", "খাবার কম খায় বলে"], c: 1, e: "মুক্তভাবে পতনের কারণে নভোচারীরা ওজনহীনতা অনুভব করেন।" },
+    { q: "কৃত্রিম উপগ্রহের শক্তির উৎস কী?", a: ["পেট্রোল", "সৌরশক্তি", "কয়লা", "পারমাণবিক শক্তি"], c: 1, e: "সোলার প্যানেল সূর্যের আলো থেকে বিদ্যুৎ তৈরি করে।" },
+    { q: "রেডিও সংকেত প্রতিফলিত করে বায়ুমণ্ডলের কোন স্তর?", a: ["ট্রপোস্ফিয়ার", "আয়নোস্ফিয়ার", "স্ট্রাটোস্ফিয়ার", "ওজোন স্তর"], c: 1, e: "আয়নোস্ফিয়ার রেডিও তরঙ্গকে পৃথিবীতে ফেরত পাঠায়।" },
+    { q: "নভোচারীদের পোশাককে কী বলা হয়?", a: ["এয়ার স্যুট", "স্পেস স্যুট", "লাইফ জ্যাকেট", "কমব্যাট স্যুট"], c: 1, e: "স্পেস স্যুট চাপ ও তাপমাত্রা নিয়ন্ত্রণ করে।" },
+    { q: "রকেট কোন নীতির ওপর ভিত্তি করে চলে?", a: ["ঘর্ষণ", "ক্রিয়া ও প্রতিক্রিয়া", "স্থির তড়িৎ", "চৌম্বক"], c: 1, e: "নিউটনের ৩য় সূত্র অনুযায়ী এটি কাজ করে।" },
+    { q: "টেলিস্কোপ লাগানো কৃত্রিম উপগ্রহকে কী বলে?", a: ["যোগাযোগ উপগ্রহ", "জ্যোতির্বিজ্ঞান উপগ্রহ", "জিপিএস", "সামরিক উপগ্রহ"], c: 1, e: "এটি মহাকাশ পর্যবেক্ষণে ব্যবহৃত হয়।" },
+    { q: "মহাকাশ গবেষণায় বাংলাদেশের সংস্থার নাম কী?", a: ["নাসা", "স্পারসো (SPARRSO)", "ইসরো", "বিটিআরসি"], c: 1, e: "এটি বাংলাদেশের মহাকাশ গবেষণা ও দূর অনুধাবন সংস্থা।" },
+    { q: "চাঁদে প্রথম সফল অভিযান চালায় কোন যানটি?", a: ["অ্যাপোলো-১১", "ভয়েজার", "স্পুটনিক", "ম্যাজেলান"], c: 0, e: "অ্যাপোলো-১১ মিশনে মানুষ প্রথম চাঁদে নামে।" },
+    { q: "মহাকাশে প্রথম নারী নভোচারী কে?", a: ["কল্পনা চাওলা", "ভ্যালেন্তিনা তেরেশকোভা", "সুনিতা উইলিয়ামস", "পেগি হুইটসন"], c: 1, e: "১৯৬৩ সালে তিনি প্রথম নারী হিসেবে মহাকাশে যান।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+window.onload = function() { renderHistory(); };
+
+function renderHistory() {
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    if(history.length > 0) {
+        document.getElementById("history-box").style.display = "block";
+        let listHTML = history.slice(-5).reverse().map(h => 
+            `<div class="history-item"><span>${h.date} (${h.subject})</span> <b>${h.score}</b></div>`
+        ).join("");
+        document.getElementById("history-list").innerHTML = listHTML;
+    }
+}
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<h3>${qData.q}</h3>${opts}`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds/60)}m ${totalSeconds%60}s`;
+    
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName}`;
+    document.getElementById("final-score").innerText = `প্রাপ্ত স্কোর: ${score} / ${quizData.length}`;
+    
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push({ subject: "মহাকাশ", score: score + "/" + quizData.length, date: new Date().toLocaleDateString('bn-BD') });
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরমালা:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><b>ব্যাখ্যা:</b> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => document.getElementById("db-status").innerText = "✓ ফলাফল ডাটাবেসে সফলভাবে জমা হয়েছে।");
+}
+</script>
+</body>
+</html>

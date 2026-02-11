@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রাণীজগতের শ্রেণিবিন্যাস - স্মার্ট নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00b09b, #96c93d);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --dark-bg: #1a1a2e;
+            --card-white: #ffffff;
+            --text-main: #2d3436;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* হেডার অ্যানিমেশন */
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: slideInDown 1s ease;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* সেকশন কার্ড */
+        .card {
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border-top: 5px solid #00b09b;
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        h2 {
+            color: #008c7a;
+            font-size: 22px;
+            border-left: 5px solid #96c93d;
+            padding-left: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #d63031;
+            font-size: 18px;
+            background: #fff5f5;
+            padding: 8px 15px;
+            border-radius: 10px;
+        }
+
+        /* লিস্ট স্টাইল */
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* আইকন বক্স */
+        .info-box {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #e8f5e9;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        /* টেবিল ডিজাইন */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: #00b09b;
+            color: white;
+            padding: 12px;
+            text-align: center;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #eee;
+            text-align: center;
+        }
+
+        tr:nth-child(even) { background: #f9f9f9; }
+
+        /* বিশেষ হাইলাইট */
+        .highlight-blue { border-top: 5px solid #0984e3; }
+        .highlight-purple { border-top: 5px solid #6c5ce7; }
+        .highlight-red { border-top: 5px solid #d63031; }
+
+        /* অ্যানিমেশন কিফ্রেম */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, 10px); }
+            100% { transform: translate(0, 0px); }
+        }
+
+        /* মোবাইল স্ক্রিন সেটিংস */
+        @media (max-width: 600px) {
+            h1 { font-size: 24px; }
+            .card { padding: 15px; }
+            table { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="floating">প্রাণীজগতের শ্রেণিবিন্যাস</h1>
+    <p>অষ্টম শ্রেণি • বিজ্ঞান • প্রথম অধ্যায়</p>
+</header>
+
+<div class="container">
+
+    <div class="card" style="animation-delay: 0.1s;">
+        <h2>১. শ্রেণীবিন্যাস কী ও কেন?</h2>
+        <p>শ্রেণীবিন্যাস হল প্রাণীদের সুবিধাজনকভাবে দলভুক্ত করার বৈজ্ঞানিক পদ্ধতি।</p>
+        <strong>প্রয়োজনীয়তা:</strong>
+        <ul>
+            <li>অজস্র প্রাণীকে সহজে চেনা ও শনাক্ত করা।</li>
+            <li>প্রাণীদের মধ্যে সম্পর্ক নির্ণয়।</li>
+            <li>নতুন প্রজাতি শনাক্তকরণ।</li>
+            <li>জ্ঞান সংরক্ষণ ও প্রয়োগ।</li>
+        </ul>
+    </div>
+
+    <div class="card highlight-blue" style="animation-delay: 0.2s; text-align: center;">
+        <h2>২. শ্রেণীবিন্যাসের স্তরক্রম</h2>
+        <p>জগৎ ➔ পর্ব ➔ শ্রেণী ➔ বর্গ ➔ গোত্র ➔ গণ ➔ প্রজাতি</p>
+    </div>
+
+    <div class="card highlight-purple" style="animation-delay: 0.3s;">
+        <h2 style="color: #6c5ce7;">৩. (ক) অমেরুদণ্ডী প্রাণী (Invertebrates)</h2>
+        <p><i>শরীরে মেরুদণ্ড বা কশেরুকা থাকে না।</i></p>
+
+        <h3>১. পর্ব: পোরিফেরা (Porifera)</h3>
+        <div class="info-box">সাধারণ নাম: স্পঞ্জ</div>
+        <ul>
+            <li>সরলতম বহুকোষী প্রাণী।</li>
+            <li>দেহে অসংখ্য ছিদ্র (Ostia) থাকে।</li>
+            <li>টিস্যু বা অঙ্গ তন্ত্র অনুপস্থিত।</li>
+            <li>উদাহরণ: <strong>Sycon, Spongilla</strong></li>
+        </ul>
+
+        <h3>২. পর্ব: সিনিডেরিয়া (Cnidaria)</h3>
+        <ul>
+            <li>দেহ দ্বিস্তর বিশিষ্ট (এক্টোডার্ম ও এন্ডোডার্ম)।</li>
+            <li>দেহগহ্বরকে <strong>সিলেন্টেরন</strong> বলে।</li>
+            <li>শিকারের জন্য <strong>নেমাটোসিস্ট</strong> কোষ থাকে।</li>
+            <li>উদাহরণ: <strong>Hydra, জেলিফিশ</strong></li>
+        </ul>
+
+        <h3>৩. পর্ব: প্লাটিহেলমিনথিস (চ্যাপ্টা কৃমি)</h3>
+        <ul>
+            <li>দেহ চ্যাপ্টা, পৃষ্ঠীয়-উদরীয়ভাবে চাপা।</li>
+            <li>অধিকাংশই পরজীবী।</li>
+            <li>উদাহরণ: <strong>যকৃত কৃমি, ফিতা কৃমি</strong></li>
+        </ul>
+
+        <h3>৪. পর্ব: নেমাটোডা (গোলকৃমি)</h3>
+        <ul>
+            <li>দেহ চোঙাকার, দুই প্রান্ত সরু।</li>
+            <li>লিঙ্গভেদ আছে (পুরুষ ও স্ত্রী পৃথক)।</li>
+            <li>উদাহরণ: <strong>অ্যাসকারিস (গোলকৃমি)</strong></li>
+        </ul>
+
+        <h3>৫. পর্ব: অ্যানেলিডা (Annelida)</h3>
+        <ul>
+            <li>দেহ রিং-এর মতো খণ্ডায়িত।</li>
+            <li>প্রকৃত দেহগহ্বর (সিলোম) আছে।</li>
+            <li>উদাহরণ: <strong>কেঁচো, জোঁক</strong></li>
+        </ul>
+
+        <h3>৬. পর্ব: আর্থ্রোপোডা (Arthropoda)</h3>
+        <div class="info-box">সবচেয়ে বড় পর্ব</div>
+        <ul>
+            <li>দেহ খণ্ডায়িত, যুগ্মপাদ ও যুগ্ম চোখ আছে।</li>
+            <li>কাইটিন নির্মিত শক্ত বহিঃকঙ্কাল।</li>
+            <li>উপশ্রেণী: ক্রাস্টেসিয়া (চিংড়ি), ইনসেক্টা (পিঁপিড়া), অ্যারাকনিডা (মাকড়সা)।</li>
+        </ul>
+
+        <h3>৭. পর্ব: মলাস্কা (Mollusca)</h3>
+        <ul>
+            <li>নরম দেহ, সাধারণত খোলক ও ম্যান্টল পর্দা দ্বারা আবৃত।</li>
+            <li>পেশিল পদ দিয়ে চলাচল করে।</li>
+            <li>উদাহরণ: <strong>শামুক, ঝিনুক, অক্টোপাস</strong></li>
+        </ul>
+
+        <h3>৮. পর্ব: ইকিনোডার্মাটা (Echinodermata)</h3>
+        <ul>
+            <li>দেহ তীক্ষ্ণ কাঁটাযুক্ত এবং রেডিয়াল প্রতিসম।</li>
+            <li>নলপাদ (Tube feet) দিয়ে চলাচল করে।</li>
+            <li>উদাহরণ: <strong>তারামাছ, সামুদ্রিক শসা</strong></li>
+        </ul>
+    </div>
+
+    <div class="card highlight-red" style="animation-delay: 0.4s;">
+        <h2 style="color: #d63031;">৩. (খ) মেরুদণ্ডী প্রাণী (Vertebrates)</h2>
+        
+        <h3>পর্ব: কর্ডাটা (Chordata)</h3>
+        <p><strong>উপপর্ব ১: সিবেরাসফালোকর্ডাটা:</strong> নটোকর্ড আছে, মেরুদণ্ড নেই। উদা: অ্যাম্ফিওক্সাস।</p>
+        <p><strong>উপপর্ব ২: ভার্টিব্রাটা:</strong> এদের ৫টি প্রধান শ্রেণী আছে:</p>
+        
+        <ol>
+            <li><strong>পিসিস (মাছ):</strong> ফুলকার সাহায্যে শ্বাসকার্য, ২ প্রকোষ্ঠী হৃৎপিণ্ড।</li>
+            <li><strong>অ্যাম্ফিবিয়া (উভচর):</strong> ত্বক আর্দ্র, ৩ প্রকোষ্ঠী হৃৎপিণ্ড। উদা: ব্যাঙ।</li>
+            <li><strong>রেপটিলিয়া (সরীসৃপ):</strong> বুকে ভর দিয়ে চলে, শুষ্ক আঁশযুক্ত ত্বক। উদা: সাপ।</li>
+            <li><strong>এভিস (পাখি):</strong> দেহ পালকযুক্ত, হাড় ফাঁপা ও হালকা। ৪ প্রকোষ্ঠী হৃৎপিণ্ড।</li>
+            <li><strong>ম্যামালিয়া (স্তন্যপায়ী):</strong> শাবক প্রসব ও দুগ্ধপান করায়, উষ্ণরক্তের প্রাণী। উদা: মানুষ।</li>
+        </ol>
+    </div>
+
+    <div class="card" style="border-top: 5px solid #f39c12; animation-delay: 0.5s;">
+        <h2 style="color: #e67e22;">৪. দ্বিপদ নামকরণ ও সুবিধা</h2>
+        <p>প্রবর্তক: <strong>কার্ল লিনিয়াস</strong></p>
+        <p>ফরম্যাট: <strong>গণ + প্রজাতি</strong></p>
+        <div class="info-box" style="background: #fff3e0; color: #e65100;">মানুষের নাম: Homo sapiens</div>
+        <p><strong>সুবিধা:</strong> প্রজাতি শনাক্তকরণ সহজ হয় এবং জীববৈচিত্র্য রক্ষায় সাহায্য করে।</p>
+    </div>
+
+    <div class="card" style="animation-delay: 0.6s;">
+        <h2>৬. একনজরে সারাংশ টেবিল</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>পর্ব</th>
+                        <th>দেহগহ্বর</th>
+                        <th>প্রতিসমতা</th>
+                        <th>উদাহরণ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>পোরিফেরা</td><td>নেই</td><td>অনুপ্রতিসম</td><td>স্পঞ্জ</td></tr>
+                    <tr><td>সিনিডেরিয়া</td><td>অসম্পূর্ণ</td><td>রেডিয়াল</td><td>হাইড্রা</td></tr>
+                    <tr><td>প্লাটিহেলমিনথিস</td><td>নেই</td><td>দ্বিপার্শ্বীয়</td><td>ফিতা কৃমি</td></tr>
+                    <tr><td>নেমাটোডা</td><td>সিউডোসিলোম</td><td>দ্বিপার্শ্বীয়</td><td>গোলকৃমি</td></tr>
+                    <tr><td>অ্যানেলিডা</td><td>সিলোম</td><td>দ্বিপার্শ্বীয়</td><td>কেঁচো</td></tr>
+                    <tr><td>আর্থ্রোপোডা</td><td>সিলোম</td><td>দ্বিপার্শ্বীয়</td><td>প্রজাপতি</td></tr>
+                    <tr><td>মলাস্কা</td><td>সিলোম</td><td>দ্বিপার্শ্বীয়</td><td>শামুক</td></tr>
+                    <tr><td>ইকিনোডার্মাটা</td><td>সিলোম</td><td>রেডিয়াল</td><td>তারামাছ</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card highlight-purple" style="animation-delay: 0.7s; background: #f8f9fa;">
+        <h2>৭. শব্দকোষ (Dictionary)</h2>
+        <p><span class="badge">সিলোম:</span> প্রকৃত দেহগহ্বর।</p>
+        <p><span class="badge">পরজীবী:</span> যারা অন্য জীবের দেহে বাস করে পুষ্টি নেয়।</p>
+        <p><span class="badge">রেডিয়াল প্রতিসম:</span> কেন্দ্র থেকে চারদিকে সমানভাবে ভাগ করা যায়।</p>
+    </div>
+
+</div>
+
+<footer style="text-align: center; padding: 20px; color: #7f8c8d;">
+    © ২০২৬ বিজ্ঞান স্মার্ট লার্নিং নোট
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অম্ল, ক্ষার ও লবণ - স্মার্ট নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --acid-red: #e74c3c;
+            --base-blue: #3498db;
+            --salt-gray: #95a5a6;
+            --neutral-green: #2ecc71;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, #e74c3c, #3498db);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h1 { margin: 0; font-size: 32px; }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        .acid-title { color: var(--acid-red); }
+        .base-title { color: var(--base-blue); }
+        .salt-title { color: #8e44ad; }
+
+        .equation {
+            background: #2d3436;
+            color: #fab1a0;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .highlight-box {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+        .acid-box { background: #feeae6; border-left: 5px solid var(--acid-red); }
+        .base-box { background: #eaf4fb; border-left: 5px solid var(--base-blue); }
+
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        th { background: #f1f2f6; padding: 12px; text-align: left; border: 1px solid #ddd; }
+        td { padding: 10px; border: 1px solid #ddd; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+
+        .ph-scale {
+            height: 40px;
+            background: linear-gradient(to right, red, orange, yellow, green, lightblue, blue, purple);
+            border-radius: 20px;
+            margin: 20px 0;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 30px; color: #7f8c8d; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 24px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>অম্ল, ক্ষার ও লবণ (Acid, Base & Salt)</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | অধ্যায় ১০ (ডিজিটাল নোট)</p>
+    <div style="font-size: 40px; margin-top: 10px;">🧪🍋🧼</div>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2 class="acid-title">১. অম্ল (Acids) 🍋</h2>
+        <div class="acid-box highlight-box">
+            <strong>সংজ্ঞা:</strong> যেসব যৌগ জলে দ্রবীভূত হয়ে হাইড্রোজেন আয়ন (H⁺) প্রদান করে, তাদের অম্ল বলে।
+        </div>
+        <p><strong>বৈশিষ্ট্য:</strong> টক স্বাদযুক্ত, নীল লিটমাসকে লাল করে।</p>
+        <p><strong>ধাতুর সাথে বিক্রিয়া:</strong></p>
+        <div class="equation">Zn + H2SO4 → ZnSO4 + H2 (গ্যাস)</div>
+        
+        
+        <table>
+            <tr><th>প্রকার</th><th>বৈশিষ্ট্য</th><th>উদাহরণ</th></tr>
+            <tr><td>জৈব অম্ল</td><td>প্রাকৃতিক উৎস</td><td>সাইট্রিক অম্ল (লেবু)</td></tr>
+            <tr><td>অজৈব অম্ল</td><td>রাসায়নিক উৎস</td><td>HCl, H2SO4</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2 class="base-title">২. ক্ষার (Bases) 🧼</h2>
+        <div class="base-box highlight-box">
+            <strong>সংজ্ঞা:</strong> যেসব যৌগ জলে হাইড্রোক্সাইড আয়ন (OH⁻) প্রদান করে, তাদের ক্ষার বলে।
+        </div>
+        <p><strong>বৈশিষ্ট্য:</strong> তিক্ত স্বাদ, পিচ্ছিল অনুভূতি, লাল লিটমাসকে নীল করে।</p>
+        
+        <p><strong>ব্যবহার:</strong> সাবান তৈরিতে (NaOH), এন্টাসিড হিসেবে (Mg(OH)2)।</p>
+    </div>
+
+    <div class="card">
+        <h2 class="salt-title">৩. লবণ (Salts) 🧂</h2>
+        <p>অম্ল ও ক্ষারের বিক্রিয়ায় উৎপন্ন নিরপেক্ষ পদার্থ।</p>
+        <div class="equation">HCl + NaOH → NaCl + H2O</div>
+        <table>
+            <tr><th>লবণ</th><th>সংকেত</th><th>ব্যবহার</th></tr>
+            <tr><td>খাদ্য লবণ</td><td>NaCl</td><td>খাদ্যে, শিল্পে</td></tr>
+            <tr><td>বেকিং সোডা</td><td>NaHCO3</td><td>বেকিং পাউডার তৈরিতে</td></tr>
+            <tr><td>তুঁতে</td><td>CuSO4.5H2O</td><td>কৃষিতে ছত্রাকনাশক</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>৪ ও ৫. সূচক ও pH স্কেল 🌡️</h2>
+        <p><strong>সূচকের বর্ণ পরিবর্তন:</strong></p>
+        <table>
+            <tr><th>সূচক</th><th>অম্লে বর্ণ</th><th>ক্ষারে বর্ণ</th></tr>
+            <tr><td>লিটমাস</td><td>লাল</td><td>নীল</td></tr>
+            <tr><td>ফেনলফথালিন</td><td>বর্ণহীন</td><td>গোলাপি</td></tr>
+        </table>
+
+        <h3>pH স্কেল:</h3>
+        <p>০ থেকে ১৪ পর্যন্ত স্কেল যা দ্রবণের অম্লতা বা ক্ষারীয়তা নির্দেশ করে।</p>
+        <div class="ph-scale">
+            <span>০ (তীব্র অম্ল)</span>
+            <span>৭ (নিরপেক্ষ)</span>
+            <span>১৪ (তীব্র ক্ষার)</span>
+        </div>
+        
+        <p><i>মানবদেহের রক্তের pH সাধারণত ৭.৪ (সামান্য ক্ষারীয়)।</i></p>
+    </div>
+
+    <div class="card">
+        <h2 style="color: var(--neutral-green);">৬. নিরপেক্ষীকরণ বিক্রিয়া</h2>
+        <div class="highlight-box" style="background: #e8f5e9; border-left: 5px solid var(--neutral-green);">
+            অম্ল + ক্ষার → লবণ + পানি
+        </div>
+        <p><strong>দৈনন্দিন প্রয়োগ:</strong></p>
+        <ul>
+            <li>পাকস্থলীর এসিডিটি কমাতে ম্যাগনেসিয়াম হাইড্রোক্সাইড (ক্ষার) ব্যবহার।</li>
+            <li>জমির অম্লতা কমাতে চুন (ক্ষার) প্রয়োগ।</li>
+            <li>মৌমাছির কামড়ে (অম্লীয়) চুন বা বেকিং সোডা ব্যবহার।</li>
+        </ul>
+        
+    </div>
+
+    <div class="card">
+        <h2>৮. গুরুত্বপূর্ণ রাসায়নিক সমীকরণ</h2>
+        <div class="equation">
+            CaCO3 + 2HCl → CaCl2 + H2O + CO2<br>
+            SO2 + H2O → H2SO3 (অ্যাসিড বৃষ্টি)<br>
+            CaO + H2O → Ca(OH)2 (চুন ভেজানো)
+        </div>
+    </div>
+
+    <div class="card" style="background: #f1f2f6; border: 1px dashed #7f8c8d;">
+        <h2>সারাংশ (Summary) ✨</h2>
+        <ul>
+            <li>অম্ল নীল লিটমাসকে লাল করে এবং H⁺ আয়ন দেয়।</li>
+            <li>ক্ষার লাল লিটমাসকে নীল করে এবং OH⁻ আয়ন দেয়।</li>
+            <li>pH ৭ হলে দ্রবণ নিরপেক্ষ (যেমন বিশুদ্ধ পানি)।</li>
+            <li>লবণ ও পানি তৈরির বিক্রিয়াকে নিরপেক্ষীকরণ বিক্রিয়া বলে।</li>
+            <li>তীব্র অ্যাসিড ব্যবহারের সময় অবশ্যই সতর্কতা অবলম্বন করতে হবে।</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং ড্যাশবোর্ড ২০২৬ | বিজ্ঞান হোক আনন্দময় ✨</p>
+</footer>
+
+</body>
+</html>

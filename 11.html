@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় ১১: আলো কুইজ</title>
+    <style>
+        :root { --primary: #f39c12; --secondary: #e67e22; --bg: #fffaf0; --text: #2c3e50; --success: #27ae60; }
+        body { font-family: 'SolaimanLipi', Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .quiz-container { max-width: 750px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 8px solid var(--primary); }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 5px; }
+        p.sub-title { text-align: center; color: #666; margin-bottom: 25px; }
+        input[type="text"], select { width: 100%; padding: 14px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .option { display: block; background: #fff; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; font-size: 17px; }
+        .option:hover { background: #fef5e7; border-color: var(--primary); transform: translateX(5px); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; margin-bottom: 10px; }
+        .btn:hover { background: var(--secondary); }
+        .time-box { text-align: center; font-weight: bold; color: #d35400; margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #eee; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fdfdfd; }
+        .explanation { margin-top: 10px; padding: 10px; background: #fef9e7; border-radius: 5px; font-size: 14px; color: #555; border-left: 3px solid var(--primary); }
+        .history-item { padding: 10px; border-bottom: 1px dashed #ddd; font-size: 14px; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2>অধ্যায় ১১: আলো</h2>
+        <p class="sub-title">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ পরিমার্জিত সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার পূর্ণ নাম লিখুন">
+        <button class="btn" style="width:100%" onclick="startQuiz()">কুইজ শুরু করুন</button>
+        <div id="local-history-display"></div>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color: var(--primary);"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div id="final-score" style="font-size: 26px; text-align: center; font-weight: bold; color: var(--primary); margin: 15px 0;"></div>
+        <p id="db-status" style="text-align:center; color: var(--success); font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" style="width:100%; background:#7f8c8d; margin-top:20px;" onclick="location.reload()">আবার চেষ্টা করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "আলো যখন এক স্বচ্ছ মাধ্যম থেকে অন্য স্বচ্ছ মাধ্যমে তির্যকভাবে প্রবেশ করে তখন এর দিক পরিবর্তনকে কী বলে?", a: ["প্রতিফলন", "প্রতিসরণ", "বিক্ষেপণ", "শোষণ"], c: 1, e: "আলোর এই দিক পরিবর্তনের ঘটনাই হলো প্রতিসরণ।" },
+    { q: "হালকা মাধ্যম থেকে ঘন মাধ্যমে প্রবেশের সময় আলোক রশ্মি অভিলম্বের—", a: ["কাছে সরে আসে", "দূরে সরে যায়", "সোজাসুজি চলে যায়", "পিছনে ফিরে আসে"], c: 0, e: "হালকা থেকে ঘন মাধ্যমে গেলে আলোর বেগ কমে যায়, ফলে এটি অভিলম্বের দিকে বেঁকে আসে।" },
+    { q: "ঘন মাধ্যম থেকে হালকা মাধ্যমে প্রবেশের সময় আলোক রশ্মি অভিলম্বের—", a: ["কাছে সরে আসে", "দূরে সরে যায়", "সমান্তরাল থাকে", "উপর দিয়ে যায়"], c: 1, e: "হালকা মাধ্যমে আলোর বেগ বেশি হওয়ায় এটি অভিলম্ব থেকে দূরে সরে যায়।" },
+    { q: "প্রতিসরণের ক্ষেত্রে আপতন কোণ এবং প্রতিসরণ কোণ কখন সমান হয়?", a: ["৬০° কোণে পড়লে", "লম্বভাবে আপতিত হলে", "৩০° কোণে পড়লে", "কখনোই হয় না"], c: 1, e: "আলো লম্বভাবে আপতিত হলে কোনো দিক পরিবর্তন হয় না, উভয় কোণ ০° হয়।" },
+    { q: "কোনটি আলোর প্রতিসরণের বাস্তব উদাহরণ?", a: ["আয়নায় মুখ দেখা", "পানিতে ডোবানো পেন্সিল বাঁকা দেখা", "মোমবাতির আলো", "রংধনু"], c: 1, e: "প্রতিসরণের কারণে ঘন মাধ্যম থেকে আসা আলো হালকা মাধ্যমে বাঁকা হয়ে চোখে পৌঁছায়।" },
+    { q: "ঘন মাধ্যমের যে আপতন কোণের জন্য প্রতিসরণ কোণ ৯০° হয় তাকে কী বলে?", a: ["প্রতিসরণ কোণ", "সংকট কোণ", "প্রতিফলন কোণ", "পূরক কোণ"], c: 1, e: "সংকট কোণ বা ক্রান্তি কোণে প্রতিসরিত রশ্মি বিভেদ তল ঘেঁষে চলে যায়।" },
+    { q: "পূর্ণ অভ্যন্তরীণ প্রতিফলন ঘটার জন্য প্রথম শর্ত কী?", a: ["আলো হালকা থেকে ঘন মাধ্যমে যেতে হবে", "আলো ঘন থেকে হালকা মাধ্যমে যেতে হবে", "উভয় মাধ্যম সমান হতে হবে", "শূন্য মাধ্যমে হতে হবে"], c: 1, e: "পূর্ণ অভ্যন্তরীণ প্রতিফলন কেবল ঘন মাধ্যম থেকে হালকা মাধ্যমে যাওয়ার সময় ঘটে।" },
+    { q: "পূর্ণ অভ্যন্তরীণ প্রতিফলনের সময় আপতন কোণ সংকট কোণের চেয়ে কেমন হয়?", a: ["ছোট হয়", "সমান হয়", "বড় হয়", "অর্ধেক হয়"], c: 2, e: "আপতন কোণ সংকট কোণের চেয়ে বড় হলেই আলোক রশ্মি প্রতিফলিত হয়ে ফিরে আসে।" },
+    { q: "অপটিক্যাল ফাইবার (Optical Fiber) কিসের ভিত্তিতে কাজ করে?", a: ["আলোর বিচ্ছুরণ", "আলোর প্রতিসরণ", "পূর্ণ অভ্যন্তরীণ প্রতিফলন", "আলোর শোষণ"], c: 2, e: "এটি একটি সরু কাঁচতন্তু যার ভেতরে আলো বারবার প্রতিফলিত হয়ে অনেক দূরে যায়।" },
+    { q: "চিকিৎসা ক্ষেত্রে শরীরের ভেতরের অংশ দেখতে কোন যন্ত্র ব্যবহৃত হয়?", a: ["মাইক্রোস্কোপ", "টেলিস্কোপ", "এন্দোস্কোপ", "পেরিস্কোপ"], c: 2, e: "এন্ডোস্কোপিতে অপটিক্যাল ফাইবার ব্যবহার করা হয়।" },
+    { q: "মরুভূমিতে মরীচিকা হওয়ার কারণ কী?", a: ["আলোর প্রতিফলন", "আলোর প্রতিসরণ", "পূর্ণ অভ্যন্তরীণ প্রতিফলন", "আলোর বিচ্ছুরণ"], c: 2, e: "বাতাসের ঘনত্বের পার্থক্যের কারণে আলোর পূর্ণ অভ্যন্তরীণ প্রতিফলন ঘটে।" },
+    { q: "লেন্স প্রধানত কত প্রকার?", a: ["২ প্রকার", "৩ প্রকার", "৪ প্রকার", "৫ প্রকার"], c: 0, e: "লেন্স প্রধানত দুই প্রকার: উত্তল ও অবতল।" },
+    { q: "কোন লেন্স আলোকে একটি বিন্দুতে মিলিত করে?", a: ["উত্তল লেন্স", "অবতল লেন্স", "সমতল দর্পণ", "প্রিজম"], c: 0, e: "উত্তল লেন্সকে অভিসারী লেন্স বলা হয়।" },
+    { q: "চোখের রেটিনায় কোন ধরনের লেন্স থাকে?", a: ["উত্তল লেন্স", "অবতল লেন্স", "সিলিন্ড্রিক্যাল লেন্স", "কোনোটিই নয়"], c: 0, e: "মানুষের চোখের লেন্সটি প্রকৃতিগতভাবে একটি দ্বিউত্তল লেন্স।" },
+    { q: "চোখের কোন অংশে বস্তুর প্রতিবিম্ব গঠিত হয়?", a: ["আইরিস", "পিউপিল", "রেটিনা", "কর্নিয়া"], c: 2, e: "রেটিনায় আলোক সংবেদী কোষ থাকে যেখানে উল্টো প্রতিবিম্ব তৈরি হয়।" },
+    { q: "চোখের লেন্সের ফোকাস দূরত্ব নিয়ন্ত্রণ করে কোনটি?", a: ["সিলিয়ারি পেশি", "কর্নিয়া", "শ্বেতমণ্ডল", "কৃষ্ণমণ্ডল"], c: 0, e: "সিলিয়ারি পেশির সংকোচন ও প্রসারণের ফলে লেন্সের ফোকাস দূরত্ব পরিবর্তিত হয়।" },
+    { q: "চোখের যে ত্রুটির কারণে দূরের বস্তু স্পষ্ট দেখা যায় না তাকে কী বলে?", a: ["দীর্ঘদৃষ্টি", "হ্রস্বদৃষ্টি", "চালশে", "ছানি"], c: 1, e: "একে Myopia বা হ্রস্বদৃষ্টি বলা হয়।" },
+    { q: "হ্রস্বদৃষ্টি (Short-sightedness) প্রতিকারে কোন লেন্স ব্যবহার করা হয়?", a: ["উত্তল লেন্স", "অবতল লেন্স", "বাইফোকাল লেন্স", "বেলনাকার লেন্স"], c: 1, e: "অবতল লেন্স আলোক রশ্মিকে কিছুটা অপসারী করে রেটিনায় ফেলতে সাহায্য করে।" },
+    { q: "দীর্ঘদৃষ্টি (Long-sightedness) প্রতিকারে কোন লেন্স ব্যবহার করা হয়?", a: ["উত্তল লেন্স", "অবতল লেন্স", "সমতল লেন্স", "প্রিজম"], c: 0, e: "উত্তল লেন্স আলোকরশ্মিকে অভিসারী করে রেটিনায় ফেলতে সাহায্য করে।" },
+    { q: "স্পষ্ট দর্শনের ন্যূনতম দূরত্ব কত?", a: ["১৫ সে.মি.", "২৫ সে.মি.", "৫০ সে.মি.", "১ মিটার"], c: 1, e: "স্বাভাবিক পূর্ণবয়স্ক মানুষের চোখের জন্য এই দূরত্ব প্রায় ২৫ সেন্টিমিটার।" },
+    { q: "ক্যামেরার লেন্সের সামনে যে ছিদ্র দিয়ে আলো ঢোকে তাকে কী বলে?", a: ["শাটার", "ডায়াফ্রাম", "ফিল্ম", "ভিউ ফাইন্ডার"], c: 1, e: "ডায়াফ্রাম ছোট-বড় করে আলো প্রবেশের পরিমাণ নিয়ন্ত্রণ করা হয়।" },
+    { q: "ক্যামেরার কোন অংশ চোখের রেটিনার মতো কাজ করে?", a: ["লেন্স", "ডায়াফ্রাম", "ফটোগ্রাফিক ফিল্ম", "শাটার"], c: 2, e: "ফটোগ্রাফিক ফিল্ম বা ডিজিটাল সেন্সরেই ছবি বা প্রতিবিম্ব জমা হয়।" },
+    { q: "চোখের লেন্স এবং রেটিনার মধ্যবর্তী স্থানে যে জেলির মতো পদার্থ থাকে তাকে কী বলে?", a: ["অ্যাকুয়াস হিউমার", "ভিট্রিয়াস হিউমার", "কর্নিয়া", "আইরিস"], c: 1, e: "ভিট্রিয়াস হিউমার চোখের গোলকের আকৃতি বজায় রাখে।" },
+    { q: "কর্নিয়ার ঠিক পেছনে যে কালো গোলাকার পর্দা থাকে তাকে কী বলে?", a: ["রেটিনা", "আইরিস", "শ্বেতমণ্ডল", "পিউপিল"], c: 1, e: "আইরিস চোখের রঙের জন্য দায়ী এবং আলোর তীব্রতা নিয়ন্ত্রণ করে।" },
+    { q: "ম্যাগনিফাইং গ্লাস হিসেবে কোন লেন্স ব্যবহৃত হয়?", a: ["অবতল লেন্স", "উত্তল লেন্স", "সমতল কাঁচ", "প্রিজম"], c: 1, e: "উত্তল লেন্সের খুব কাছে বস্তু রাখলে বড় ও সোজা প্রতিবিম্ব দেখা যায়।" },
+    { q: "আলোর প্রতিসরণের কয়টি সূত্র আছে?", a: ["১টি", "২টি", "৩টি", "৪টি"], c: 1, e: "প্রতিসরণের দুইটি প্রধান সূত্র আছে।" },
+    { q: "পেরিস্কোপ তৈরিতে আলোর কোন ঘটনা ব্যবহৃত হয়?", a: ["শুধু প্রতিফলন", "প্রতিফলন ও প্রতিসরণ", "শুধু প্রতিসরণ", "বিচ্ছুরণ"], c: 0, e: "পেরিস্কোপে দর্পণের সাহায্যে আলোর প্রতিফলন ব্যবহার করা হয়।" },
+    { q: "কোন রঙের আলোর প্রতিসরণ সবচেয়ে বেশি হয়?", a: ["লাল", "সবুজ", "বেগুনি", "হলুদ"], c: 2, e: "বেগুনি আলোর তরঙ্গদৈর্ঘ্য কম হওয়ায় এটি সবচেয়ে বেশি বেঁকে যায়।" },
+    { q: "আলোর বেগ সবচেয়ে বেশি কোথায়?", a: ["পানিতে", "কাঁচের ভেতরে", "শূন্য মাধ্যমে", "হীরায়"], c: 2, e: "শূন্য মাধ্যমে আলোর বেগ প্রায় ৩,০০,০০০ কি.মি./সেকেন্ড।" },
+    { q: "চোখের সাদা ও অস্বচ্ছ অংশটিকে কী বলে?", a: ["কর্নিয়া", "শ্বেতমণ্ডল (Sclera)", "আইরিস", "রেটিনা"], c: 1, e: "এটি চোখের বাইরের শক্ত স্তর যা ভেতরের অংশ রক্ষা করে।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+// পেজ লোড হলে হিস্ট্রি দেখানো
+window.onload = function() {
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    if(history.length > 0) {
+        let historyHTML = "<h4 style='margin-top:20px; border-top:1px solid #eee; padding-top:10px;'>আগের পরীক্ষার রেকর্ড:</h4>";
+        history.slice(-3).reverse().forEach(h => {
+            historyHTML += `<div class="history-item">${h.date}: <b>${h.score}</b></div>`;
+        });
+        document.getElementById("local-history-display").innerHTML = historyHTML;
+    }
+};
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<h3>${qData.q}</h3>${opts}`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function saveToHistory(got, total) {
+    let resultData = { 
+        subject: "আলো", 
+        score: got + " / " + total, 
+        date: new Date().toLocaleDateString('bn-BD') 
+    };
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push(resultData);
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds/60)}m ${totalSeconds%60}s`;
+    
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName} | <b>শ্রেণি:</b> অষ্টম`;
+    document.getElementById("final-score").innerText = `প্রাপ্ত স্কোর: ${score} / ${quizData.length}`;
+    
+    // হিস্ট্রি সেভ করা
+    saveToHistory(score, quizData.length);
+    
+    // গুগল ফর্মে পাঠানো
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরমালা:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><b>ব্যাখ্যা:</b> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => document.getElementById("db-status").innerText = "✓ ফলাফল ডাটাবেসে সফলভাবে জমা হয়েছে।");
+}
+</script>
+</body>
+</html>

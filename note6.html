@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পরমাণুর গঠন - স্মার্ট নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --atom-blue: #0984e3;
+            --nucleus-red: #d63031;
+            --electron-gold: #fdcb6e;
+            --bg-dark: #2d3436;
+            --card-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f1f2f6;
+            margin: 0;
+            padding: 0;
+            color: #2d3436;
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3799, #0984e3);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: var(--card-white);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border-top: 8px solid var(--atom-blue);
+            animation: fadeInUp 0.8s ease backwards;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        h1 { margin: 0; font-size: 36px; }
+        h2 { color: #1e3799; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: var(--nucleus-red); margin-top: 25px; }
+
+        .highlight-box {
+            background: #f0f3ff;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--atom-blue);
+            margin: 15px 0;
+        }
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; border-radius: 15px; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th { background: var(--atom-blue); color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border: 1px solid #f1f2f6; }
+        tr:nth-child(even) { background-color: #f9f9ff; }
+
+        /* মডেল চিত্র */
+        .atom-diagram {
+            text-align: center;
+            background: var(--bg-dark);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+            border: 2px dashed var(--electron-gold);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #ffeaa7;
+            color: #d35400;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 40px; color: #636e72; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 26px; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>পরমাণুর গঠন (Structure of Atom)</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | অধ্যায় ৬ (পূর্ণাঙ্গ স্মার্ট নোট)</p>
+    <div style="font-size: 40px; margin-top: 15px;">⚛️🔬🔋</div>
+</header>
+
+<div class="container">
+
+    <div class="card" style="animation-delay: 0.1s;">
+        <h2>১. পরমাণুর ধারণার ইতিহাস</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>বিজ্ঞানী</th><th>অবদান</th><th>সীমাবদ্ধতা</th></tr>
+                <tr><td>ডেমোক্রিটাস</td><td>পরমাণু অখণ্ড ধারণা</td><td>বৈজ্ঞানিক প্রমাণ নেই</td></tr>
+                <tr><td>জন ডাল্টন (১৮০৩)</td><td>অবিভেদ্য পরমাণু মডেল</td><td>অবিভাজ্যতা ভুল প্রমাণিত</td></tr>
+                <tr><td>জে. জে. থমসন</td><td>ইলেকট্রন আবিষ্কার</td><td>নিউক্লিয়াস ধারণা ছিল না</td></tr>
+                <tr><td>রাদারফোর্ড (১৯১১)</td><td>নিউক্লিয়াস আবিষ্কার</td><td>কক্ষপথ ব্যাখ্যা করেনি</td></tr>
+                <tr><td>নীলস বোর (১৯১৩)</td><td>নির্দিষ্ট কক্ষপথ ধারণা</td><td>জটিল পরমাণুর জন্য অসম্পূর্ণ</td></tr>
+            </table>
+        </div>
+
+        <h2>২. পরমাণুর মৌলিক কণাসমূহ</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>কণা</th><th>আবিষ্কারক</th><th>আধান</th><th>অবস্থান</th></tr>
+                <tr><td>ইলেকট্রন (e⁻)</td><td>জে. জে. থমসন</td><td>ঋণাত্মক (-1)</td><td>কক্ষপথে</td></tr>
+                <tr><td>প্রোটন (p⁺)</td><td>আর্নেস্ট রাদারফোর্ড</td><td>ধনাত্মক (+1)</td><td>নিউক্লিয়াসে</td></tr>
+                <tr><td>নিউট্রন (n⁰)</td><td>জেমস চ্যাডউইক</td><td>নিরপেক্ষ (0)</td><td>নিউক্লিয়াসে</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="border-top-color: var(--nucleus-red); animation-delay: 0.2s;">
+        <h2>৩. পরমাণুর গঠন ও সাধারণ চিত্র</h2>
+        <div class="highlight-box">
+            <ul>
+                <li><strong>নিউক্লিয়াস:</strong> পরমাণুর কেন্দ্রস্থল, যেখানে প্রোটন ও নিউট্রন থাকে। এটি ধনাত্মক আধানযুক্ত।</li>
+                <li><strong>ইলেকট্রন কক্ষপথ:</strong> নিউক্লিয়াসের চারপাশে নির্দিষ্ট শক্তিস্তরে ইলেকট্রন ঘোরে।</li>
+                <li>পরমাণুর অধিকাংশ স্থানই ফাঁকা।</li>
+            </ul>
+        </div>
+        
+        <div class="atom-diagram">
+            ইলেকট্রন (-)<br>
+            ↻<br>
+            নিউক্লিয়াস → [প্রোটন (+) + নিউট্রন (0)]<br>
+            ↺<br>
+            ইলেকট্রন (-)
+        </div>
+    </div>
+
+    <div class="card" style="animation-delay: 0.3s;">
+        <h2>৪. পারমাণবিক সংখ্যা ও ভর সংখ্যা</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>পরিভাষা</th><th>প্রতীক</th><th>সূত্র</th></tr>
+                <tr><td>পারমাণবিক সংখ্যা</td><td>Z</td><td>Z = প্রোটন সংখ্যা</td></tr>
+                <tr><td>ভর সংখ্যা</td><td>A</td><td>A = প্রোটন + নিউট্রন</td></tr>
+                <tr><td>নিউট্রন সংখ্যা</td><td>N</td><td>N = A - Z</td></tr>
+            </table>
+        </div>
+        <p><strong>উদাহরণ (কার্বন):</strong> প্রোটন = 6, নিউট্রন = 6; তাই Z = 6 এবং A = 12।</p>
+    </div>
+
+    <div class="card" style="animation-delay: 0.4s; border-top-color: #27ae60;">
+        <h2>৫. আইসোটোপ (Isotopes)</h2>
+        <p>যাদের <strong>প্রোটন সংখ্যা সমান</strong> কিন্তু নিউট্রন সংখ্যা ভিন্ন।</p>
+        <h3>হাইড্রোজেনের আইসোটোপ:</h3>
+        <ul>
+            <li><span class="badge">প্রোটিয়াম (¹H):</span> নিউট্রন 0, ভর 1</li>
+            <li><span class="badge">ডিউটিরিয়াম (²H):</span> নিউট্রন 1, ভর 2</li>
+            <li><span class="badge">ট্রিটিয়াম (³H):</span> নিউট্রন 2, ভর 3</li>
+        </ul>
+        <p><strong>কার্বন-১৪:</strong> তেজস্ক্রিয় আইসোটোপ যা প্রত্নতত্ত্বে ব্যবহৃত হয়।</p>
+    </div>
+
+    <div class="card" style="animation-delay: 0.5s;">
+        <h2>৬. ইলেকট্রন বিন্যাস ও শক্তিস্তর</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>শক্তিস্তর (n)</th><th>ধারণক্ষমতা (2n²)</th><th>প্রতীক</th></tr>
+                <tr><td>১ম (n=1)</td><td>2</td><td>K</td></tr>
+                <tr><td>২য় (n=2)</td><td>8</td><td>L</td></tr>
+                <tr><td>৩য় (n=3)</td><td>18</td><td>M</td></tr>
+                <tr><td>৪র্থ (n=4)</td><td>32</td><td>N</td></tr>
+            </table>
+        </div>
+        <p><strong>বিন্যাস উদাহরণ:</strong><br>
+        Sodium (Na, 11) ➔ 2, 8, 1<br>
+        Chlorine (Cl, 17) ➔ 2, 8, 7</p>
+    </div>
+
+    <div class="card" style="border-top-color: var(--electron-gold); animation-delay: 0.6s;">
+        <h2>৮. আয়ন গঠন (Ion Formation)</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>আয়ন</th><th>প্রক্রিয়া</th><th>আধান</th><th>উদাহরণ</th></tr>
+                <tr><td>ক্যাটায়ন</td><td>ইলেকট্রন ত্যাগ</td><td>ধনাত্মক (+)</td><td>Na⁺, Ca²⁺</td></tr>
+                <tr><td>অ্যায়ন</td><td>ইলেকট্রন গ্রহণ</td><td>ঋণাত্মক (-)</td><td>Cl⁻, O²⁻</td></tr>
+            </table>
+        </div>
+        <p><strong>আয়নিক বন্ধন:</strong> Na তার ১টি ইলেকট্রন Cl-কে দিয়ে NaCl লবণ গঠন করে।</p>
+    </div>
+
+    <div class="card" style="animation-delay: 0.7s;">
+        <h2>১০. আইসোটোপের বহুমুখী ব্যবহার</h2>
+        <ul>
+            <li><strong>চিকিৎসা:</strong> ক্যান্সার নিরাময় (কোবাল্ট-৬০), থাইরয়েড রোগ নির্ণয় (আয়োডিন-১৩১)।</li>
+            <li><strong>কৃষি:</strong> ক্ষতিকারক পোকা দমন ও সার গবেষণায় (ফসফরাস-৩২)।</li>
+            <li><strong>প্রত্নতত্ত্ব:</strong> ফসিল বা নিদর্শনের বয়স নির্ধারণ (কার্বন-১৪ ডেটিং)।</li>
+            <li><strong>শিল্প:</strong> পাইপের লিক শনাক্তকরণ ও পাতের পুরুত্ব নির্ণয়।</li>
+        </ul>
+    </div>
+
+    <div class="card" style="background: #f8f9fa; animation-delay: 0.8s;">
+        <h2>১২. গুরুত্বপূর্ণ গাণিতিক সূত্র</h2>
+        <div class="highlight-box" style="background: #fff;">
+            1. নিউট্রন (N) = A - Z <br>
+            2. ক্যাটায়নের ইলেকট্রন = Z - আধান <br>
+            3. অ্যানায়নের ইলেকট্রন = Z + আধান
+        </div>
+        <h3>১৩. সংজ্ঞা একনজরে:</h3>
+        <p><b>পরমাণু:</b> মৌলিক পদার্থের ক্ষুদ্রতম কণা। <b>অষ্টক নিয়ম:</b> বাইরের স্তরে ৮টি ইলেকট্রন থাকার প্রবণতা। <b>আয়ন:</b> আধানযুক্ত পরমাণু।</p>
+    </div>
+
+    <div class="card" style="background: #e3f2fd; border-top-color: #1976d2; animation-delay: 0.9s;">
+        <h2>১৪. সারসংক্ষেপ (Summary)</h2>
+        <ul>
+            <li>পরমাণু ইলেকট্রন, প্রোটন ও নিউট্রন নিয়ে গঠিত।</li>
+            <li>প্রোটন সংখ্যাই মৌলের পরিচয় বা পারমাণবিক সংখ্যা।</li>
+            <li>আইসোটোপ একই মৌলের কিন্তু ভিন্ন ওজনের পরমাণু।</li>
+            <li>স্থিতিশীল হতে পরমাণু ইলেকট্রন আদান-প্রদান করে আয়ন গঠন করে।</li>
+            <li>আইসোটোপের ব্যবহার আমাদের জীবনকে আধুনিক ও রোগমুক্ত করতে সহায়তা করছে।</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং ড্যাশবোর্ড © ২০২৬ | বিজ্ঞান হোক আনন্দময় ✨</p>
+</footer>
+
+</body>
+</html>

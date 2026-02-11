@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় কুইজ - অষ্টম শ্রেণি</title>
+    <style>
+        :root { --primary: #2980b9; --secondary: #3498db; --success: #27ae60; --danger: #e74c3c; }
+        body { background-color: #f4f7f6; margin: 0; padding: 10px; }
+        .quiz-container { max-width: 750px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-family: 'SolaimanLipi', Arial, sans-serif; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        input[type="text"], select { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; }
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.4s; }
+        .option { display: block; background: #f9f9f9; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .option:hover { background: #ebf5fb; border-color: var(--secondary); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; }
+        .score-box { font-size: 24px; font-weight: bold; color: var(--success); text-align: center; margin: 15px 0; padding: 20px; background: #f1f9f1; border-radius: 10px; border: 1px solid #d4edda; }
+        .time-box { text-align: center; font-size: 18px; color: #e67e22; margin-bottom: 15px; font-weight: bold; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fafafa; }
+        .explanation { margin-top: 10px; padding: 10px; background: #eaf2f8; border-radius: 5px; font-size: 14px; color: #444; border-left: 3px solid var(--secondary); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2 id="chapter-title">অধ্যায় ৭: পৃথিবী ও মহাকর্ষ</h2>
+        <p style="text-align:center; color:#666;">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার নাম লিখুন...">
+        <button type="button" class="btn" onclick="startQuiz()">কুইজ শুরু করুন</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color:#7f8c8d;"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div class="score-box" id="final-score"></div>
+        <p id="db-status" style="text-align:center; color: #27ae60; font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" onclick="location.reload()" style="background:#7f8c8d; margin-top:20px;">আবার শুরু করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "মহাবিশ্বের প্রতিটি বস্তু একে অপরকে নিজের দিকে আকর্ষণ করে, একে কী বলে?", a: ["অভিকর্ষ", "মহাকর্ষ", "চৌম্বক বল", "ঘর্ষণ"], c: 1, e: "মহাবিশ্বের যেকোনো দুটি বস্তুর মধ্যকার আকর্ষণ বলই হলো মহাকর্ষ।" },
+    { q: "पृथ्वी এবং অন্য কোনো বস্তুর মধ্যকার আকর্ষণ বলকে কী বলে?", a: ["মহাকর্ষ", "অভিকর্ষ", "ত্বরণ", "জড়তা"], c: 1, e: "যখন একটি বস্তু পৃথিবী হয়, তখন সেই আকর্ষণ বলকে অভিকর্ষ বলা হয়।" },
+    { q: "মহাকর্ষীয় ধ্রুবক 'G' এর মান কত?", a: ["9.8 ms-2", "6.673 \\times 10^-11 Nm2 kg-2", "1.6 10^-19 C", "3  10^8 ms^-1"], c: 1, e: "এটি একটি সর্বজনীন ধ্রুবক যা নিউটনের মহাকর্ষীয় সূত্রে ব্যবহৃত হয়।" },
+    { q: "নিউটনের মহাকর্ষীয় সূত্রানুসারে দূরত্ব দ্বিগুণ করলে বল কত গুণ কমবে?", a: ["২ গুণ", "৩ গুণ", "৪ গুণ", "৮ গুণ"], c: 2, e: "বল দূরত্বের বর্গের ব্যস্তানুপাতিক (1/d^2)। তাই দূরত্ব ২ গুণ করলে বল ৪ গুণ কমে যায়।" },
+    { q: "অভিকর্ষজ ত্বরণ 'g' এর মান কোথায় সবচেয়ে বেশি?", a: ["মেরু অঞ্চলে", "বিষুবীয় অঞ্চলে", "কেন্দ্রে", "পাহাড়ের চূড়ায়"], c: 0, e: "মেরু অঞ্চলে পৃথিবীর ব্যাসার্ধ কম হওয়ায় সেখানে g এর মান সবচেয়ে বেশি (৯.৮৩ মি./সে.২)।" },
+    { q: "পৃথিবীর কেন্দ্রে অভিকর্ষজ ত্বরণ 'g' এর মান কত?", a: ["৯.৮", "৯.৭৮", "শূন্য", "১০"], c: 2, e: "পৃথিবীর কেন্দ্রে আকর্ষণ বলের লব্ধি শূন্য হওয়ায় g এর মান শূন্য হয়।" },
+    { q: "ভরের আন্তর্জাতিক (SI) একক কী?", a: ["গ্রাম", "কিলোগ্রাম", "নিউটন", "ডাইন"], c: 1, e: "ভরের আন্তর্জাতিক একক হলো কিলোগ্রাম (kg)।" },
+    { q: "ওজনের একক কী?", a: ["কিলোগ্রাম", "মিটার", "নিউটন", "প্যাসকেল"], c: 2, e: "ওজন একটি বল, তাই এর একক নিউটন (N)।" },
+    { q: "কোনটি স্থানভেদে পরিবর্তিত হয় না?", a: ["ওজন", "ভর", "অভিকর্ষজ ত্বরণ", "বায়ুচাপ"], c: 1, e: "ভর বস্তুর মধ্যকার পদার্থের পরিমাণ, যা মহাবিশ্বের যেকোনো স্থানে অপরিবর্তিত থাকে।" },
+    { q: "চাঁদে ১ কেজি ভরের বস্তুর ওজন কত হবে?", a: ["৯.৮ নিউটন", "১.৬ নিউটন", "৯৮ নিউটন", "শূন্য"], c: 1, e: "চাঁদের অভিকর্ষজ ত্বরণ পৃথিবীর প্রায় ৬ ভাগের ১ ভাগ, যা প্রায় ১.৬৩ মি./সে.২।" },
+    { q: "মুক্তভাবে পড়ন্ত বস্তুর ত্বরণকে কী বলে?", a: ["গড় ত্বরণ", "অভিকর্ষজ ত্বরণ", "মন্দন", "বেগ"], c: 1, e: "অভিকর্ষ বলের প্রভাবে পড়ন্ত বস্তুর বেগ বৃদ্ধির হারকে অভিকর্ষজ ত্বরণ বলে।" },
+    { q: "লিফটে কখন নিজেকে ওজহীন মনে হয়?", a: ["লিফট উপরে উঠলে", "লিফট নিচে নামলে", "লিফটের দড়ি ছিঁড়ে মুক্তভাবে পড়লে", "লিফট স্থির থাকলে"], c: 2, e: "মুক্তভাবে পড়ার সময় ত্বরণ g এর সমান হয়, ফলে ওজন শূন্য অনুভূত হয়।" },
+    { q: "পৃথিবীর গড় ব্যাসার্ধ কত?", a: ["৬৪০০ কি.মি.", "৩২০০ কি.মি.", "১২৮০০ কি.মি.", "৫০০০ কি.মি."], c: 0, e: "পৃথিবীর কেন্দ্র থেকে পৃষ্ঠের গড় দূরত্ব প্রায় ৬৪০০ কিলোমিটার।" },
+    { q: "বস্তুর ওজন মাপার যন্ত্রের নাম কী?", a: ["সাধারণ তূলাযন্ত্র", "স্প্রিং নিক্তি", "থার্মোমিটার", "ব্যারোমিটার"], c: 1, e: "স্প্রিং নিক্তির সাহায্যে কোনো বস্তুর ওজন নির্ণয় করা হয়।" },
+    { q: "একটি বস্তুর ভর ১০ কেজি হলে পৃথিবীতে এর ওজন কত?", a: ["১০ নিউটন", "৯.৮ নিউটন", "৯৮ নিউটন", "১০০ নিউটন"], c: 2, e: "ওজন = ভর $\\times$ g ($10 \\times 9.8 = 98$ N)।" },
+    { q: "বিষুবীয় অঞ্চলে 'g' এর মান কত?", a: ["৯.৮৩", "৯.৭৮", "৯.৮", "৯.৮১"], c: 1, e: "পৃথিবী বিষুবীয় অঞ্চলে একটু স্ফীত হওয়ায় ব্যাসার্ধ বেশি, তাই g এর মান কম (৯.৭৮ মি./সে.২)।" },
+    { q: "মহাকর্ষ বল কিসের ওপর নির্ভর করে?", a: ["বস্তুদ্বয়ের ভর", "বস্তুদ্বয়ের মধ্যবর্তী দূরত্ব", "উভয়ই", "কোনোটিই নয়"], c: 2, e: "নিউটনের সূত্র অনুযায়ী বল ভরের গুণফলের সমানুপাতিক এবং দূরত্বের বর্গের ব্যস্তানুপাতিক।" },
+    { q: "বস্তুর ওজন কোথায় সবচেয়ে কম হয়?", a: ["মেরু অঞ্চলে", "পাহাড়ের উপরে", "খনি গর্ভে", "কেন্দ্রে"], c: 3, e: "যেহেতু কেন্দ্রে g = ০, তাই সেখানে ওজনও শূন্য।" },
+    { q: "স্প্রিং নিক্তির হুক থেকে বস্তু ঝুলালে স্প্রিং লম্বা হয় কেন?", a: ["ভরের কারণে", "চৌম্বকত্বের কারণে", "অভিকর্ষ বলের কারণে", "তাপের কারণে"], c: 2, e: "পৃথিবীর আকর্ষণ বা অভিকর্ষ বলের টানে স্প্রিংটি নিচে প্রসারিত হয়।" },
+    { q: "পৃথিবীর আহ্নিক গতির কারণে 'g' এর মানে কী পরিবর্তন হয়?", a: ["কমে", "বাড়ে", "স্থির থাকে", "শূন্য হয়"], c: 0, e: "আহ্নিক গতির কারণে বিষুবীয় অঞ্চলে g এর মান কিছুটা কমে যায়।" },
+    { q: "নভোচারীরা মহাকাশযানে নিজেকে ওজহীন মনে করেন কেন?", a: ["মহাকাশযানে বাতাস নেই", "তারা মুক্তভাবে পড়ন্ত অবস্থায় থাকেন", "সেখানে কোনো ভর নেই", "সেখানে পৃথিবী নেই"], c: 1, e: "মহাকাশযানটি পৃথিবীর চারদিকে প্রদক্ষিণ করার সময় একটি পড়ন্ত অবস্থায় থাকে।" },
+    { q: "গড় মান হিসেবে 'g' এর মান কত ধরা হয়?", a: ["৯.৭৮", "৯.৮৩", "৯.৮", "১০"], c: 2, e: "হিসাবের সুবিধার্থে আদর্শ মান হিসেবে ৯.৮ মি./সে.২ ধরা হয়।" },
+    { q: "উচ্চতা বৃদ্ধির সাথে সাথে অভিকর্ষজ ত্বরণের মান—", a: ["বাড়ে", "কমে", "একই থাকে", "প্রথমে বাড়ে পরে কমে"], c: 1, e: "পৃষ্ঠ থেকে যত উপরে যাওয়া যায়, ব্যাসার্ধ বাড়ায় আকর্ষণ বল তথা g এর মান কমতে থাকে।" },
+    { q: "ওজন কোন ধরনের রাশি?", a: ["স্কেলার রাশি", "ভেক্টর রাশি", "মৌলিক রাশি", "কোনোটিই নয়"], c: 1, e: "ওজনের নির্দিষ্ট মান ও দিক (পৃথিবীর কেন্দ্রের দিকে) আছে বলে এটি ভেক্টর রাশি।" },
+    { q: "ভর মাপার জন্য কোনটি ব্যবহার করা হয়?", a: ["স্প্রিং নিক্তি", "সাধারণ তূলাযন্ত্র", "ব্যারোমিটার", "ভোল্টমিটার"], c: 1, e: "দাঁড়িপাল্লা বা সাধারণ তূলাযন্ত্রের সাহায্যে ভর মাপা হয়।" },
+    { q: "পড়ন্ত বস্তুর বেগ প্রতি সেকেন্ডে কতটুকু বাড়ে?", a: ["৯.৮ মি/সে", "১০ মি/সে", "১.৬ মি/সে", "৯.৭৮ মি/সে"], c: 0, e: "অভিকর্ষজ ত্বরণ ৯.৮ মি./সে.২ মানেই হলো বেগ প্রতি সেকেন্ডে ৯.৮ মি./সে. হারে বাড়ে।" },
+    { q: "পৃথিবীর আকৃতি কেমন হওয়ার কারণে g এর মান ভিন্ন হয়?", a: ["পুরোপুরি গোল", "কমলা লেবুর মতো মেরু অঞ্চলে চাপা", "লম্বাকৃতি", "বর্গাকার"], c: 1, e: "মেরু অঞ্চলে চাপা হওয়ায় সেখানে ব্যাসার্ধ কম এবং আকর্ষণ বেশি।" },
+    { q: "চাঁদে কোনো বস্তুর ওজন পৃথিবীর তুলনায় কত হবে?", a: ["১/৪ ভাগ", "১/৬ ভাগ", "১/১০ ভাগ", "সমান"], c: 1, e: "চাঁদে অভিকর্ষ বল পৃথিবীর ৬ ভাগের ১ ভাগ।" },
+    { q: "মহাকর্ষ বলের উদাহরণ কোনটি?", a: ["গাছ থেকে ফল নিচে পড়া", "পৃথিবীর চারদিকে চাঁদের ঘোরা", "সূর্যের চারদিকে গ্রহদের ঘোরা", "সবগুলো"], c: 3, e: "এসবই মহাকর্ষ বা অভিকর্ষ বলের প্রভাবে ঘটে।" },
+    { q: "১ কেজি ভরের বস্তুর আদর্শ ওজন কত?", a: ["৯.৮৩ নিউটন", "৯.৭৮ নিউটন", "৯.৮ নিউটন", "১০ নিউটন"], c: 2, e: "আদর্শ মান ৯.৮ মি/সে২ অনুযায়ী ওজন ৯.৮ নিউটন।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m}:${s < 10 ? '0'+s : s}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<div class="question-box active"><h3>${qData.q}</h3>${opts}</div>`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function saveToHistory(got, total) {
+    let resultData = { subject: "অধ্যায় ৭: পৃথিবী ও মহাকর্ষ", score: got + " / " + total, date: new Date().toLocaleString('bn-BD') };
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push(resultData);
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds / 60)}m ${totalSeconds % 60}s`;
+
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName} | <b>শ্রেণি:</b> অষ্টম`;
+    document.getElementById("final-score").innerText = `স্কোর: ${score} / ${quizData.length}`;
+    
+    saveToHistory(score, quizData.length);
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরপত্র:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><strong>ব্যাখ্যা:</strong> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => { document.getElementById("db-status").innerText = "✓ ফলাফল সার্ভারে সংরক্ষিত হয়েছে।"; })
+    .catch(() => { document.getElementById("db-status").innerText = "⚠ ডাটা সেভ করতে সমস্যা হয়েছে।"; });
+}
+</script>
+</body>
+</html>

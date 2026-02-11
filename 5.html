@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় কুইজ - অষ্টম শ্রেণি</title>
+    <style>
+        :root { --primary: #9b59b6; --secondary: #8e44ad; --success: #27ae60; --danger: #e74c3c; }
+        body { background-color: #f4f7f6; margin: 0; padding: 10px; }
+        .quiz-container { max-width: 750px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-family: 'SolaimanLipi', Arial, sans-serif; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        input[type="text"], select { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; }
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.4s; }
+        .option { display: block; background: #f9f9f9; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .option:hover { background: #f0f4f8; border-color: var(--secondary); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; }
+        .score-box { font-size: 24px; font-weight: bold; color: var(--success); text-align: center; margin: 15px 0; padding: 20px; background: #f1f9f1; border-radius: 10px; border: 1px solid #d4edda; }
+        .time-box { text-align: center; font-size: 18px; color: #e67e22; margin-bottom: 15px; font-weight: bold; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fafafa; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e8f4fd; border-radius: 5px; font-size: 14px; color: #444; border-left: 3px solid var(--secondary); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2 id="chapter-title">অধ্যায় ৫: সমন্বয় ও নিঃসরণ</h2>
+        <p style="text-align:center; color:#666;">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার নাম লিখুন...">
+        <button type="button" class="btn" onclick="startQuiz()">কুইজ শুরু করুন</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color:#7f8c8d;"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div class="score-box" id="final-score"></div>
+        <p id="db-status" style="text-align:center; color: #27ae60; font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" onclick="location.reload()" style="background:#7f8c8d; margin-top:20px;">আবার শুরু করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "উদ্ভিদে বৃদ্ধিকারক হরমোন কোনটি?", a: ["অক্সিন", "ইথিলিন", "অ্যাবসিসিক এসিড", "মিথেন"], c: 0, e: "অক্সিন উদ্ভিদের বৃদ্ধিতে সহায়তা করে এবং চার্লস ডারউইন এটি প্রথম আবিষ্কার করেন।" },
+    { q: "ফল পাকানোর জন্য দায়ী হরমোন কোনটি?", a: ["জিবেরেলিন", "অক্সিন", "ইথিলিন", "সাইটোকাইনিন"], c: 2, e: "ইথিলিন একটি গ্যাসীয় হরমোন যা ফল পাকাতে সাহায্য করে।" },
+    { q: "উদ্ভিদের অঙ্গের চলন যখন আলোর উদ্দীপকের দিকে হয় তখন তাকে কী বলে?", a: ["ফোটোট্রপিক চলন", "জিওট্রপিক চলন", "হাইড্রোট্রপিক চলন", "সবগুলো"], c: 0, e: "আলোর দিকে উদ্ভিদের অঙ্গের চলনকে ফোটোট্রপিজম বা ফোটোট্রপিক চলন বলে।" },
+    { q: "স্নায়ুতন্ত্রের গাঠনিক ও কার্যকরী একক কী?", a: ["নেফ্রন", "নিউরন", "কোষ", "সেন্ট্রোমিয়ার"], c: 1, e: "নিউরন হলো স্নায়ুতন্ত্রের মূল একক যা উদ্দীপনা বহন করে।" },
+    { q: "নিউরনের প্রধান অংশ কয়টি?", a: ["২টি", "৩টি", "৪টি", "৫টি"], c: 0, e: "নিউরনের প্রধান দুটি অংশ হলো কোষদেহ ও প্রলম্বিত অংশ।" },
+    { q: "মস্তিষ্কের প্রধান অংশ কয়টি?", a: ["২টি", "৩টি", "৪টি", "৫টি"], c: 1, e: "মস্তিষ্কের তিনটি প্রধান অংশ: গুরুমস্তিষ্ক, মধ্যমস্তিষ্ক ও পশ্চাৎমস্তিষ্ক।" },
+    { q: "মস্তিষ্কের সবচেয়ে বড় অংশ কোনটি?", a: ["সেরিবেলাম", "সেরিব্রাম", "মেডুলা", "পনস"], c: 1, e: "সেরিব্রাম বা গুরুমস্তিষ্ক হলো মস্তিষ্কের বৃহত্তম অংশ যা মানুষের বুদ্ধি ও স্মৃতি নিয়ন্ত্রণ করে।" },
+    { q: "সেরিব্রাম ও সেরিবেলামের মধ্যে যোগসূত্র স্থাপন করে কোনটি?", a: ["পনস", "মেডুলা", "স্নায়ু", "কোষদেহ"], c: 0, e: "পনস মধ্যমস্তিষ্ক ও সেরিবেলামের মধ্যে যোগাযোগ রক্ষা করে।" },
+    { q: "দেহের ভারসাম্য রক্ষা করে মস্তিষ্কের কোন অংশ?", a: ["সেরিব্রাম", "সেরিবেলাম", "থ্যালামাস", "মেডুলা"], c: 1, e: "সেরিবেলাম বা লঘুমস্তিষ্ক চলাফেরা ও দেহের ভারসাম্য নিয়ন্ত্রণ করে।" },
+    { q: "হৃৎস্পন্দন ও শ্বসন নিয়ন্ত্রণ করে কোনটি?", a: ["সেরিব্রাম", "পনস", "মেডুলা অবলংগাটা", "মেরুরজ্জু"], c: 2, e: "মেডুলা অবলংগাটা শরীরের অনৈচ্ছিক কাজ যেমন হৃদস্পন্দন ও শ্বাসক্রিয়া নিয়ন্ত্রণ করে।" },
+    { q: "দুটি নিউরনের মিলনস্থলকে কী বলে?", a: ["ডেনড্রন", "অ্যাক্সন", "সিন্যাপস", "মায়োলিন"], c: 2, e: "সিন্যাপসের মাধ্যমেই এক নিউরন থেকে অন্য নিউরনে স্নায়ুতাড়না প্রবাহিত হয়।" },
+    { q: "স্নায়ুতাড়না নিউরনের কোন অংশ দিয়ে প্রবাহিত হয়?", a: ["কোষদেহ থেকে ডেনড্রন", "অ্যাক্সন থেকে কোষদেহ", "ডেনড্রন থেকে কোষদেহ", "কোনোটিই নয়"], c: 2, e: "উদ্দীপনা ডেনড্রন থেকে কোষদেহে এবং সেখান থেকে অ্যাক্সনে যায়।" },
+    { q: "প্রতিবর্তী ক্রিয়া (Reflex Action) কার দ্বারা নিয়ন্ত্রিত হয়?", a: ["মস্তিষ্ক", "মেরুরজ্জু", "হৃদপিণ্ড", "ফুসফুস"], c: 1, e: "হঠাৎ ঘটে যাওয়া অনৈচ্ছিক প্রতিক্রিয়া বা প্রতিবর্তী ক্রিয়া মেরুরজ্জু দিয়ে নিয়ন্ত্রিত হয়।" },
+    { q: "অন্তঃক্ষরা গ্রন্থি থেকে কী নিঃসৃত হয়?", a: ["এনজাইম", "রক্ত", "লালা", "হরমোন"], c: 3, e: "অন্তঃক্ষরা গ্রন্থি নালিহীন হয় এবং সরাসরি রক্তে হরমোন নিঃসরণ করে।" },
+    { q: "মানবদেহের প্রধান বা মাস্টার গ্রন্থি কোনটি?", a: ["থাইরয়েড", "পিটুইটারি", "অ্যাড্রেনাল", "আইলেটস অব ল্যাঙ্গারহ্যান্স"], c: 1, e: "পিটুইটারি গ্রন্থি অন্য সব গ্রন্থিকে নিয়ন্ত্রণ করে বলে একে প্রধান গ্রন্থি বলে।" },
+    { q: "থাইরক্সিন হরমোন কোন গ্রন্থি থেকে নিঃসৃত হয়?", a: ["পিটুইটারি", "থাইরয়েড", "প্যারাথাইরয়েড", "অগ্ন্যাশয়"], c: 1, e: "থাইরয়েড গ্রন্থি আমাদের গলার নিচে থাকে যা থাইরক্সিন হরমোন তৈরি করে।" },
+    { q: "ইনসুলিন হরমোন তৈরিতে বাধা আসলে কী রোগ হয়?", a: ["গয়টার", "ডায়াবেটিস", "অ্যানেমিয়া", "রিকেটস"], c: 1, e: "অগ্ন্যাশয়ের ইনসুলিন হরমোন রক্তে শর্করার পরিমাণ নিয়ন্ত্রণ করে।" },
+    { q: "আইোডিনের অভাবে কোন রোগ হয়?", a: ["রাতকানা", "গয়টার বা গলগণ্ড", "বেড়িবেরি", "স্কার্ভি"], c: 1, e: "আইোডিনের অভাবে থাইরয়েড গ্রন্থি ফুলে যায়, যাকে গয়টার বলে।" },
+    { q: "ভয় পেলে বা উত্তেজিত হলে কোন হরমোন দ্রুত ক্ষরিত হয়?", a: ["ইনসুলিন", "থাইরক্সিন", "অ্যাড্রেনালিন", "অক্সিন"], c: 2, e: "অ্যাড্রেনালিন হরমোন শরীরকে জরুরি অবস্থা মোকাবেলায় সাহায্য করে।" },
+    { q: "অক্সিন হরমোন প্রথম কে আবিষ্কার করেন?", a: ["চার্লস ডারউইন", "নিউটন", "মেন্ডেল", "হেকেল"], c: 0, e: "চার্লস ডারউইন আলোর প্রতি উদ্ভিদের বাঁক নিয়ে কাজ করার সময় এটি লক্ষ্য করেন।" },
+    { q: "বীজের সুপ্তাবস্থা কাটাতে সাহায্য করে কোন হরমোন?", a: ["ইথিলিন", "জিবেরেলিন", "অ্যাড্রেনালিন", "সাইটোকাইনিন"], c: 1, e: "জিবেরেলিন বীজের সুপ্তাবস্থা কাটিয়ে অঙ্কুরোদগমে সাহায্য করে।" },
+    { q: "উদ্ভিদ কোষের বিভাজনে সহায়তা করে কোনটি?", a: ["সাইটোকাইনিন", "ইথিলিন", "মিথেন", "নাইট্রোজেন"], c: 0, e: "সাইটোকাইনিন ফলের শাঁসে ও বীজে পাওয়া যায় যা কোষ বিভাজনে অংশ নেয়।" },
+    { q: "অ্যাক্সনের শেষ প্রান্তের নাম কী?", a: ["ডেনড্রাইট", "সিন্যাপটিক নব", "নিউক্লিয়াস", "মায়োলিন শিথ"], c: 1, e: "অ্যাক্সনের শেষ প্রান্তের ছোট ছোট নব আকৃতির অংশকে সিন্যাপটিক নব বলে।" },
+    { q: "নিউরনের কোন অংশটি স্নায়ুতাড়না কোষদেহে নিয়ে আসে?", a: ["অ্যাক্সন", "ডেনড্রন", "র‍্যানভিয়ারের পর্ব", "মায়োলিন"], c: 1, e: "ডেনড্রন উদ্দীপনা গ্রহণ করে কোষদেহে প্রেরণ করে।" },
+    { q: "মস্তিষ্ক যে পর্দার আবরণে ঢাকা থাকে তাকে কী বলে?", a: ["প্লুরা", "পেরিকার্ডিয়াম", "মেনিঞ্জেস", "প্লাজমা মেমব্রেন"], c: 2, e: "মস্তিষ্কের আবরণকে মেনিঞ্জেস বলা হয়।" },
+    { q: "লঘুমস্তিষ্কের অংশ কোনটি?", a: ["সেরিবেলাম", "পনস", "মেডুলা", "সবগুলো"], c: 3, e: "সেরিবেলাম, পনস ও মেডুলা মিলেই পশ্চাৎ বা লঘুমস্তিষ্ক গঠিত।" },
+    { q: "রেচন তন্ত্রের মাধ্যমে মানবদেহ থেকে কোন বর্জ্য বের হয়?", a: ["কার্বন ডাই-অক্সাইড", "নাইট্রোজেনঘটিত বর্জ্য", "অক্সিজেন", "খাদ্য কণা"], c: 1, e: "বৃক্কের মাধ্যমে প্রধানত ইউরিয়া ও অ্যামোনিয়া জাতীয় নাইট্রোজেন বর্জ্য বের হয়।" },
+    { q: "বৃক্কের একককে কী বলা হয়?", a: ["নিউরন", "কোষ", "নেফ্রন", "রক্তকণিকা"], c: 2, e: "নেফ্রন হলো বৃক্ক বা কিডনির গাঠনিক ও কার্যকরী একক।" },
+    { q: "ফুলের পরিস্ফুটনে সাহায্য করে কোনটি?", a: ["ফ্লোরিজেন", "ইথিলিন", "অক্সিন", "অক্সিজেন"], c: 0, e: "ফ্লোরিজেন হলো একটি প্রকল্পিত হরমোন যা ফুল ফোটাতে সাহায্য করে।" },
+    { q: "সুশুম্না কান্ড বা মেরুরজ্জু কোথায় সুরক্ষিত থাকে?", a: ["হৃৎপিণ্ডে", "মেরুদণ্ডের ভেতরে", "মস্তিষ্কে", "ফুসফুসে"], c: 1, e: "মেরুরজ্জু কশেরুকার ছিদ্রপথের মাধ্যমে মেরুদণ্ডের ভেতরে সুরক্ষিত থাকে।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m}:${s < 10 ? '0'+s : s}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<div class="question-box active"><h3>${qData.q}</h3>${opts}</div>`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function saveToHistory(got, total) {
+    let resultData = { subject: "অধ্যায় ৫: সমন্বয় ও নিঃসরণ", score: got + " / " + total, date: new Date().toLocaleString('bn-BD') };
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push(resultData);
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds / 60)}m ${totalSeconds % 60}s`;
+
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName} | <b>শ্রেণি:</b> অষ্টম`;
+    document.getElementById("final-score").innerText = `স্কোর: ${score} / ${quizData.length}`;
+    
+    saveToHistory(score, quizData.length);
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরপত্র:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><strong>ব্যাখ্যা:</strong> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => { document.getElementById("db-status").innerText = "✓ ফলাফল সার্ভারে সংরক্ষিত হয়েছে।"; })
+    .catch(() => { document.getElementById("db-status").innerText = "⚠ ডাটা সেভ করতে সমস্যা হয়েছে।"; });
+}
+</script>
+</body>
+</html>

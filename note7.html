@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পৃথিবী ও মহাকর্ষ - স্মার্ট নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --space-blue: #1e3799;
+            --earth-green: #2ecc71;
+            --moon-gray: #95a5a6;
+            --formula-bg: #f8f9fa;
+            --accent-red: #e74c3c;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s ease;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border-left: 10px solid var(--space-blue);
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        h1 { margin: 0; font-size: 36px; }
+        h2 { color: var(--space-blue); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: #8e44ad; margin-top: 25px; }
+
+        .equation-box {
+            background: var(--formula-bg);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #dcdde1;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            text-align: center;
+            color: #2f3640;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .highlight-blue {
+            background: #ebf3ff;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 5px solid var(--space-blue);
+            margin: 15px 0;
+        }
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; border-radius: 15px; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th { background: var(--space-blue); color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border: 1px solid #f1f2f6; }
+        tr:nth-child(even) { background-color: #f9f9ff; }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: #ffeaa7;
+            color: #d35400;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 40px; color: #7f8c8d; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 26px; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>পৃথিবী ও মহাকর্ষ (Earth & Gravitation)</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | অধ্যায় ৭ (ডিজিটাল মাস্টার নোট)</p>
+    <div style="font-size: 40px; margin-top: 15px;">🌍🌌⚖️</div>
+</header>
+
+<div class="container">
+
+    <div class="card" style="animation-delay: 0.1s;">
+        <h2>১. মহাকর্ষ (Gravity)</h2>
+        <p><strong>সংজ্ঞা:</strong> মহাবিশ্বের যেকোনো দুটি বস্তুর মধ্যকার পরস্পর আকর্ষণ বল-কে মহাকর্ষ বল বলে।</p>
+        <div class="highlight-blue">
+            <strong>নিউটনের মহাকর্ষ সূত্র:</strong> "মহাবিশ্বের প্রতিটি বস্তুকণা একে অপরকে নিজের দিকে আকর্ষণ করে। এই আকর্ষণ বলের মান বস্তুকণাদ্বয়ের ভরের গুণফলের সমানুপাতিক এবং তাদের দূরত্বের বর্গের ব্যস্তানুপাতিক।"
+        </div>
+        <p><strong>গাণিতিক রূপ:</strong></p>
+        <div class="equation-box">
+            F = G * (m1 * m2) / d^2
+        </div>
+        <p>এখানে, F = মহাকর্ষ বল, G = মহাকর্ষীয় ধ্রুবক (6.67 × 10^-11 Nm^2/kg^2), m1, m2 = বস্তুর ভর এবং d = মধ্যবর্তী দূরত্ব।</p>
+    </div>
+
+    <div class="card" style="border-left-color: var(--earth-green); animation-delay: 0.2s;">
+        <h2 style="color: var(--earth-green);">২. অভিকর্ষ (Gravity of Earth)</h2>
+        <p><strong>সংজ্ঞা:</strong> পৃথিবী যে বল দ্বারা কোনো বস্তুকে নিজের কেন্দ্রের দিকে আকর্ষণ করে, তাকে অভিকর্ষ বলে।</p>
+        <p><strong>অভিকর্ষজ ত্বরণ (g):</strong> পৃথিবীর আকর্ষণের জন্য যে হারে বস্তুর বেগ বৃদ্ধি পায়।</p>
+        <ul>
+            <li><strong>মান:</strong> g = 9.8 m/s^2 (প্রায়)</li>
+            <li><strong>দিক:</strong> পৃথিবীর কেন্দ্রের দিকে</li>
+        </ul>
+    </div>
+
+    <div class="card" style="animation-delay: 0.3s;">
+        <h2>৩. ভর ও ওজনের পার্থক্য</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>বৈশিষ্ট্য</th><th>ভর (Mass)</th><th>ওজন (Weight)</th></tr>
+                <tr><td>সংজ্ঞা</td><td>পদার্থের পরিমাণ</td><td>পৃথিবীর আকর্ষণ বল</td></tr>
+                <tr><td>একক</td><td>কিলোগ্রাম (kg)</td><td>নিউটন (N)</td></tr>
+                <tr><td>যন্ত্র</td><td>তুলাযন্ত্র</td><td>স্প্রিং নিক্তি</td></tr>
+                <tr><td>পরিবর্তন</td><td>স্থানভেদে হয় না</td><td>স্থানভেদে পরিবর্তিত হয়</td></tr>
+                <tr><td>সূত্র</td><td>-</td><td>W = m * g</td></tr>
+            </table>
+        </div>
+        <p><strong>উদাহরণ:</strong> ১০ কেজি ভরের বস্তুর ওজন পৃথিবীতে W = 10 * 9.8 = 98 N।</p>
+    </div>
+
+    <div class="card" style="border-left-color: var(--accent-red); animation-delay: 0.4s;">
+        <h2 style="color: var(--accent-red);">৪. পৃথিবীর বিভিন্ন স্থানে g-এর মানের পরিবর্তন</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>অবস্থান</th><th>g-এর মান</th><th>কারণ</th></tr>
+                <tr><td>মেরু অঞ্চল</td><td>সর্বোচ্চ (9.83 m/s^2)</td><td>কেন্দ্র থেকে দূরত্ব সর্বনিম্ন</td></tr>
+                <tr><td>বিষুবীয় অঞ্চল</td><td>সর্বনিম্ন (9.78 m/s^2)</td><td>কেন্দ্র থেকে দূরত্ব সর্বোচ্চ</td></tr>
+                <tr><td>ঢাকা</td><td>9.8 m/s^2</td><td>মধ্যবর্তী দূরত্ব</td></tr>
+            </table>
+        </div>
+        <p><strong>অন্যান্য ক্ষেত্রে:</strong></p>
+        <ul>
+            <li><strong>উচ্চতা বাড়লে:</strong> g-এর মান কমে। সূত্র: g_h = g * [R / (R + h)]^2</li>
+            <li><strong>অভ্যন্তরে:</strong> কেন্দ্রের দিকে গেলে g কমে; কেন্দ্রে g = 0।</li>
+            <li><strong>আবর্তন গতি:</strong> ঘূর্ণনের প্রভাবে g-এর মান সামান্য কমে।</li>
+        </ul>
+    </div>
+
+    <div class="card" style="border-left-color: var(--moon-gray); animation-delay: 0.5s;">
+        <h2 style="color: #7f8c8d;">৫. চাঁদে ওজন</h2>
+        <p>চাঁদের অভিকর্ষজ ত্বরণ পৃথিবীর ১/৬ অংশ।</p>
+        <div class="equation-box">
+            g_moon = 1/6 * g ≈ 1.63 m/s^2 <br>
+            W_moon = 1/6 * W_earth
+        </div>
+        <p><strong>উদাহরণ:</strong> পৃথিবীতে ৬০ নিউটন ওজন হলে চাঁদে তা হবে ১০ নিউটন।</p>
+    </div>
+
+    <div class="card" style="animation-delay: 0.6s;">
+        <h2>৬. ওজনহীনতা (Weightlessness)</h2>
+        <p>মুক্ত পতনের সময় বা মহাকাশযানে যখন মেঝেতে কোনো বল থাকে না, তখন ওজনহীনতা অনুভূত হয়।</p>
+        <h3>৭. লিফটে ওজনের পরিবর্তন</h3>
+        <div class="table-container">
+            <table>
+                <tr><th>লিফটের গতি</th><th>ওজনের পরিবর্তন</th><th>কারণ</th></tr>
+                <tr><td>স্থির বা সমান বেগে</td><td>অপরিবর্তিত</td><td>ত্বরণ শূন্য</td></tr>
+                <tr><td>উর্ধ্বগামী ত্বরণে</td><td>বৃদ্ধি পায়</td><td>মেঝে বেশি বল প্রয়োগ করে</td></tr>
+                <tr><td>নিম্নগামী ত্বরণে</td><td>হ্রাস পায়</td><td>মেঝে কম বল প্রয়োগ করে</td></tr>
+                <tr><td>মুক্ত পতন (ছিঁড়ে পড়া)</td><td>শূন্য (০)</td><td>লিফট ও ব্যক্তি একই ত্বরণে পড়ে</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="animation-delay: 0.7s;">
+        <h2>৮. প্রাকৃতিক ঘটনায় অভিকর্ষের ভূমিকা</h2>
+        <p><span class="badge">বস্তুর পতন</span> <span class="badge">নদীর প্রবাহ</span> <span class="badge">বায়ুমণ্ডল রক্ষা</span> <span class="badge">জোয়ার-ভাটা</span></p>
+        <h3>৯. গুরুত্বপূর্ণ সূত্রসমূহ (Writing Format)</h3>
+        <div class="equation-box">
+            ১. F = G * m1 * m2 / d^2 <br>
+            ২. W = m * g <br>
+            ৩. W_moon = 1/6 * W_earth <br>
+            ৪. g_h = g * (R / (R + h))^2
+        </div>
+    </div>
+
+    <div class="card" style="animation-delay: 0.8s;">
+        <h2>১০. গুরুত্বপূর্ণ সংজ্ঞা ও ১১. তুলনা</h2>
+        <div style="columns: 2; gap: 20px;">
+            <p><b>মহাকর্ষ:</b> যে কোনো দুই বস্তুর আকর্ষণ।</p>
+            <p><b>অভিকর্ষ:</b> পৃথিবীর আকর্ষণ বল।</p>
+            <p><b>ভর:</b> জড়ত্বের পরিমাপ।</p>
+            <p><b>ওজন:</b> ক্রিয়াশীল বল।</p>
+        </div>
+        <div class="table-container">
+            <table>
+                <tr><th>বৈশিষ্ট্য</th><th>পৃথিবী</th><th>চাঁদ</th></tr>
+                <tr><td>g-এর মান</td><td>9.8 m/s^2</td><td>1.63 m/s^2</td></tr>
+                <tr><td>বায়ুমণ্ডল</td><td>আছে</td><td>নেই</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="background: #f1f9ff; border-top: 5px solid var(--space-blue); animation-delay: 0.9s;">
+        <h2>১২. সারসংক্ষেপ (Summary)</h2>
+        <ul>
+            <li>মহাকর্ষ হলো সর্বজনীন আকর্ষণ বল, নিউটন এর সূত্র দেন।</li>
+            <li>অভিকর্ষ হলো পৃথিবীর আকর্ষণ বল।</li>
+            <li>ভর স্থানভেদে অপরিবর্তিত, ওজন স্থানভেদে পরিবর্তিত হয়।</li>
+            <li>পৃথিবীর বিষুবীয় অঞ্চলে g সর্বনিম্ন, মেরু অঞ্চলে সর্বোচ্চ।</li>
+            <li>উচ্চতা বাড়লে g কমে, পৃথিবীর অভ্যন্তরে গেলেও g কমে।</li>
+            <li>চাঁদে g পৃথিবীর 1/6 অংশ, তাই ওজনও 1/6 অংশ হয়।</li>
+            <li>ওজনহীনতা ঘটে যখন বস্তু মুক্ত পতনশীল থাকে (মহাকাশযান, লিফট)।</li>
+            <li>লিফট ত্বরণসহ চললে ওজনের পরিবর্তন হয়।</li>
+            <li>মহাকর্ষের জন্য বস্তু পড়ে, নদী প্রবাহিত হয়, বায়ুমণ্ডল থাকে।</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং ড্যাশবোর্ড © ২০২৬ | পদার্থবিজ্ঞান সহজ পাঠ ✨</p>
+</footer>
+
+</body>
+</html>

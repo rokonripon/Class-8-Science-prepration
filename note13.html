@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>খাদ্য ও পুষ্টি - মাস্টার নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #27ae60;
+            --secondary-orange: #f39c12;
+            --danger-red: #e74c3c;
+            --water-blue: #3498db;
+            --bg-light: #f9fbf9;
+            --card-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 5px solid var(--secondary-orange);
+            animation: fadeInDown 1s ease;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .section-card {
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-left: 10px solid var(--primary-green);
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        h1 { margin: 0; font-size: 35px; }
+        h2 { color: var(--primary-green); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: var(--secondary-orange); margin-top: 25px; }
+
+        .definition-box {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px dashed var(--primary-green);
+            margin: 15px 0;
+        }
+
+        /* খাদ্য পিরামিড ডিজাইন */
+        .pyramid-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        .pyramid-level {
+            margin: 5px auto;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .level-5 { width: 20%; background: #e74c3c; } /* চর্বি/মিষ্টি */
+        .level-4 { width: 40%; background: #9b59b6; } /* দুধ */
+        .level-3 { width: 60%; background: #f1c40f; } /* প্রোটিন */
+        .level-2 { width: 80%; background: #27ae60; } /* শাকসবজি */
+        .level-1 { width: 100%; background: #3498db; } /* শর্করা */
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th { background: var(--primary-green); color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border: 1px solid #f1f2f6; }
+        tr:nth-child(even) { background-color: #f9f9ff; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e1f5fe;
+            color: #0277bd;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 3px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 40px; color: #636e72; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 26px; }
+            .section-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>অধ্যায় ১৩: খাদ্য ও পুষ্টি</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | সম্পূর্ণ মাস্টার নোট ও গাইড</p>
+    <div style="font-size: 40px; margin-top: 15px;">🍎🥦🍗🥚</div>
+</header>
+
+<div class="container">
+
+    <div class="section-card" style="animation-delay: 0.1s;">
+        <h2>১. খাদ্য ও পুষ্টি কি?</h2>
+        <div class="definition-box">
+            <strong>খাদ্য:</strong> যা খেলে দেহের বৃদ্ধি, শক্তি উৎপাদন ও রোগ প্রতিরোধ হয়।<br>
+            <strong>পুষ্টি:</strong> খাদ্য গ্রহণ থেকে শরীরের কাজে লাগানো পর্যন্ত সমগ্র প্রক্রিয়া।
+        </div>
+        <p><strong>পুষ্টি উপাদানের কাজ:</strong></p>
+        <p>
+            <span class="badge">শর্করা: শক্তি</span> 
+            <span class="badge">প্রোটিন: দেহ গঠন</span> 
+            <span class="badge">স্নেহ: তাপ রক্ষা</span> 
+            <span class="badge">ভিটামিন: রোগ প্রতিরোধ</span> 
+            <span class="badge">পানি: বিপাক</span>
+        </p>
+    </div>
+
+    <div class="section-card" style="border-left-color: var(--secondary-orange); animation-delay: 0.2s;">
+        <h2 style="color: var(--secondary-orange);">২. ভিটামিন ও খনিজ লবণের ছক</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>উপাদান</th><th>কাজ</th><th>অভাবজনিত রোগ</th><th>উৎস</th></tr>
+                <tr><td>ভিটামিন A</td><td>দৃষ্টিশক্তি</td><td>রাতকানা</td><td>গাজর, মিষ্টি কুমড়া</td></tr>
+                <tr><td>ভিটামিন C</td><td>রোগ প্রতিরোধ</td><td>স্কার্ভি</td><td>লেবু, আমলকী</td></tr>
+                <tr><td>ভিটামিন D</td><td>হাড় গঠন</td><td>রিকেটস</td><td>সূর্যালোক, ডিম</td></tr>
+                <tr><td>ক্যালসিয়াম</td><td>হাড় ও দাঁত</td><td>হাড় দুর্বলতা</td><td>দুধ, ছোট মাছ</td></tr>
+                <tr><td>আয়োডিন</td><td>হরমোন নিয়ন্ত্রণ</td><td>গলগণ্ড</td><td>আয়োডিনযুক্ত লবণ</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.3s;">
+        <h2>৩. সুষম আহার ও খাদ্য পিরামিড</h2>
+        <p>সুষম আহারে সকল পুষ্টি উপাদান সঠিক অনুপাতে থাকে। নিচের পিরামিডটি লক্ষ্য করো:</p>
+        <div class="pyramid-container">
+            <div class="pyramid-level level-5">চর্বি ও মিষ্টি (খুব কম)</div>
+            <div class="pyramid-level level-4">দুধ ও দধি (পরিমিত)</div>
+            <div class="pyramid-level level-3">মাছ, মাংস, ডাল (প্রয়োজনীয়)</div>
+            <div class="pyramid-level level-2">ফল ও শাকসবজি (বেশি)</div>
+            <div class="pyramid-level level-1">শর্করা/ভাত/রুটি (সবচেয়ে বেশি)</div>
+            <p style="margin-top: 10px; font-size: 14px;"><i>চিত্র: আদর্শ খাদ্য পিরামিড</i></p>
+        </div>
+    </div>
+
+    <div class="section-card" style="border-left-color: var(--water-blue); animation-delay: 0.4s;">
+        <h2>অপুষ্টি ও খাদ্য সংরক্ষণ</h2>
+        <h3>অপুষ্টির প্রকারভেদ:</h3>
+        <ul>
+            <li><strong>কোয়াশিওরকর:</strong> প্রোটিনের অভাবে শিশুর পেট ফুলে যায়।</li>
+            <li><strong>ম্যারাসমাস:</strong> শক্তি ও প্রোটিন উভয়ের অভাবে শরীর শীর্ণ হয়।</li>
+            <li><strong>স্থূলতা:</strong> অতিপুষ্টির কারণে অতিরিক্ত ওজন বৃদ্ধি।</li>
+        </ul>
+        <h3>সংরক্ষণ পদ্ধতি:</h3>
+        <p><span class="badge">শুষ্ককরণ</span> <span class="badge">রেফ্রিজারেশন</span> <span class="badge">লবণায়ন</span> <span class="badge">চিনি দিয়ে সংরক্ষণ</span> <span class="badge">ধূমায়ন</span></p>
+    </div>
+
+    <div class="section-card" style="border-left-color: var(--danger-red); animation-delay: 0.5s;">
+        <h2 style="color: var(--danger-red);">৭ ও ৮. খাদ্যে ভেজাল ও নিরাপত্তা</h2>
+        <p><strong>ভেজাল শনাক্তকরণ:</strong> দুধে ইউরিয়া পরীক্ষা বা লঙ্কার গুঁড়োর রং পরীক্ষা করে ভেজাল ধরা যায়।</p>
+        <div class="definition-box" style="background: #fff5f5; border-color: var(--danger-red);">
+            <strong>নিরাপদ খাদ্যের চাবিকাঠি:</strong> <br>
+            ১. পরিষ্কার হাত ও পরিবেশ। <br>
+            ২. কাঁচা ও রান্না করা খাবার আলাদা রাখা। <br>
+            ৩. সঠিক তাপমাত্রায় রান্না ও সংরক্ষণ। <br>
+            ৪. নিরাপদ পানি ও কাঁচামাল ব্যবহার।
+        </div>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.6s;">
+        <h2>১০. স্বাস্থ্যবান জীবনের টিপস ও পরিভাষা</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>গুরুত্বপূর্ণ পরিভাষা:</h3>
+                <p><b>কিলোক্যালরি:</b> শক্তির একক।</p>
+                <p><b>বিপাক:</b> দেহের রাসায়নিক প্রক্রিয়া।</p>
+                <p><b>রাফেজ:</b> আঁশজাতীয় খাদ্য যা হজমে সাহায্য করে।</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>জীবনযাত্রার টিপস:</h3>
+                <ul>
+                    <li>দিনে ৮ গ্লাস পানি পান।</li>
+                    <li>রঙিন শাকসবজি ও ফল গ্রহণ।</li>
+                    <li>নিয়মিত ব্যায়াম ও পর্যাপ্ত ঘুম।</li>
+                    <li>প্রসেসড ফুড এড়িয়ে চলা।</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং ড্যাশবোর্ড ২০২৬ | সুস্থ শরীর, সুন্দর মন ✨</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় কুইজ - অষ্টম শ্রেণি</title>
+    <style>
+        :root { --primary: #2c3e50; --secondary: #34495e; --accent: #f1c40f; --success: #27ae60; --danger: #e74c3c; }
+        body { background-color: #ecf0f1; margin: 0; padding: 10px; }
+        .quiz-container { max-width: 750px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-family: 'SolaimanLipi', Arial, sans-serif; border-top: 8px solid var(--primary); }
+        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        input[type="text"], select { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; }
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.4s; }
+        .option { display: block; background: #f9f9f9; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .option:hover { background: #fef9e7; border-color: var(--accent); transform: translateX(5px); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; }
+        .score-box { font-size: 24px; font-weight: bold; color: var(--success); text-align: center; margin: 15px 0; padding: 20px; background: #f1f9f1; border-radius: 10px; border: 1px solid #d4edda; }
+        .time-box { text-align: center; font-size: 18px; color: #d35400; margin-bottom: 15px; font-weight: bold; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fafafa; }
+        .explanation { margin-top: 10px; padding: 10px; background: #fcf3cf; border-radius: 5px; font-size: 14px; color: #444; border-left: 3px solid var(--accent); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2>অধ্যায় ৯: বর্তনী ও চলবিদ্যুৎ</h2>
+        <p style="text-align:center; color:#666;">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার নাম লিখুন...">
+        <button type="button" class="btn" onclick="startQuiz()">কুইজ শুরু করুন</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color:#7f8c8d;"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div class="score-box" id="final-score"></div>
+        <p id="db-status" style="text-align:center; color: #27ae60; font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" onclick="location.reload()" style="background:#7f8c8d; margin-top:20px;">আবার চেষ্টা করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "তড়িৎ প্রবাহের একক কী?", a: ["ভোল্ট", "অ্যাম্পিয়ার", "ওহম", "ওয়াট"], c: 1, e: "তড়িৎ প্রবাহের আন্তর্জাতিক একক হলো অ্যাম্পিয়ার (A)।" },
+    { q: "বিভব পার্থক্যের একক কী?", a: ["অ্যাম্পিয়ার", "ভোল্ট", "কুলম্ব", "জুল"], c: 1, e: "বৈদ্যুতিক বিভবের পার্থক্য ভোল্ট (V) এককে মাপা হয়।" },
+    { q: "পরিবাহীর যে ধর্মের জন্য তড়িৎ প্রবাহ বাধাগ্রস্ত হয় তাকে কী বলে?", a: ["বিভব", "তড়িৎ প্রবাহ", "রোধ", "তড়িৎ ক্ষমতা"], c: 2, e: "রোধ (Resistance) বিদ্যুৎ প্রবাহকে বাধা দেয়।" },
+    { q: "ওহমের সূত্রানুসারে, তড়িৎ প্রবাহ বিভব পার্থক্যের কেমন হয়?", a: ["বর্গের সমানুপাতিক", "সমানুপাতিক", "ব্যস্তানুপাতিক", "অর্ধেক"], c: 1, e: "I = V/R, অর্থাৎ প্রবাহ বিভব পার্থক্যের সমানুপাতিক।" },
+    { q: "রোধের একক কী?", a: ["ভোল্ট", "অ্যাম্পিয়ার", "ওহম", "ওয়াট"], c: 2, e: "রোধের একক হলো ওহম (Ω)।" },
+    { q: "কোনটি তড়িৎ সুপরিবাহী পদার্থ?", a: ["রবার", "কাঠ", "তামা", "কাঁচ"], c: 2, e: "তামা ধাতু হওয়ায় এর ভেতর দিয়ে সহজে বিদ্যুৎ প্রবাহিত হয়।" },
+    { q: "বর্তনীতে তড়িৎ প্রবাহ মাপার যন্ত্রের নাম কী?", a: ["ভোল্টমিটার", "অ্যামিটার", "গ্যালভানোমিটার", "ব্যারোমিটার"], c: 1, e: "অ্যামিটার বর্তনীতে শ্রেণি সংযোগে যুক্ত করা হয়।" },
+    { q: "বিভব পার্থক্য মাপার যন্ত্রের নাম কী?", a: ["অ্যামিটার", "ভোল্টমিটার", "স্পিডোমিটার", "অ্যানিমোমিটার"], c: 1, e: "ভোল্টমিটার সমান্তরাল সংযোগে যুক্ত করা হয়।" },
+    { q: "তড়িৎ প্রবাহ কত প্রকার?", a: ["২ প্রকার", "৩ প্রকার", "৪ প্রকার", "৫ প্রকার"], c: 0, e: "তড়িৎ প্রবাহ ২ প্রকার: AC (পর্যায়বৃত্ত) এবং DC (একমুখী)।" },
+    { q: "বাংলাদেশে পর্যায়বৃত্ত প্রবাহের কম্পাঙ্ক কত?", a: ["৪০ হার্জ", "৫০ হার্জ", "৬০ হার্জ", "১০০ হার্জ"], c: 1, e: "বাংলাদেশে বিদ্যুতের ফ্রিকুয়েন্সি ৫০ হার্জ (Hz)।" },
+    { q: "শুকনো কোষ বা ড্রাই সেলের বিভব পার্থক্য কত?", a: ["১.০ ভোল্ট", "১.৫ ভোল্ট", "২.০ ভোল্ট", "১২ ভোল্ট"], c: 1, e: "ড্রাই সেলের ভোল্টেজ সাধারণত ১.৫ ভোল্ট থাকে।" },
+    { q: "তড়িৎ বর্তনী প্রধানত কয় প্রকার?", a: ["২ প্রকার", "৩ প্রকার", "৪ প্রকার", "৫ প্রকার"], c: 0, e: "শ্রেণি সংযোগ (Series) ও সমান্তরাল সংযোগ (Parallel)।" },
+    { q: "বাসাবাড়ির জন্য কোন বর্তনী সবচেয়ে উপযোগী?", a: ["শ্রেণি সংযোগ", "সমান্তরাল সংযোগ", "মিশ্র সংযোগ", "কোনোটিই নয়"], c: 1, e: "সমান্তরাল সংযোগে প্রতিটি যন্ত্রে সমান ভোল্টেজ পাওয়া যায়।" },
+    { q: "ফিউজ তার সাধারণত কিসের সংকর ধাতু?", a: ["তামা ও দস্তা", "টিন ও সীসা", "লোহা ও কার্বন", "রূপা ও সোনা"], c: 1, e: "টিন ও সীসার সংকর ধাতুর গলনাঙ্ক কম হয়।" },
+    { q: "বৈদ্যুতিক বাল্বের ফিলামেন্ট কিসের তৈরি?", a: ["তামা", "নাইক্রোম", "টাংস্টেন", "অ্যালুমিনিয়াম"], c: 2, e: "টাংস্টেনের গলনাঙ্ক অনেক বেশি।" },
+    { q: "তড়িৎ ক্ষমতার একক কী?", a: ["জুল", "ওয়াট", "অ্যাম্পিয়ার", "ভোল্ট"], c: 1, e: "বিদ্যুৎ শক্তির কাজের হারকে ওয়াট (W) বলে।" },
+    { q: "১ ইউনিট বিদ্যুৎ শক্তি বলতে কী বোঝায়?", a: ["১ ওয়াট-ঘন্টা", "১ কিলোওয়াট-ঘন্টা", "১০০ ওয়াট-ঘন্টা", "১০০০ কিলোওয়াট-ঘন্টা"], c: 1, e: "১ কিলোওয়াট-ঘন্টা = ১ ইউনিট (BOT)।" },
+    { q: "অ্যামিটারকে বর্তনীতে কীভাবে যুক্ত করতে হয়?", a: ["শ্রেণি সংযোগে", "সমান্তরাল সংযোগে", "বিপরীতভাবে", "মাটির নিচে"], c: 0, e: "অ্যামিটার সর্বদা সিরিজে যুক্ত থাকে।" },
+    { q: "চামচের ওপর রূপার প্রলেপ দেওয়াকে কী বলে?", a: ["জারন", "তড়িৎ লেপন", "বিজারণ", "দহন"], c: 1, e: "একে ইলেক্ট্রোলেটিংও বলা হয়।" },
+    { q: "সমান্তরাল বর্তনীতে বিভব পার্থক্য কেমন থাকে?", a: ["ভিন্ন হয়", "সমান থাকে", "শূন্য হয়", "দ্বিগুণ হয়"], c: 1, e: "সমান্তরাল সংযোগে ভোল্টেজ অপরিবর্তিত থাকে।" },
+    { q: "মানুষের শরীর বিদ্যুৎ—", a: ["সুপরিবাহী", "অপরিবাহী", "কুপরিবাহী", "অর্ধ-পরিবাহী"], c: 0, e: "মানুষের শরীর দিয়ে বিদ্যুৎ সহজে প্রবাহিত হতে পারে।" },
+    { q: "বৈদ্যুতিক হিটারের কুণ্ডলীতে কোন তার ব্যবহার করা হয়?", a: ["টাংস্টেন", "নাইক্রোম", "তামা", "লোহা"], c: 1, e: "নাইক্রোম তারের রোধ ও গলনাঙ্ক বেশি হয়।" },
+    { q: "সিস্টেম লস কমাতে কোন বিদ্যুৎ পরিবহন করা হয়?", a: ["নিম্ন ভোল্টেজ", "উচ্চ ভোল্টেজ", "ডিসি কারেন্ট", "কোনোটিই নয়"], c: 1, e: "উচ্চ ভোল্টেজে অপচয় বা সিস্টেম লস কমে।" },
+    { q: "তড়িৎ বিশ্লেষণে ক্যাথোডে কোন আয়ন যায়?", a: ["অ্যানায়ন", "ক্যাটায়ন", "ইলেকট্রন", "প্রোটন"], c: 1, e: "ক্যাথোড ঋণাত্মক, তাই এটি ধনাত্মক ক্যাটায়নকে টানে।" },
+    { q: "ফিউজ কেন ব্যবহার করা হয়?", a: ["বিদ্যুৎ সাশ্রয়", "বর্তনী রক্ষা", "ভোল্টেজ বাড়াতে", "আলো বাড়াতে"], c: 1, e: "অতিরিক্ত কারেন্টে ফিউজ পুড়ে দুর্ঘটনা রোধ করে।" },
+    { q: "এসি (AC) কারেন্টকে ডিসি (DC) তে রূপান্তর করে কোনটি?", a: ["ট্রান্সফরমার", "রেকটিফায়ার", "ক্যাপাসিটর", "ইন্ডাক্টর"], c: 1, e: "রেকটিফায়ার বা অ্যাডাপ্টার এসি-কে ডিসি করে।" },
+    { q: "তড়িৎ চার্জের একক কী?", a: ["ভোল্ট", "কুলম্ব", "অ্যাম্পিয়ার", "জুল"], c: 1, e: "চার্জ বা আধানের একক কুলম্ব (C)।" },
+    { q: "বৈদ্যুতিক ইস্ত্রি তড়িতের কোন ফল ব্যবহার করে?", a: ["চৌম্বক ফল", "তাপীয় ফল", "রাসায়নিক ফল", "আলোক ফল"], c: 1, e: "তড়িৎ প্রবাহের ফলে উৎপন্ন তাপকে এখানে কাজে লাগানো হয়।" },
+    { q: "৬০ ওয়াট বাল্বের অর্থ কী?", a: ["৬০ ভোল্ট", "প্রতি সেকেন্ডে ৬০ জুল শক্তি ব্যয়", "৬০ মিনিট জ্বলবে", "রোধ ৬০ ওহম"], c: 1, e: "এটি প্রতি সেকেন্ডে ৬০ জুল বৈদ্যুতিক শক্তি খরচ করে।" },
+    { q: "টাংস্টেনের গলনাঙ্ক কতর কাছাকাছি?", a: ["১০০০°C", "২০০০°C", "৩৩৮০°C", "৫০০০°C"], c: 2, e: "উচ্চ গলনাঙ্কের কারণে এটি আলো দেয় কিন্তু গলে না।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m}:${s < 10 ? '0'+s : s}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<div class="question-box active"><h3>${qData.q}</h3>${opts}</div>`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function saveToHistory(got, total) {
+    let resultData = { subject: "অধ্যায় ৯: বর্তনী ও চলবিদ্যুৎ", score: got + " / " + total, date: new Date().toLocaleString('bn-BD') };
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push(resultData);
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds / 60)}m ${totalSeconds % 60}s`;
+
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName} | <b>শ্রেণি:</b> অষ্টম`;
+    document.getElementById("final-score").innerText = `স্কোর: ${score} / ${quizData.length}`;
+    
+    saveToHistory(score, quizData.length);
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরপত্র:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><strong>ব্যাখ্যা:</strong> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => { document.getElementById("db-status").innerText = "✓ ফলাফল সার্ভারে সংরক্ষিত হয়েছে।"; })
+    .catch(() => { document.getElementById("db-status").innerText = "⚠ ডাটা সেভ করতে সমস্যা হয়েছে।"; });
+}
+</script>
+</body>
+</html>

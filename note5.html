@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সমন্বয় ও নিঃসরণ - স্মার্ট নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0984e3;
+            --secondary-purple: #6c5ce7;
+            --accent-green: #00b894;
+            --warning-orange: #e67e22;
+            --bg-light: #f1f2f6;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            color: #2d3436;
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0984e3, #6c5ce7);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.3);
+            animation: fadeInDown 1s ease;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-left: 10px solid var(--primary-blue);
+            animation: fadeInUp 0.8s ease backwards;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        h1 { margin: 0; font-size: 35px; font-weight: 700; }
+        h2 { color: var(--secondary-purple); border-bottom: 3px solid #dfe6e9; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: var(--primary-blue); margin-top: 25px; font-size: 22px; }
+
+        .definition {
+            background: #f0f3ff;
+            padding: 20px;
+            border-radius: 15px;
+            border-right: 5px solid var(--primary-blue);
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th { background: var(--secondary-purple); color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border: 1px solid #f1f2f6; }
+        tr:nth-child(even) { background-color: #f9f9ff; }
+
+        /* ব্যাজ */
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--accent-green);
+            color: white;
+            border-radius: 50px;
+            font-size: 14px;
+            margin: 5px;
+            font-weight: 600;
+        }
+
+        /* অ্যানিমেশন কিফ্রেম */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .process-step {
+            display: inline-block;
+            background: #fff3e0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 5px;
+            border: 1px solid #ffe0b2;
+            color: #e65100;
+            font-weight: bold;
+        }
+
+        footer { text-align: center; padding: 40px; color: #636e72; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 26px; }
+            h2 { font-size: 22px; }
+            .card { padding: 20px; }
+            table { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>সমন্বয় ও নিঃসরণ</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | অধ্যায় ৫ (স্মার্ট ডিজিটাল নোট)</p>
+    <div style="font-size: 45px; margin-top: 20px;">🧠🧪💧</div>
+</header>
+
+<div class="container">
+
+    <div class="card" style="animation-delay: 0.1s;">
+        <h2>১. সমন্বয় (Coordination)</h2>
+        <div class="definition">
+            <strong>সংজ্ঞা:</strong> জীবদেহের বিভিন্ন অংশের কাজের মধ্যে <b>সামঞ্জস্য ও নিয়ন্ত্রণ</b> বজায় রাখার প্রক্রিয়াকে সমন্বয় বলে।
+        </div>
+    </div>
+
+    <div class="card" style="border-left-color: var(--accent-green); animation-delay: 0.2s;">
+        <h2 style="color: var(--accent-green);">২. উদ্ভিদের সমন্বয়</h2>
+        <h3>(ক) উদ্ভিদ হরমোন (Phytohormone)</h3>
+        <p>উদ্ভিদদেহে উৎপন্ন রাসায়নিক পদার্থ যা উদ্ভিদের বৃদ্ধি ও বিকাশ নিয়ন্ত্রণ করে।</p>
+        
+        <div class="table-container">
+            <table>
+                <tr><th>হরমোন</th><th>স্থান</th><th>কাজ</th></tr>
+                <tr><td>অক্সিন</td><td>কাণ্ড ও মূলের অগ্রভাগ</td><td>কোষ প্রসারণ, মূল গজাতে ও ফল ঝরা রোধ করে।</td></tr>
+                <tr><td>জিব্বেরেলিন</td><td>বীজ, কচিপাতা</td><td>কাণ্ডের দৈর্ঘ্য বৃদ্ধি ও বীজের সুপ্তাবস্থা ভঙ্গ করে।</td></tr>
+                <tr><td>সাইটোকাইনিন</td><td>মূলের অগ্রভাগ, ফল</td><td>কোষ বিভাজন ও বার্ধক্য রোধ করে।</td></tr>
+                <tr><td>ইথিলিন</td><td>ফল, ফুল</td><td>ফল পাকাতে সাহায্য করে ও ফুল ফোটায়।</td></tr>
+                <tr><td>অ্যাবসিসিক অ্যাসিড</td><td>পাতা, কাণ্ড</td><td>বৃদ্ধি রোধ করে ও সুপ্তাবস্থা বজায় রাখে।</td></tr>
+            </table>
+        </div>
+
+        <h3>(খ) উদ্ভিদের চলন</h3>
+        <p>উদ্দীপনার প্রতি সাড়া দেওয়ার ক্ষমতাকে চলন বলে।</p>
+        <div class="table-container">
+            <table>
+                <tr><th>চলনের প্রকার</th><th>উদ্দীপনা</th><th>উদাহরণ</th></tr>
+                <tr><td>আলোকমুখী</td><td>আলো</td><td>সূর্য্যমুখী ফুল</td></tr>
+                <tr><td>অভিকর্ষমুখী</td><td>অভিকর্ষ</td><td>মূল নিচের দিকে বৃদ্ধি</td></tr>
+                <tr><td>স্পর্শমুখী</td><td>স্পর্শ</td><td>লতানো গাছ খুঁটি জড়ানো</td></tr>
+                <tr><td>জলমুখী</td><td>পানি</td><td>মূল পানির দিকে বেড়ে যাওয়া</td></tr>
+                <tr><td>রাসায়নিকমুখী</td><td>রাসায়নিক পদার্থ</td><td>পরাগনালিকার ডিম্বাশয়ের দিকে বৃদ্ধি</td></tr>
+            </table>
+        </div>
+        <p><strong>পরীক্ষা (আলোর প্রতি সাড়া):</strong> অন্ধকার বাক্সে একটি ছিদ্র দিয়ে আলো প্রবেশ করালে চারা গাছটির কাণ্ড আলোর দিকে বেঁকে যায়, যা আলোকমুখী চলন প্রমাণ করে।</p>
+    </div>
+
+    <div class="card" style="border-left-color: var(--secondary-purple); animation-delay: 0.3s;">
+        <h2 style="color: var(--secondary-purple);">৩. প্রাণীর সমন্বয়: স্নায়ুতন্ত্র</h2>
+        <h3>(ক) নিউরন (স্নায়ুকোষ)</h3>
+        <p>স্নায়ুতন্ত্রের একক। এটি তিনটি প্রধান নিউরন নিয়ে গঠিত: সংবেদী, চালক ও সংযোজক।</p>
+        <div class="table-container">
+            <table>
+                <tr><th>অংশ</th><th>কাজ</th></tr>
+                <tr><td>কোষদেহ (সোমা)</td><td>জীবনকার্য পরিচালনা</td></tr>
+                <tr><td>ডেনড্রাইট</td><td>উদ্দীপনা গ্রহণ</td></tr>
+                <tr><td>অ্যাক্সন</td><td>উদ্দীপনা বহন</td></tr>
+                <tr><td>মায়েলিন শীথ</td><td>অ্যাক্সনকে রক্ষা করা</td></tr>
+                <tr><td>র্যানভিয়ার নোড</td><td>উদ্দীপনা লাফিয়ে চলা</td></tr>
+            </table>
+        </div>
+        <p><strong>সিন্যাপস:</strong> দুটি নিউরনের সংযোগস্থল যা সংকেত আদান-প্রদান করে।</p>
+
+        <h3>(খ) মস্তিষ্কের অংশ</h3>
+        <div class="table-container">
+            <table>
+                <tr><th>অংশ</th><th>অবস্থান</th><th>কাজ</th></tr>
+                <tr><td>বৃহৎ মস্তিষ্ক</td><td>উপরের ভাগ</td><td>চিন্তা, স্মৃতি, বুদ্ধি ও ইচ্ছামূলক কাজ।</td></tr>
+                <tr><td>লঘু মস্তিষ্ক</td><td>পিছনের ভাগ</td><td>দেহের ভারসাম্য ও চলন সমন্বয়।</td></tr>
+                <tr><td>মেডুলা</td><td>নিচের ভাগ</td><td>অনৈচ্ছিক কাজ (হৃৎস্পন্দন, শ্বসন)।</td></tr>
+            </table>
+        </div>
+        <p><span class="badge">ধূসর পদার্থ:</span> বাইরে থাকে। <span class="badge">শ্বেত পদার্থ:</span> ভিতরে থাকে।</p>
+
+        <h3>(গ) সুষুম্নাকাণ্ড ও প্রতিবর্ত ক্রিয়া</h3>
+        <p><strong>সুষুম্নাকাণ্ড:</strong> মেরুদণ্ডের ভিতরে থাকে এবং প্রতিবর্ত ক্রিয়া নিয়ন্ত্রণ করে।</p>
+        <p><strong>প্রতিবর্ত ক্রিয়া (Reflex Action):</strong> তাৎক্ষণিক, অনৈচ্ছিক সাড়া।</p>
+        <p><strong>প্রতিবর্ত চক্রের ধাপ:</strong> <br>
+            <span class="process-step">গ্রাহক</span> ➔ 
+            <span class="process-step">সংবেদী নিউরন</span> ➔ 
+            <span class="process-step">সুষুম্নাকাণ্ড</span> ➔ 
+            <span class="process-step">প্রচালক নিউরন</span> ➔ 
+            <span class="process-step">কার্যকরী অঙ্গ</span>
+        </p>
+    </div>
+
+    <div class="card" style="border-left-color: var(--warning-orange); animation-delay: 0.4s;">
+        <h2 style="color: var(--warning-orange);">৪. নিঃসরণ (Excretion)</h2>
+        <div class="definition">
+            <strong>সংজ্ঞা:</strong> জীবদেহ থেকে বর্জ্য পদার্থ নিষ্কাশনের প্রক্রিয়াকে নিঃসরণ বলে।
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <tr><th>অঙ্গ</th><th>বর্জ্য</th><th>কাজ</th></tr>
+                <tr><td>বৃক্ক (Kidney)</td><td>ইউরিয়া, পানি, লবণ</td><td>রক্ত ছাঁকন ও মূত্র তৈরি।</td></tr>
+                <tr><td>ত্বক (Skin)</td><td>ঘাম</td><td>তাপমাত্রা নিয়ন্ত্রণ ও লবণ ত্যাগ।</td></tr>
+                <tr><td>ফুসফুস</td><td>CO₂</td><td>গ্যাসীয় বর্জ্য নিষ্কাশন।</td></tr>
+                <tr><td>যকৃত</td><td>বিলিরুবিন</td><td>বিষাক্ত পদার্থ নিষ্কাশন।</td></tr>
+            </table>
+        </div>
+
+        <h3>বৃক্ক ও নেফ্রন:</h3>
+        <p>বৃক্কের কার্যকরী একক হলো <strong>নেফ্রন</strong> (প্রতি বৃক্কে ১০ লক্ষ)। মূত্র তৈরির ধাপগুলো হলো: <b>পরিস্রাবণ ➔ পুনঃশোষণ ➔ নিঃসরণ</b>।</p>
+        <p><strong>নিঃসরণের গুরুত্ব:</strong> রাসায়নিক সমতা রক্ষা, বিষাক্ত পদার্থ বের করা এবং রক্তচাপ ও তাপমাত্রা নিয়ন্ত্রণ করা।</p>
+    </div>
+
+    <div class="card" style="animation-delay: 0.5s; border-left-color: #7f8c8d;">
+        <h2>৫. গুরুত্বপূর্ণ পরিভাষা</h2>
+        <div style="columns: 2; -webkit-columns: 2; gap: 20px;">
+            <p><b>অক্সিন:</b> বৃদ্ধি নিয়ন্ত্রক হরমোন।</p>
+            <p><b>নিউরন:</b> স্নায়ুতন্ত্রের একক।</p>
+            <p><b>নেফ্রন:</b> বৃক্কের একক।</p>
+            <p><b>সিন্যাপস:</b> নিউরনের মিলনস্থল।</p>
+            <p><b>ইউরিয়া:</b> প্রোটিন বিপাকের বর্জ্য।</p>
+            <p><b>লেন্টিসেল:</b> কাণ্ডের ছিদ্র।</p>
+        </div>
+    </div>
+
+    <div class="card" style="background: #e8f4fd; animation-delay: 0.6s;">
+        <h2>৬. সারসংক্ষেপ (Summary)</h2>
+        <ul>
+            <li>সমন্বয় হলো জীবদেহের কাজের মধ্যে সামঞ্জস্য রক্ষা।</li>
+            <li>উদ্ভিদের সমন্বয় হরমোন ও চলনের মাধ্যমে ঘটে।</li>
+            <li>প্রাণীর সমন্বয় স্নায়ুতন্ত্রের (নিউরন, মস্তিষ্ক) মাধ্যমে ঘটে।</li>
+            <li>প্রতিবর্ত ক্রিয়া হলো দ্রুত ও অনৈচ্ছিক সাড়া।</li>
+            <li>নিঃসরণ হলো বর্জ্য নিষ্কাশন; বৃক্ক এর প্রধান অঙ্গ।</li>
+            <li>ত্বক, ফুসফুস ও যকৃতও নিঃসরণে অংশ নেয় এবং অভ্যন্তরীণ পরিবেশ সঠিক রাখে।</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং নোট © ২০২৬ | বিজ্ঞানকে সহজ করি ✨</p>
+</footer>
+
+</body>
+</html>

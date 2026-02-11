@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বর্তনী ও চলবিদ্যুৎ - মাস্টার নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --electric-blue: #0984e3;
+            --danger-red: #d63031;
+            --success-green: #27ae60;
+            --circuit-yellow: #f1c40f;
+            --bg-light: #f4f7f6;
+            --card-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            color: #2d3436;
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2980b9, #2c3e50);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 5px solid var(--circuit-yellow);
+            animation: fadeInDown 1s ease;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .section-card {
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-left: 10px solid var(--electric-blue);
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        h1 { margin: 0; font-size: 35px; }
+        h2 { color: var(--electric-blue); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: #8e44ad; margin-top: 25px; }
+
+        .formula-box {
+            background: #2d3436;
+            color: #00cec9;
+            padding: 20px;
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2em;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .highlight-box {
+            background: #fff9db;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 5px solid var(--circuit-yellow);
+            margin: 15px 0;
+        }
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+        th { background: var(--electric-blue); color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border: 1px solid #f1f2f6; }
+        tr:nth-child(even) { background-color: #f9f9ff; }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #e8f6ef;
+            color: #27ae60;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 40px; color: #636e72; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 26px; }
+            .section-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>অধ্যায় ৯: বর্তনী ও চলবিদ্যুৎ</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান (পূর্ণাঙ্গ মাস্টার নোট)</p>
+    <div style="font-size: 40px; margin-top: 15px;">⚡🔋🔌</div>
+</header>
+
+<div class="container">
+
+    <div class="section-card" style="animation-delay: 0.1s;">
+        <h2>১. তড়িৎপরিবাহী ও অপরিবাহী</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>পরিবাহী (Conductor)</h3>
+                <p>সহজে তড়িৎ প্রবাহিত হয়।</p>
+                <p><span class="badge">তামা</span> <span class="badge">লোহা</span> <span class="badge">রূপা</span> <span class="badge">গ্রাফাইট</span></p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>অপরিবাহী (Insulator)</h3>
+                <p>তড়িৎ প্রবাহিত হতে পারে না।</p>
+                <p><span class="badge">কাঠ</span> <span class="badge">প্লাস্টিক</span> <span class="badge">কাঁচ</span> <span class="badge">রাবার</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-card" style="border-left-color: var(--circuit-yellow); animation-delay: 0.2s;">
+        <h2>২. তড়িৎপ্রবাহ ও ৩. তড়িৎবিভব</h2>
+        <div class="highlight-box">
+            <strong>তড়িৎপ্রবাহ (I):</strong> একক সময়ে প্রবাহিত আধান। একক: <b>অ্যাম্পিয়ার (A)</b>। মাপার যন্ত্র: <b>অ্যামিটার</b>।
+        </div>
+        
+        <div class="highlight-box">
+            <strong>বিভব পার্থক্য (V):</strong> দুই বিন্দুর বিভবের পার্থক্য। একক: <b>ভোল্ট (V)</b>। মাপার যন্ত্র: <b>ভোল্টমিটার</b>।
+        </div>
+        <p><i>মনে রেখো:</i> প্রচলিত প্রবাহের দিক ধনাত্মক থেকে ঋণাত্মক দিকে, কিন্তু ইলেকট্রন চলে তার উল্টো দিকে।</p>
+    </div>
+
+    <div class="section-card" style="border-left-color: var(--success-green); animation-delay: 0.3s;">
+        <h2>৪. রোধ ও ৫. ওহমের সূত্র</h2>
+        <p><strong>রোধ (R):</strong> তড়িৎপ্রবাহের বাধা। একক: <b>ওহম (Ω)</b>।</p>
+        <p><strong>ওহমের সূত্র:</strong> স্থির তাপমাত্রায় প্রবাহ বিভব পার্থক্যের সমানুপাতিক।</p>
+        <div class="formula-box">
+            V = I * R
+        </div>
+        <p><strong>নির্ভরশীলতা:</strong> রোধ দৈর্ঘ্যের (L) সমানুপাতিক এবং প্রস্থচ্ছেদের ক্ষেত্রফলের (A) ব্যস্তানুপাতিক।</p>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.4s;">
+        <h2>৬. বর্তনীর প্রকারভেদ</h2>
+        
+
+[attachment_0](attachment)
+
+        <div class="table-container">
+            <table>
+                <tr><th>বৈশিষ্ট্য</th><th>শ্রেণি বর্তনী (Series)</th><th>সমান্তরাল বর্তনী (Parallel)</th></tr>
+                <tr><td>পথ</td><td>একটি মাত্র পথ</td><td>একাধিক শাখা পথ</td></tr>
+                <tr><td>প্রবাহ (I)</td><td>সবখানে সমান</td><td>শাখাভেদে ভিন্ন</td></tr>
+                <tr><td>বিভব (V)</td><td>ভাগ হয়ে যায়</td><td>সবখানে সমান</td></tr>
+                <tr><td>মোট রোধ</td><td>R = R1 + R2 + ...</td><td>1/R = 1/R1 + 1/R2 + ...</td></tr>
+                <tr><td>সুবিধা</td><td>একটি নষ্ট হলে সব বন্ধ</td><td>একটি নষ্ট হলেও অন্যগুলো চলে</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-card" style="border-left-color: var(--danger-red); animation-delay: 0.5s;">
+        <h2>৭. গৃহস্থালির বৈদ্যুতিক বর্তনী</h2>
+        <p>বাড়িতে বিদ্যুৎ সংযোগের জন্য <b>সমান্তরাল বর্তনী</b> ব্যবহার করা হয়।</p>
+        <ul>
+            <li><strong>ফিউজ:</strong> অতিরিক্ত প্রবাহে গলে গিয়ে দুর্ঘটনা রোধ করে।</li>
+            <li><strong>মেইন সুইচ:</strong> পুরো বাড়ির সংযোগ বিচ্ছিন্ন করার চাবি।</li>
+        </ul>
+        <h3>তারের কালার কোড:</h3>
+        <p><span class="badge" style="background:#e74c3c; color:white;">লাইভ: লাল/বাদামি</span> 
+           <span class="badge" style="background:#2d3436; color:white;">নিউট্রাল: নীল/কালো</span> 
+           <span class="badge" style="background:#2ecc71; color:white;">আর্থিং: সবুজ/হলুদ</span></p>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.6s;">
+        <h2>৮. তড়িৎশক্তির হিসাব ও ৯. নিরাপদ ব্যবহার</h2>
+        <div class="formula-box">
+            ক্ষমতা (P) = V * I <br>
+            শক্তি খরচ = P * সময় (t)
+        </div>
+        <p><strong>ইউনিট (kWh):</strong> ১ কিলোওয়াট-ঘণ্টা বিদ্যুৎ খরচকে ১ ইউনিট বলা হয়।</p>
+        <div class="highlight-box">
+            <strong>নিরাপত্তা টিপস:</strong> ১. ভেজা হাতে সুইচ ধরা নিষেধ। ২. শর্ট সার্কিট এড়াতে ফিউজ বা সার্কিট ব্রেকার ব্যবহার। ৩. ধাতব যন্ত্রের নিরাপত্তার জন্য <b>আর্থিং</b> করা জরুরি।
+        </div>
+    </div>
+
+    <div class="section-card" style="background: #eef2f7; animation-delay: 0.7s;">
+        <h2>১০. গুরুত্বপূর্ণ পরিভাষা ও সারসংক্ষেপ</h2>
+        <div style="columns: 2;">
+            <p><b>রিওস্ট্যাট:</b> পরিবর্তনশীল রোধ।</p>
+            <p><b>সার্কিট ব্রেকার:</b> অটোমেটিক সুইচ।</p>
+            <p><b>শর্ট সার্কিট:</b> লাইভ ও নিউট্রালের সংযোগ।</p>
+            <p><b>ওহমিক পরিবাহী:</b> সূত্র মেনে চলা ধাতু।</p>
+        </div>
+        <hr>
+        <p><strong>একনজরে:</strong> তড়িৎপ্রবাহ হলো আধানের চলন। ওহমের সূত্র দ্বারা ভোল্টেজ, কারেন্ট ও রোধের সম্পর্ক বোঝা যায়। বাড়িতে নিরাপত্তার জন্য ফিউজ ও আর্থিং অপরিহার্য। সমান্তরাল বর্তনী গৃহস্থালির জন্য সেরা।</p>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং ড্যাশবোর্ড © ২০২৬ | বিজ্ঞান হোক আলোকিত ✨</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ব্যাপন, অভিস্রবণ ও প্রস্বেদন - স্মার্ট নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --diffusion-color: #ff7675;
+            --osmosis-color: #0984e3;
+            --transpiration-color: #00b894;
+            --bg-light: #f8f9fa;
+            --text-dark: #2d3436;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeInDown 1s ease;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        h2 {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h2::before { margin-right: 15px; font-size: 30px; }
+
+        .diffusion-title::before { content: "🌬️"; color: var(--diffusion-color); }
+        .osmosis-title::before { content: "💧"; color: var(--osmosis-color); }
+        .transpiration-title::before { content: "🍃"; color: var(--transpiration-color); }
+
+        .highlight-box {
+            background: #f1f2f6;
+            border-left: 5px solid #6c5ce7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .badge-red { background: #ffeaa7; color: #d35400; }
+        .badge-blue { background: #dff9fb; color: #0984e3; }
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        th { background: #6c5ce7; color: white; padding: 15px; text-align: center; }
+        td { padding: 12px; border: 1px solid #eee; text-align: center; background: white; }
+
+        /* অ্যানিমেশন */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .process-flow {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .flow-item {
+            text-align: center;
+            padding: 15px;
+            background: #fff;
+            border: 2px dashed #6c5ce7;
+            border-radius: 15px;
+            width: 120px;
+            margin: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 10px; }
+            h2 { font-size: 20px; }
+            table { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>অধ্যায় ৩: ব্যাপন, অভিস্রবণ ও প্রস্বেদন</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | প্রিমিয়াম ডিজিটাল নোট</p>
+</header>
+
+<div class="container">
+
+    <div class="card" style="border-top: 6px solid var(--diffusion-color);">
+        <h2 class="diffusion-title">১. ব্যাপন (Diffusion)</h2>
+        <div class="highlight-box">
+            <strong>সংজ্ঞা:</strong> উচ্চ ঘনত্বের স্থান থেকে নিম্ন ঘনত্বের স্থানের দিকে অণুগুলোর স্বতঃস্ফূর্ত ও সমভাবে ছড়িয়ে পড়াকে <b>ব্যাপন</b> বলে।
+        </div>
+        <p><strong>পরীক্ষা:</strong> ঘরের এক কোণে আতর বা ধূপ জ্বালালে কিছুক্ষণের মধ্যে পুরো ঘরে সুবাস ছড়ায়। কারণ, আতরের অণুগুলি উচ্চ ঘনত্বের স্থান থেকে নিম্ন ঘনত্বের দিকে ছড়িয়ে পড়ে।</p>
+        <p><strong>উদাহরণ:</strong> 
+            <span class="badge badge-red">ফুলের গন্ধ</span> 
+            <span class="badge badge-red">খাবারের সুবাস</span> 
+            <span class="badge badge-red">পানিতে চিনি মেশানো</span>
+        </p>
+        <strong>জীবদেহে ভূমিকা:</strong> শ্বসনে অক্সিজেন ও CO<sub>2</sub> আদান-প্রদান এবং পুষ্টি শোষণে ব্যাপন কাজ করে।
+    </div>
+
+    <div class="card" style="border-top: 6px solid var(--osmosis-color);">
+        <h2 class="osmosis-title">২. অভিস্রবণ (Osmosis)</h2>
+        <div class="highlight-box">
+            <strong>সংজ্ঞা:</strong> অর্ধভেদ্য পর্দার মাধ্যমে দ্রাবক অণু (পানি) কম ঘনত্বের দ্রবণ থেকে বেশি ঘনত্বের দ্রবণের দিকে চলাচল করার প্রক্রিয়াই হলো <b>অভিস্রবণ</b>।
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <tr><th>পর্দার ধরন</th><th>বৈশিষ্ট্য</th><th>উদাহরণ</th></tr>
+                <tr><td>ভেদ্য</td><td>দ্রাবক ও দ্রব উভয়ই যেতে পারে</td><td>কোষপ্রাচীর</td></tr>
+                <tr><td>অর্ধভেদ্য</td><td>শুধু দ্রাবক (পানি) যেতে পারে</td><td>কোষপর্দা, ডিমের পর্দা</td></tr>
+                <tr><td>অভেদ্য</td><td>কেউই যেতে পারে না</td><td>প্লাস্টিক, কাঁচ</td></tr>
+            </table>
+        </div>
+
+        <p><strong>কিশমিশ পরীক্ষা:</strong> শুকনো কিশমিশ পানিতে রাখলে ফুলে ওঠে কারণ পানি <b>অন্তঃঅভিস্রবণ</b> প্রক্রিয়ায় ভিতরে ঢোকে।</p>
+        <strong>উদ্ভিদে ভূমিকা:</strong> মূলরোম দিয়ে পানি শোষণ ও কোষকে সতেজ (টার্গর চাপ) রাখা।
+    </div>
+
+    <div class="card">
+        <h2>৩. উদ্ভিদে পানি ও খনিজ লবণ শোষণ</h2>
+        <ul>
+            <li><strong>ইমবাইবিশন:</strong> শুষ্ক পদার্থ (সেলুলোজ, স্টার্চ) দ্বারা পানি শোষণ।</li>
+            <li><strong>খনিজ লবণ শোষণ:</strong> ২ প্রকার - 
+                <br>১. <b>নিষ্ক্রিয়:</b> শক্তি লাগে না। 
+                <br>২. <b>ক্রিয়াশীল:</b> ATP শক্তি ও এনজাইম লাগে।
+            </li>
+        </ul>
+        <div class="process-flow">
+            <div class="flow-item">মাটির পানি</div>
+            <div class="flow-item">➡️ মূলরোম</div>
+            <div class="flow-item">➡️ জাইলেম</div>
+            <div class="flow-item">➡️ পাতা</div>
+        </div>
+    </div>
+
+    <div class="card" style="border-top: 6px solid var(--transpiration-color);">
+        <h2 class="transpiration-title">৪. প্রস্বেদন (Transpiration)</h2>
+        <p>উদ্ভিদের পাতা বা অন্যান্য অংশ থেকে বাষ্পাকারে পানি বের করে দেওয়ার প্রক্রিয়া।</p>
+        <div class="table-container">
+            <table>
+                <tr><th>প্রকার</th><th>ঘটনাস্থল</th></tr>
+                <tr><td>পত্ররন্ধ্রীয়</td><td>পাতার পত্ররন্ধ্র (৯৯%)</td></tr>
+                <tr><td>লেন্টিসেলীয়</td><td>কাণ্ডের লেন্টিসেল</td></tr>
+                <tr><td>ত্বকীয়</td><td>পাতার কিউটিকল বা ত্বক</td></tr>
+            </table>
+        </div>
+        <strong>প্রভাবকসমূহ:</strong> আলো ⬆️, তাপমাত্রা ⬆️, বায়ুর গতি ⬆️ হলে প্রস্বেদন বাড়ে। বাতাসের আর্দ্রতা ⬇️ হলে প্রস্বেদন বাড়ে।
+    </div>
+
+    <div class="card">
+        <h2>৫. উদ্ভিদে পরিবহন ব্যবস্থা</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div style="background: #e3f2fd; padding: 15px; border-radius: 15px;">
+                <h4 style="color: #0d47a1;">জাইলেম (Xylem)</h4>
+                <p>পানি ও খনিজ লবণ বহন করে। <br><b>দিক:</b> শুধুমাত্র ঊর্ধ্বমুখী।</p>
+            </div>
+            <div style="background: #e8f5e9; padding: 15px; border-radius: 15px;">
+                <h4 style="color: #1b5e20;">ফ্লোয়েম (Phloem)</h4>
+                <p>তৈরি খাদ্য সারা দেহে পৌঁছায়। <br><b>দিক:</b> উভয়মুখী।</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>৬. তুলনা ও শব্দকোষ</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>প্রক্রিয়া</th><th>মাধ্যম</th><th>উদাহরণ</th></tr>
+                <tr><td>ব্যাপন</td><td>যেকোনো মাধ্যম</td><td>সুবাস ছড়ানো</td></tr>
+                <tr><td>অভিস্রবণ</td><td>অর্ধভেদ্য পর্দা</td><td>কিশমিশ ফোলানো</td></tr>
+                <tr><td>প্রস্বেদন</td><td>পত্ররন্ধ্র/লেন্টিসেল</td><td>পানি বাষ্প হওয়া</td></tr>
+            </table>
+        </div>
+        <div class="highlight-box" style="border-left-color: #f39c12; background: #fff9f0;">
+            <b>টার্গর চাপ:</b> কোষপ্রাচীরের উপর প্রোটোপ্লাজমের চাপ। <br>
+            <b>লেন্টিসেল:</b> কাণ্ডের বাকলে থাকা ছিদ্র।
+        </div>
+    </div>
+
+</div>
+
+<footer style="text-align: center; padding: 30px; color: #95a5a6; font-size: 14px;">
+    স্মার্ট লার্নিং নোট © ২০২৬ | বিজ্ঞান সহজ পাঠ
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় কুইজ - অষ্টম শ্রেণি</title>
+    <style>
+        :root { --primary: #27ae60; --secondary: #2ecc71; --success: #27ae60; --danger: #e74c3c; }
+        body { background-color: #f4f7f6; margin: 0; padding: 10px; }
+        .quiz-container { max-width: 750px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-family: 'SolaimanLipi', Arial, sans-serif; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        input[type="text"], select { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; }
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.4s; }
+        .option { display: block; background: #f9f9f9; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .option:hover { background: #f0f4f8; border-color: var(--secondary); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; }
+        .score-box { font-size: 24px; font-weight: bold; color: var(--success); text-align: center; margin: 15px 0; padding: 20px; background: #f1f9f1; border-radius: 10px; border: 1px solid #d4edda; }
+        .time-box { text-align: center; font-size: 18px; color: #e67e22; margin-bottom: 15px; font-weight: bold; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fafafa; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e8f4fd; border-radius: 5px; font-size: 14px; color: #444; border-left: 3px solid var(--secondary); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2 id="chapter-title">অধ্যায় ৪: উদ্ভিদে বংশবৃদ্ধি</h2>
+        <p style="text-align:center; color:#666;">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার নাম লিখুন...">
+        <button type="button" class="btn" onclick="startQuiz()">কুইজ শুরু করুন</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color:#7f8c8d;"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div class="score-box" id="final-score"></div>
+        <p id="db-status" style="text-align:center; color: #27ae60; font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" onclick="location.reload()" style="background:#7f8c8d; margin-top:20px;">আবার শুরু করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "যে প্রক্রিয়ায় জীব তার প্রতিরূপ সৃষ্টি করে তাকে কী বলে?", a: ["রেচন", "বংশবৃদ্ধি", "শ্বসন", "পুষ্টি"], c: 1, e: "বংশবৃদ্ধি বা প্রজননের মাধ্যমেই জীব তার বংশধর টিকিয়ে রাখে।" },
+    { q: "উদ্ভিদের প্রধান প্রজনন অঙ্গ কোনটি?", a: ["মূল", "কাণ্ড", "পাতা", "ফুল"], c: 3, e: "ফুল হলো উদ্ভিদের বংশবৃদ্ধির জন্য বিশেষভাবে রূপান্তরিত বিটপ।" },
+    { q: "পরাগায়ন প্রধানত কয় প্রকার?", a: ["২ প্রকার", "৩ প্রকার", "৪ প্রকার", "৫ প্রকার"], c: 0, e: "পরাগায়ন ২ প্রকার: স্বপরাগায়ন ও পরপরাগায়ন।" },
+    { q: "একটি আদর্শ ফুলের কয়টি অংশ থাকে?", a: ["৩টি", "৪টি", "৫টি", "৬টি"], c: 2, e: "একটি আদর্শ ফুলের ৫টি অংশ: পুষ্পাক্ষ, বৃতি, দলমন্ডল, পুংস্তবক ও স্ত্রীস্তবক।" },
+    { q: "ফুলের বাইরের স্তবককে কী বলে?", a: ["দলমন্ডল", "বৃতি", "পুংস্তবক", "স্ত্রীস্তবক"], c: 1, e: "বৃতি হলো ফুলের বাইরের স্তবক যা কুঁড়ি অবস্থায় ফুলকে রক্ষা করে।" },
+    { q: "ফুলের কোন অংশটি রঙিন হয়ে পতঙ্গ আকর্ষণ করে?", a: ["বৃতি", "দলমন্ডল", "পুষ্পাক্ষ", "গর্ভাশয়"], c: 1, e: "দলমন্ডল বা পাপড়ি উজ্জ্বল রঙের হয় যা পরাগায়নের জন্য পতঙ্গ আকর্ষণ করে।" },
+    { q: "পরাগরেণু কোথায় উৎপন্ন হয়?", a: ["গর্ভমুণ্ডে", "পরাধানীতে", "বৃতিতে", "পুষ্পাক্ষে"], c: 1, e: "পুংস্তবকের পরাধানীর মধ্যে পরাগরেণু উৎপন্ন হয়।" },
+    { q: "নিষেক প্রক্রিয়ার পর গর্ভাশয় কিসে পরিণত হয়?", a: ["বীজ", "ফল", "পাতা", "কাণ্ড"], c: 1, e: "নিষেক শেষে গর্ভাশয় ফলে এবং ডিম্বক বীজে পরিণত হয়।" },
+    { q: "কোনটি অযৌন প্রজননের মাধ্যম?", a: ["বীজ", "রেণু বা স্পোর", "ফুল", "ফল"], c: 1, e: "নিম্নশ্রেণির উদ্ভিদে রেণু বা স্পোর তৈরির মাধ্যমে অযৌন প্রজনন ঘটে।" },
+    { q: "মিষ্টি আলুর প্রজনন ঘটে কিসের মাধ্যমে?", a: ["কাণ্ড", "পাতা", "মূল", "ফুল"], c: 2, e: "মিষ্টি আলু মূলের মাধ্যমে বংশবৃদ্ধি করে।" },
+    { q: "পাথরকুচি উদ্ভিদের প্রজনন ঘটে কিসের মাধ্যমে?", a: ["মূল", "পাতা", "কাণ্ড", "বীজ"], c: 1, e: "পাথরকুচি পাতার কিনারায় নতুন চারা জন্মায়।" },
+    { q: "আদার ভূ-নিম্নস্থ রূপান্তরিত কাণ্ডকে কী বলে?", a: ["টিউবার", "রাইজোম", "বাল্ব", "অফসেট"], c: 1, e: "আদা ও হলুদ রাইজোম জাতীয় রূপান্তরিত কাণ্ড।" },
+    { q: "একই ফুলের মধ্যে পরাগায়ন ঘটলে তাকে কী বলে?", a: ["স্বপরাগায়ন", "পরপরাগায়ন", "নিষেক", "অঙ্কুরোদগম"], c: 0, e: "একই ফুল বা একই গাছের দুটি ফুলের মধ্যে পরাগায়নই স্বপরাগায়ন।" },
+    { q: "পেঁপের পরাগায়ন কোন ধরনের?", a: ["স্বপরাগায়ন", "পরপরাগায়ন", "নিষেক", "অ্যামাইটোসিস"], c: 1, e: "পেঁপে একলিঙ্গ ফুল হওয়ায় এতে পরপরাগায়ন ঘটে।" },
+    { q: "বাতাসের মাধ্যমে পরাগায়ন ঘটে কোন উদ্ভিদে?", a: ["শিমুল", "ধান", "কদম", "পদ্ম"], c: 1, e: "ধান বা ঘাস জাতীয় উদ্ভিদে বায়ুপরাগায়ন ঘটে।" },
+    { q: "জলের মাধ্যমে পরাগায়ন ঘটে কোনটিতে?", a: ["পাতা শ্যাওলা", "কদম", "মরিচ", "আম"], c: 0, e: "জলজ উদ্ভিদে পানির মাধ্যমে পরাগায়ন সম্পন্ন হয়।" },
+    { q: "ফুলের অত্যাবশ্যকীয় স্তবক কয়টি?", a: ["২টি", "৩টি", "৪টি", "৫টি"], c: 0, e: "পুংস্তবক ও স্ত্রীস্তবক সরাসরি প্রজননে অংশ নেয় বলে এদের অত্যাবশ্যকীয় স্তবক বলে।" },
+    { q: "ডিম্বক কিসে পরিণত হয়?", a: ["ফল", "বীজ", "মূল", "পাপড়ি"], c: 1, e: "নিষেকের পর ডিম্বক বীজে রূপান্তরিত হয়।" },
+    { q: "অঙ্কুরোদগম কয় প্রকার?", a: ["২ প্রকার", "৩ প্রকার", "৪ প্রকার", "১ প্রকার"], c: 0, e: "অঙ্কুরোদগম ২ প্রকার: মৃৎভেদী ও মৃৎগত।" },
+    { q: "ছোলা বীজের অঙ্কুরোদগম কোন ধরনের?", a: ["মৃৎভেদী", "মৃৎগত", "বায়বীয়", "অযৌন"], c: 1, e: "ছোলা বীজের বীজপত্র মাটির নিচে থাকে বলে এটি মৃৎগত অঙ্কুরোদগম।" },
+    { q: "টিউবার বা কন্দাল কাণ্ডের উদাহরণ কোনটি?", a: ["গোল আলু", "পেঁয়াজ", "আদা", "কচু"], c: 0, e: "গোল আলু টিউবার জাতীয় রূপান্তরিত কাণ্ড।" },
+    { q: "কচুরিপানার বংশবৃদ্ধি ঘটে কিসের মাধ্যমে?", a: ["অফসেট", "সাকার", "রানার", "বাল্ব"], c: 0, e: "কচুরিপানা অফসেটের মাধ্যমে দ্রুত বংশবৃদ্ধি করে।" },
+    { q: "নিষেকের পূর্বশর্ত কোনটি?", a: ["ফল হওয়া", "বীজ হওয়া", "পরাগায়ন", "অঙ্কুরোদগম"], c: 2, e: "পরাগায়ন সফল হলে তবেই নিষেক প্রক্রিয়া শুরু হয়।" },
+    { q: "কোনটি পতঙ্গপরাগী ফুলের বৈশিষ্ট্য?", a: ["বর্ণহীন", "গন্ধহীন", "রঙিন ও আকর্ষণীয়", "খুব ছোট"], c: 2, e: "পতঙ্গপরাগী ফুল রঙিন, বড় ও মধুগ্রন্থিযুক্ত হয়।" },
+    { q: "বীজের সুপ্তাবস্থা ভাঙতে কোনটি প্রয়োজন?", a: ["অক্সিজেন", "পানি", "তাপমাত্রা", "সবগুলো"], c: 3, e: "অঙ্কুরোদগমের জন্য পানি, তাপ ও অক্সিজেন অপরিহার্য।" },
+    { q: "পুষ্পমঞ্জরি কাকে বলে?", a: ["ফুলের পাপড়িকে", "ফুলের সাজানো শাখাটিকে", "বৃতিকে", "গর্ভাশয়কে"], c: 1, e: "কাণ্ডের শীর্ষে ফুলের বিশেষ সাজানো অবস্থাকে পুষ্পমঞ্জরি বলে।" },
+    { q: "নিষেকের ফলে কী তৈরি হয়?", a: ["জাইগোট", "স্পোর", "বৃতি", "পুষ্পাক্ষ"], c: 0, e: "পুং ও স্ত্রী গ্যামেটের মিলনের ফলে জাইগোট তৈরি হয়।" },
+    { q: "পেঁয়াজ ও রসুন কোন ধরণের কাণ্ড?", a: ["রাইজোম", "বাল্ব বা কন্দ", "টিউবার", "রানার"], c: 1, e: "এগুলো সংক্ষিপ্ত ও চাকতির মতো বাল্ব জাতীয় কাণ্ড।" },
+    { q: "মৃৎভেদী অঙ্কুরোদগম দেখা যায় কোনটিতে?", a: ["ছোলা", "ধান", "কুমড়া", "গম"], c: 2, e: "কুমড়া বা তেঁতুলের বীজপত্র মাটি ভেদ করে উপরে ওঠে।" },
+    { q: "পুং দণ্ড ও পরাধানী মিলে কী গঠিত হয়?", a: ["পুংকেশর", "স্ত্রীকেশর", "দল", "বৃতি"], c: 0, e: "পুংকেশরের দুটি অংশ হলো পুং দণ্ড ও পরাধানী।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m}:${s < 10 ? '0'+s : s}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<div class="question-box active"><h3>${qData.q}</h3>${opts}</div>`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function saveToHistory(got, total) {
+    let resultData = { subject: "অধ্যায় ৪: উদ্ভিদে বংশবৃদ্ধি", score: got + " / " + total, date: new Date().toLocaleString('bn-BD') };
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push(resultData);
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds / 60)}m ${totalSeconds % 60}s`;
+
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName} | <b>শ্রেণি:</b> অষ্টম`;
+    document.getElementById("final-score").innerText = `স্কোর: ${score} / ${quizData.length}`;
+    
+    // হিস্ট্রি সেভ করার ফাংশনটি এখানে কল করা হলো
+    saveToHistory(score, quizData.length);
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরপত্র:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><strong>ব্যাখ্যা:</strong> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => { document.getElementById("db-status").innerText = "✓ ফলাফল সার্ভারে সংরক্ষিত হয়েছে।"; })
+    .catch(() => { document.getElementById("db-status").innerText = "⚠ ডাটা সেভ করতে সমস্যা হয়েছে।"; });
+}
+</script>
+</body>
+</html>

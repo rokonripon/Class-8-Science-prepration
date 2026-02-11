@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>উদ্ভিদের বংশবৃদ্ধি - স্মার্ট নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #27ae60;
+            --accent-orange: #e67e22;
+            --bg-color: #f9fbf9;
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-color);
+            color: #2c3e50;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 15px 30px rgba(46, 204, 113, 0.2);
+            animation: fadeInDown 1s ease;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .section-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            border-left: 8px solid var(--primary-green);
+            animation: fadeInUp 0.8s ease backwards;
+            transition: transform 0.3s ease;
+        }
+
+        .section-card:hover { transform: translateY(-5px); }
+
+        h1 { margin: 0; font-size: 32px; font-weight: 700; }
+        h2 { color: var(--dark-green); border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0; font-size: 24px; }
+        h3 { color: #d35400; font-size: 19px; margin-top: 20px; }
+
+        .highlight-box {
+            background: #f0fff4;
+            border: 1px solid #c6f6d5;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th { background: var(--primary-green); color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border: 1px solid #edf2f7; text-align: left; }
+        tr:nth-child(even) { background-color: #f8fff9; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e1f5fe;
+            color: #0277bd;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 3px;
+        }
+
+        .point-icon { margin-right: 10px; }
+
+        /* অ্যানিমেশন */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 40px; color: #95a5a6; font-size: 14px; }
+
+        /* মোবাইল অপ্টিমাইজেশন */
+        @media (max-width: 600px) {
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+            .section-card { padding: 15px; }
+            table { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>উদ্ভিদের বংশবৃদ্ধি</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | অধ্যায় ৪ (স্মার্ট ডিজিটাল নোট)</p>
+    <div style="font-size: 40px; margin-top: 15px;">🌱🌸🌳</div>
+</header>
+
+<div class="container">
+
+    <div class="section-card" style="animation-delay: 0.1s;">
+        <h2>১. বংশবৃদ্ধি বা প্রজনন (Reproduction)</h2>
+        <div class="highlight-box">
+            <strong>সংজ্ঞা:</strong> জীবের নিজের মতো নতুন জীব সৃষ্টির প্রক্রিয়াকে <b>প্রজনন</b> বলে।
+        </div>
+        <p><strong>উদ্দেশ্য:</strong> বংশরক্ষা ও প্রজাতির ধারাবাহিকতা বজায় রাখা।</p>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.2s; border-left-color: #3498db;">
+        <h2 style="color: #2980b9;">২. প্রজননের প্রকারভেদ</h2>
+        
+        <h3>(ক) অযৌন প্রজনন (Asexual Reproduction)</h3>
+        <p><i>কোনো ধরনের জনন কোষ বা গ্যামেট ছাড়াই নতুন জীব সৃষ্টি।</i></p>
+        <strong>বৈশিষ্ট্য:</strong>
+        <ul>
+            <li>একক অভিভাবক থেকে নতুন জীব সৃষ্টি।</li>
+            <li>নতুন জীব অভিভাবকের জিনগত প্রতিরূপ হয়।</li>
+            <li>দ্রুত ও সরল পদ্ধতি।</li>
+        </ul>
+
+        <h4>প্রাকৃতিক অযৌন প্রজননের পদ্ধতি:</h4>
+        <div class="table-container">
+            <table>
+                <tr><th>পদ্ধতি</th><th>ব্যাখ্যা</th><th>উদাহরণ</th></tr>
+                <tr><td>দেহের খণ্ডায়ন</td><td>দেহ খণ্ডিত হয়ে প্রতিটি খণ্ড নতুন জীব গঠন করে</td><td>স্পাইরোগাইরা, মিউকর</td></tr>
+                <tr><td>কাণ্ড দ্বারা</td><td>পরিবর্তিত কাণ্ড (রাইজোম, টিউবার, বাল্ব) থেকে গাছ গজায়</td><td>আদা, আলু, পিয়াজ</td></tr>
+                <tr><td>মূল দ্বারা</td><td>মূল থেকে নতুন চারা গজায়</td><td>পটল, শাকনাশী গাছ</td></tr>
+                <tr><td>পত্র দ্বারা</td><td>পাথার খণ্ড থেকে নতুন গাছ জন্মায়</td><td>পাথরকুচি</td></tr>
+                <tr><td>স্পোর গঠন</td><td>স্পোরাঞ্জিয়ামে স্পোর তৈরি হয়ে নতুন গাছ সৃষ্টি</td><td>ফার্ন, মস</td></tr>
+            </table>
+        </div>
+
+        <h3>(খ) যৌন প্রজনন (Sexual Reproduction)</h3>
+        <p><i>পুরুষ ও স্ত্রী গ্যামেটের মিলনের মাধ্যমে নতুন জীব সৃষ্টি।</i></p>
+        <strong>বৈশিষ্ট্য:</strong> দুটি অভিভাবক প্রয়োজন; নতুন জীব জিনগতভাবে ভিন্ন হয়; বিবর্তন ও অভিযোজনে সহায়ক।
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.3s; border-left-color: #e91e63;">
+        <h2 style="color: #c2185b;">৩. ফুল – যৌন প্রজননের অঙ্গ</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>অংশ</th><th>কার্য</th><th>বৈশিষ্ট্য</th></tr>
+                <tr><td>বৃতি (Sepal)</td><td>ফুলের প্রাথমিক রক্ষণ</td><td>সাধারণত সবুজ, বাইরের অংশ</td></tr>
+                <tr><td>দলমণ্ডল (Petal)</td><td>পরাগায়নে সাহায্য করা</td><td>রঙিন, সুরভিযুক্ত</td></tr>
+                <tr><td>পুংকেশর (Stamen)</td><td>পুরুষ জনন অঙ্গ</td><td>পরাগধানী + পরাগদণ্ড</td></tr>
+                <tr><td>গর্ভкеশর (Pistil)</td><td>স্ত্রী জনন অঙ্গ</td><td>গর্ভাশয় + গর্ভদণ্ড + গর্ভমুণ্ড</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.4s;">
+        <h2>৪. পরাগায়ন (Pollination)</h2>
+        <p>পরাগধানী থেকে পরাগরেণু গর্ভমুণ্ডে স্থানান্তরের প্রক্রিয়া।</p>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <div style="flex: 1; min-width: 250px; background: #fff9c4; padding: 15px; border-radius: 15px;">
+                <strong>স্ব-পরাগায়ন:</strong> একই ফুল বা একই গাছের ফুল। জিনগত বৈচিত্র্য কম। উদা: শিম, তামাক।
+            </div>
+            <div style="flex: 1; min-width: 250px; background: #ffe0b2; padding: 15px; border-radius: 15px;">
+                <strong>পর-পরাগায়ন:</strong> ভিন্ন গাছের ফুল। জিনগত বৈচিত্র্য বেশি। উদা: কুমড়া, ভুট্টা।
+            </div>
+        </div>
+
+        <h4>পরাগায়নের মাধ্যম:</h4>
+        <ul>
+            <li><span class="badge">পতঙ্গপরাগী:</span> জবা, সূর্যমুখী (রঙিন, মধুগ্রন্থি আছে)।</li>
+            <li><span class="badge">বায়ুপরাগী:</span> ধান, গম, ভুট্টা (হালকা পরাগরেণু)।</li>
+            <li><span class="badge">জলপরাগী:</span> হাইড্রিলা (পানিতে ভাসমান)।</li>
+            <li><span class="badge">প্রাণীপরাগী:</span> কলা, আম (সুরভি, মধু আছে)।</li>
+        </ul>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.5s;">
+        <h2>৫. নিষেক (Fertilization) ও ফল গঠন</h2>
+        <p><strong>নিষেক প্রক্রিয়া:</strong> পরাগরেণু গর্ভমুণ্ডে পড়ে ➡️ পরাগনালিকা গর্ভাশয়ের দিকে বাড়ে ➡️ পুং গ্যামেট ও ডিম্বাণুর মিলন ➡️ জাইগোট গঠন।</p>
+        
+        <h3>ফলের প্রকারভেদ:</h3>
+        <ul>
+            <li><strong>সরল ফল:</strong> আম, কাঁঠাল।</li>
+            <li><strong>গুচ্ছফল:</strong> চম্পা, আতা (একটি ফুলে অনেক গর্ভাশয়)।</li>
+            <li><strong>যৌগিক ফল:</strong> আনারস, ডুমুর (অনেক ফুল একসাথে)।</li>
+        </ul>
+
+        <h3>বীজের অংশ:</h3>
+        <p><span class="badge">বীজত্বক</span> <span class="badge">ভ্রূণ</span> <span class="badge">বীজপত্র</span> <span class="badge">এন্ডোস্পার্ম</span></p>
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.6s;">
+        <h2>৬. বীজের অঙ্কুরোদগম (Seed Germination)</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>প্রকার</th><th>সংজ্ঞা</th><th>উদাহরণ</th></tr>
+                <tr><td>মৃত্তিকাস্ত</td><td>বীজপত্র মাটির নিচে থাকে</td><td>মটর, শিম</td></tr>
+                <tr><td>মৃত্তিকোপরি</td><td>বীজপত্র মাটির উপরে উঠে আসে</td><td>সরিষা</td></tr>
+            </table>
+        </div>
+        <strong>শর্ত:</strong> পর্যাপ্ত পানি, উপযুক্ত তাপমাত্রা (২৫–৩০°C), অক্সিজেন এবং আলো।
+    </div>
+
+    <div class="section-card" style="animation-delay: 0.7s;">
+        <h2>৭. কৃত্রিম প্রজনন ও তুলনা</h2>
+        <p><strong>পদ্ধতি:</strong> কলম তৈরি (গোলাপ), কুঁড়ি সংযোজন (আম), শাখা নমিয়ে বংশবৃদ্ধি (স্ট্রবেরি), টিস্যু কালচার (আলু, কলা)।</p>
+        
+        <div class="table-container">
+            <table>
+                <tr><th>বৈশিষ্ট্য</th><th>যৌন প্রজনন</th><th>অযৌন প্রজনন</th></tr>
+                <tr><td>অভিভাবক</td><td>দুইজন</td><td>একজন</td></tr>
+                <tr><td>বৈচিত্র্য</td><td>আছে</td><td>নেই</td></tr>
+                <tr><td>গ্যামেট</td><td>প্রয়োজন</td><td>নেই</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-card" style="background: #f8f9fa; border-left-color: #7f8c8d; animation-delay: 0.8s;">
+        <h2>৮. গুরুত্বপূর্ণ শব্দকোষ</h2>
+        <div style="columns: 2; -webkit-columns: 2; gap: 20px;">
+            <p><b>জাইগোট:</b> নিষেকের ফলে গঠিত কোষ।</p>
+            <p><b>এন্ডোস্পার্ম:</b> ভ্রূণের খাদ্য।</p>
+            <p><b>রাইজোম:</b> আদা।</p>
+            <p><b>টিউবার:</b> আলু।</p>
+            <p><b>বাল্ব:</b> পিয়াজ।</p>
+            <p><b>পরাগরেণু:</b> পুং গ্যামেট বাহক।</p>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং নোট © ২০২৬ | বিজ্ঞানকে করি সহজ ✨</p>
+</footer>
+
+</body>
+</html>

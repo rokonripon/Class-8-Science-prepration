@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় ১৪: পরিবেশ ও বাস্তুতন্ত্র কুইজ</title>
+    <style>
+        :root { --primary: #2980b9; --secondary: #3498db; --bg: #f0f4f8; --text: #2c3e50; --success: #27ae60; }
+        body { font-family: 'SolaimanLipi', Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .quiz-container { max-width: 750px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 8px solid var(--primary); }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 5px; }
+        p.sub-title { text-align: center; color: #666; margin-bottom: 25px; }
+        input[type="text"] { width: 100%; padding: 14px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .option { display: block; background: #fff; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; font-size: 17px; }
+        .option:hover { background: #e1f5fe; border-color: var(--primary); transform: translateX(5px); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; margin-bottom: 10px; }
+        .btn:hover { background: var(--secondary); }
+        .time-box { text-align: center; font-weight: bold; color: #2980b9; margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #eee; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fdfdfd; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e3f2fd; border-radius: 5px; font-size: 14px; color: #555; border-left: 3px solid var(--primary); }
+        .history-box { margin-top: 20px; background: #fff; padding: 15px; border-radius: 10px; border: 1px solid #ddd; }
+        .history-item { padding: 8px; border-bottom: 1px dashed #eee; font-size: 14px; display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2>অধ্যায় ১৪: পরিবেশ ও বাস্তুতন্ত্র</h2>
+        <p class="sub-title">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ পরিমার্জিত সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার পূর্ণ নাম লিখুন">
+        <button class="btn" style="width:100%" onclick="startQuiz()">কুইজ শুরু করুন</button>
+        
+        <div class="history-box" id="history-box" style="display:none;">
+            <strong style="color:var(--primary)">আগের পরীক্ষার রেকর্ড:</strong>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color: var(--primary);"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div id="final-score" style="font-size: 26px; text-align: center; font-weight: bold; color: var(--primary); margin: 15px 0;"></div>
+        <p id="db-status" style="text-align:center; color: var(--success); font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" style="width:100%; background:#7f8c8d; margin-top:20px;" onclick="location.reload()">আবার চেষ্টা করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "কোনো একটি পরিবেশের জড় ও জীব উপাদানের মধ্যে পারস্পরিক সম্পর্ককে কী বলে?", a: ["পরিবেশ", "বাস্তুতন্ত্র", "খাদ্যশৃঙ্খল", "সমাজ"], c: 1, e: "বাস্তুতন্ত্র বা Ecosystem হলো জড় ও জীবের মধ্যকার একটি সুশৃঙ্খল প্রক্রিয়া।" },
+    { q: "বাস্তুতন্ত্রের প্রধান শক্তির উৎস কোনটি?", a: ["চাঁদ", "সূর্য", "গাছপালা", "বায়ু"], c: 1, e: "সূর্য থেকেই সব শক্তি উৎপাদক উদ্ভিদের মাধ্যমে বাস্তুতন্ত্রে প্রবেশ করে।" },
+    { q: "বাস্তুতন্ত্রের জড় উপাদানের উদাহরণ কোনটি?", a: ["মাটি ও পানি", "ব্যাকটেরিয়া", "তৃণভোজী প্রাণী", "ছত্রাক"], c: 0, e: "অজীব বা জড় উপাদান হলো মাটি, পানি, বায়ু, খনিজ লবণ ইত্যাদি।" },
+    { q: "নিচের কোনটি উৎপাদক (Producer)?", a: ["মাছ", "সবুজ উদ্ভিদ", "মানুষ", "বাঘ"], c: 1, e: "সবুজ উদ্ভিদ সালোকসংশ্লেষণ প্রক্রিয়ায় নিজেদের খাদ্য নিজেরা তৈরি করতে পারে।" },
+    { q: "খাদ্য গ্রহণ অনুযায়ী মানুষ কোন স্তরের খাদক?", a: ["প্রথম স্তর", "দ্বিতীয় স্তর", "তৃণভোজী", "সর্বভুক"], c: 3, e: "মানুষ উদ্ভিদ ও প্রাণী উভয়ই খায় বলে একে সর্বভুক (Omnivore) বলে।" },
+    { q: "বাস্তুতন্ত্রের বিয়োজক (Decomposer) কারা?", a: ["শিকারি প্রাণী", "কীটপতঙ্গ", "ছত্রাক ও ব্যাকটেরিয়া", "তৃণ"], c: 2, e: "এরা মৃত জীবদেহ পচিয়ে পুনরায় মাটিতে মিশিয়ে দিতে সাহায্য করে।" },
+    { q: "তৃণভোজী প্রাণীদের কোন স্তরের খাদক বলা হয়?", a: ["প্রথম স্তর", "দ্বিতীয় স্তর", "তৃতীয় স্তর", "চতুর্থ স্তর"], c: 0, e: "যারা সরাসরি উদ্ভিদকে খাদ্য হিসেবে গ্রহণ করে তারা প্রথম স্তরের খাদক।" },
+    { q: "খাদ্য শক্তি এক জীব থেকে অন্য জীবে স্থানান্তরের ধারাবাহিকতাকে কী বলে?", a: ["খাদ্যজাল", "খাদ্যশৃঙ্খল", "বাস্তুসংস্থান", "শক্তি চক্র"], c: 1, e: "একে ফুড চেইন বা খাদ্যশৃঙ্খল বলে।" },
+    { q: "একাধিক খাদ্যশৃঙ্খল একত্রিত হয়ে কী গঠন করে?", a: ["খাদ্য পিরামিড", "খাদ্যজাল", "জীব বৈচিত্র্য", "বাস্তুতন্ত্র"], c: 1, e: "প্রকৃতিতে অনেকগুলো শৃঙ্খল জড়িয়ে গিয়ে ফুড ওয়েব বা খাদ্যজাল তৈরি হয়।" },
+    { q: "বাস্তুতন্ত্রে প্রতিটি স্তরে শক্তি স্থানান্তরের সময় শক্তির পরিমাণ কী হয়?", a: ["বাড়ে", "কমে", "একই থাকে", "দ্বিগুণ হয়"], c: 1, e: "প্রতি ধাপে কিছু শক্তি অপচয় হয়, ফলে উপরের স্তরে শক্তির পরিমাণ কমে যায়।" },
+    { q: "স্থলজ বাস্তুতন্ত্রের উদাহরণ কোনটি?", a: ["পুকুর", "বনভূমি", "নদী", "সমুদ্র"], c: 1, e: "বনভূমি বা বনজ বাস্তুতন্ত্র হলো একটি প্রধান স্থলজ বাস্তুতন্ত্র।" },
+    { q: "পুকুরের বাস্তুতন্ত্রে ফাইটোপ্ল্যাঙ্কটন কী হিসেবে পরিচিত?", a: ["উৎপাদক", "খাদক", "বিয়োজক", "জড় উপাদান"], c: 0, e: "পানিতে থাকা অতি ক্ষুদ্র সবুজ উদ্ভিদ বা শৈবালই হলো ফাইটোপ্ল্যাঙ্কটন।" },
+    { q: "জুয়োপ্ল্যাঙ্কটন কোন স্তরের খাদক?", a: ["প্রথম স্তর", "দ্বিতীয় স্তর", "তৃতীয় স্তর", "সর্বোচ্চ স্তর"], c: 0, e: "এরা অতি ক্ষুদ্র প্রাণী যা ফাইটোপ্ল্যাঙ্কটন খেয়ে বেঁচে থাকে।" },
+    { q: "সুন্দরবনের প্রধান খাদক কোনটি?", a: ["গরু", "হরিণ", "রয়্যাল বেঙ্গল টাইগার", "বানর"], c: 2, e: "বাঘ সুন্দরবনের বাস্তুতন্ত্রে সর্বোচ্চ স্তরের খাদক।" },
+    { q: "কোনটি জলজ বাস্তুতন্ত্রের অজীব উপাদান?", a: ["মাছ", "কচুড়িপানা", "দ্রবীভূত অক্সিজেন", "শৈবাল"], c: 2, e: "জলে দ্রবীভূত অক্সিজেন ও খনিজ লবণ অজীব বা জড় উপাদান।" },
+    { q: "বিয়োজক মৃত জীবদেহ থেকে পুষ্টি নিয়ে বাকি অংশ কোথায় মিশিয়ে দেয়?", a: ["পানিতে", "বাতাসে", "মাটিতে", "গাছে"], c: 2, e: "পুষ্টি উপাদান পুনরায় মাটিতে ফিরে গিয়ে প্রাকৃতিক চক্র বজায় রাখে।" },
+    { q: "খাদ্যশৃঙ্খলে শক্তির প্রবাহ সাধারণত কেমন হয়?", a: ["একমুখী", "উভয়মুখী", "চক্রাকার", "স্থির"], c: 0, e: "শক্তি সূর্য থেকে উদ্ভিদে আসে এবং ক্রমান্বয়ে উচ্চস্তরে যায়, এটি আর ফিরে আসে না।" },
+    { q: "পুষ্টি উপাদানের প্রবাহ বাস্তুতন্ত্রে কেমন হয়?", a: ["একমুখী", "চক্রাকার", "স্থির", "ধীর"], c: 1, e: "পুষ্টি উপাদান মাটি থেকে উদ্ভিদে এবং বিয়োজকের মাধ্যমে পুনরায় মাটিতে ফিরে আসে।" },
+    { q: "সুন্দরবনে হরিণ কোন স্তরের খাদক?", a: ["প্রথম", "দ্বিতীয়", "তৃতীয়", "সর্বোচ্চ"], c: 0, e: "হরিণ সরাসরি বনের গাছপালা ও ফল খায় বলে এটি প্রথম স্তরের খাদক।" },
+    { q: "বাস্তুতন্ত্রের ভারসাম্য নষ্ট হওয়ার প্রধান কারণ কোনটি?", a: ["বনায়ন", "প্রাকৃতিক দুর্যোগ", "মানুষের হস্তক্ষেপ", "বৃষ্টিপাত"], c: 2, e: "অতিরিক্ত গাছ কাটা, দূষণ ও শিকারের ফলে বাস্তুতন্ত্রের ভারসাম্য নষ্ট হচ্ছে।" },
+    { q: "একটি পুকুরে বড় মাছ কোন স্তরের খাদক হতে পারে?", a: ["প্রথম", "দ্বিতীয়", "তৃতীয়/সর্বোচ্চ", "উৎপাদক"], c: 2, e: "বড় মাছ ছোট মাছ বা কীটপতঙ্গ খায় বলে এটি উচ্চ স্তরের খাদক।" },
+    { q: "প্রকৃতির ঝাড়ুদার বলা হয় কোনটিকে?", a: ["বাঘ", "শকুন বা কাক", "ফড়িং", "শৈবাল"], c: 1, e: "এরা মরা জীবজন্তু খেয়ে পরিবেশ পরিষ্কার রাখে বলে এদের ঝাড়ুদার বলা হয়।" },
+    { q: "জলাশয়ের তলায় বাস করা ক্ষুদ্র প্রাণীদের কী বলে?", a: ["বেনথোস", "প্ল্যাঙ্কটন", "নেক্টন", "শৈবাল"], c: 0, e: "জলাশয়ের তলদেশের জীবদের বেনথোস বলা হয়।" },
+    { q: "নিচের কোন শৃঙ্খলটি সঠিক?", a: ["ঘাস > বাঘ > ফড়িং", "ঘাস > ফড়িং > ব্যাঙ > সাপ", "সাপ > ব্যাঙ > ঘাস", "ফড়িং > ঘাস > সাপ"], c: 1, e: "এটি একটি আদর্শ স্থলজ খাদ্যশৃঙ্খল।" },
+    { q: "বাস্তুতন্ত্রের ভারসাম্য রক্ষায় কোনটি জরুরি?", a: ["শিকার করা", "জীববৈচিত্র্য সংরক্ষণ", "বন ধ্বংস করা", "কীটনাশক ব্যবহার"], c: 1, e: "জীববৈচিত্র্য সংরক্ষণ পরিবেশের স্থায়িত্ব বজায় রাখে।" },
+    { q: "একটি বনে বাঘের সংখ্যা কমে গেলে কী হতে পারে?", a: ["হরিণের সংখ্যা বাড়বে", "ঘাস বাড়বে", "বন ঘন হবে", "কোনো পরিবর্তন হবে না"], c: 0, e: "শিকারি কমে গেলে তৃণভোজী প্রাণীর সংখ্যা অস্বাভাবিক বেড়ে বন উজাড় হবে।" },
+    { q: "পরিবেশের ভৌত উপাদানের মধ্যে কোনটি অন্তর্ভুক্ত নয়?", a: ["মাটির গঠন", "সূর্যালোক", "বৃষ্টিপাত", "ব্যাকটেরিয়া"], c: 3, e: "ব্যাকটেরিয়া একটি জীব বা জৈব উপাদান।" },
+    { q: "পৃথিবীর সবচেয়ে বড় বাস্তুতন্ত্র কোনটি?", a: ["বনভূমি", "সমুদ্র", "মরুভূমি", "পাহাড়"], c: 1, e: "বিশাল আয়তনের সমুদ্রই পৃথিবীর বৃহত্তম বাস্তুতন্ত্র।" },
+    { q: "খাদ্যজালে একটি জীব কয়টি শৃঙ্খলের অংশ হতে পারে?", a: ["একটি মাত্র", "একাধিক", "কখনো একটিও না", "শুধুমাত্র দুটি"], c: 1, e: "একটি প্রাণী একাধিক খাদ্যশৃঙ্খলের সাথে যুক্ত থাকতে পারে।" },
+    { q: "বাস্তুতন্ত্রে নাইট্রোজেন ও কার্বন চক্রের প্রধান নিয়ন্ত্রক কারা?", a: ["উৎপাদক", "খাদক", "বিয়োজক", "অজীব উপাদান"], c: 2, e: "বিয়োজকরা জটিল জৈব পদার্থ ভেঙে পুষ্টি উপাদান মুক্ত করে চক্র বজায় রাখে।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+window.onload = function() { renderHistory(); };
+
+function renderHistory() {
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    if(history.length > 0) {
+        document.getElementById("history-box").style.display = "block";
+        let listHTML = history.slice(-5).reverse().map(h => 
+            `<div class="history-item"><span>${h.date} (${h.subject})</span> <b>${h.score}</b></div>`
+        ).join("");
+        document.getElementById("history-list").innerHTML = listHTML;
+    }
+}
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<h3>${qData.q}</h3>${opts}`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds/60)}m ${totalSeconds%60}s`;
+    
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName}`;
+    document.getElementById("final-score").innerText = `প্রাপ্ত নম্বর: ${score} / ${quizData.length}`;
+    
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push({ subject: "পরিবেশ", score: score + "/" + quizData.length, date: new Date().toLocaleDateString('bn-BD') });
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরমালা:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><b>ব্যাখ্যা:</b> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => document.getElementById("db-status").innerText = "✓ ফলাফল ডাটাবেসে সফলভাবে জমা হয়েছে।");
+}
+</script>
+</body>
+</html>

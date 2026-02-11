@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পরিবেশ ও বাস্তুতন্ত্র - স্মার্ট ডিজিটাল নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #1b5e20;
+            --leaf-green: #4caf50;
+            --sky-blue: #03a9f4;
+            --sun-yellow: #ffeb3b;
+            --earth-brown: #795548;
+            --bg-light: #f1f8e9;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            color: #263238;
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--forest-green), var(--leaf-green));
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 5px solid var(--earth-brown);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border-top: 10px solid var(--leaf-green);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h1 { margin: 0; font-size: 34px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        h2 { color: var(--forest-green); border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: var(--earth-brown); margin-top: 25px; }
+
+        .definition-box {
+            background: #f9fbe7;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--forest-green);
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        /* খাদ্যশৃঙ্খল ডিজাইন */
+        .food-chain-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            color: var(--forest-green);
+        }
+        .arrow { font-size: 24px; color: var(--earth-brown); }
+
+        /* টেবিল ডিজাইন */
+        .table-container { overflow-x: auto; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+        th { background: var(--forest-green); color: white; padding: 15px; text-align: left; }
+        td { padding: 12px; border: 1px solid #f1f2f6; }
+        tr:nth-child(even) { background-color: #f1f8e9; }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #c8e6c9;
+            color: var(--forest-green);
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 40px; color: #546e7a; background: #cfd8dc; margin-top: 50px; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 26px; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>অধ্যায় ১৪: পরিবেশ এবং বাস্তুতন্ত্র</h1>
+    <p>অষ্টম শ্রেণি - বিজ্ঞান | সম্পূর্ণ মাস্টার নোট</p>
+    <div style="font-size: 40px; margin-top: 15px;">🌳🐜🐟☀️</div>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>১. পরিবেশ ও ২. বাস্তুতন্ত্র (Ecosystem)</h2>
+        <div class="definition-box">
+            <strong>বাস্তুতন্ত্র:</strong> কোনো এলাকার অজীব (জড়) ও জীব উপাদানের মধ্যে পারস্পরিক সম্পর্ক এবং শক্তি ও পদার্থের আদান-প্রদান।
+        </div>
+        <p><strong>উপাদানসমূহ:</strong></p>
+        <p>
+            <span class="badge">উৎপাদক: সবুজ উদ্ভিদ</span> 
+            <span class="badge">ভোক্তা: প্রাণী</span> 
+            <span class="badge">বিয়োজক: ব্যাকটেরিয়া ও ছত্রাক</span>
+        </p>
+        
+    </div>
+
+    <div class="card" style="border-top-color: var(--earth-brown);">
+        <h2>৩. খাদ্যশৃঙ্খল ও ৪. খাদ্যজাল</h2>
+        <p><strong>খাদ্যশৃঙ্খল:</strong> শক্তির প্রবাহ যখন একমুখী হয়।</p>
+        <div class="food-chain-box">
+            ঘাস <span class="arrow">→</span> ঘাসফড়িং <span class="arrow">→</span> ব্যাঙ <span class="arrow">→</span> সাপ <span class="arrow">→</span> বাজ
+        </div>
+        
+        <p><strong>খাদ্যজাল:</strong> একাধিক খাদ্যশৃঙ্খল মিলে যখন একটি জটিল নেটওয়ার্ক তৈরি করে। এটি বাস্তুতন্ত্রকে স্থিতিশীল রাখে।</p>
+    </div>
+
+    <div class="card" style="border-top-color: var(--sun-yellow);">
+        <h2 style="color: #fbc02d;">৫. শক্তির প্রবাহ ও ১০% নিয়ম</h2>
+        <p>বাস্তুতন্ত্রে শক্তি সর্বদা <b>একমুখী</b>। সূর্য হলো সকল শক্তির মূল উৎস।</p>
+        <div class="definition-box">
+            <strong>১০% নিয়ম:</strong> প্রতিটি ট্রফিক স্তর থেকে পরবর্তী স্তরে মাত্র ১০% শক্তি পৌঁছায়, বাকি ৯০% পরিবেশে তাপ হিসেবে হারিয়ে যায়।
+        </div>
+        
+    </div>
+
+    <div class="card">
+        <h2>৬. জীববৈচিত্র্য (Biodiversity)</h2>
+        <p>পৃথিবীর জীবের মধ্যে যে ভিন্নতা ও প্রাচুর্য দেখা যায় তাই জীববৈচিত্র্য।</p>
+        <ul>
+            <li><strong>প্রজাতি বৈচিত্র্য:</strong> বাঘ, হরিণ, সাপ ইত্যাদি ভিন্ন প্রজাতি।</li>
+            <li><strong>আবাসস্থল ধ্বংস:</strong> জীববৈচিত্র্য হ্রাসের প্রধান কারণ।</li>
+        </ul>
+        
+    </div>
+
+    <div class="card" style="border-top-color: #f44336;">
+        <h2 style="color: #f44336;">৭. দূষণ ও ৮. গ্লোবাল ওয়ার্মিং</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>দূষণ</th><th>কারণ</th><th>প্রভাব</th></tr>
+                <tr><td>বায়ু</td><td>ধোঁয়া, কলকারখানা</td><td>অ্যাসিড বৃষ্টি, শ্বাসকষ্ট</td></tr>
+                <tr><td>পানি</td><td>শিল্পবর্জ্য, প্লাস্টিক</td><td>জলজ প্রাণীর মৃত্যু</td></tr>
+                <tr><td>মাটি</td><td>সার, কীটনাশক</td><td>উর্বরতা হ্রাস</td></tr>
+            </table>
+        </div>
+        <p><strong>গ্রিনহাউস প্রভাব:</strong> CO2, মিথেন ইত্যাদি গ্যাস পৃথিবীর তাপ আটকে রাখে, যা <b>গ্লোবাল ওয়ার্মিং</b> ঘটায়।</p>
+    </div>
+
+    <div class="card" style="border-top-color: var(--sky-blue);">
+        <h2>৯. পরিবেশ সংরক্ষণ ও সবুজ জীবনযাপন</h2>
+        <p>পরিবেশ বাঁচাতে আমাদের <b>3R</b> নীতি মেনে চলা উচিত:</p>
+        <p>
+            <span class="badge" style="background: #bbdefb;">Reduce (ব্যবহার কমানো)</span> 
+            <span class="badge" style="background: #90caf9;">Reuse (পুনর্ব্যবহার)</span> 
+            <span class="badge" style="background: #64b5f6; color: white;">Recycle (পুনশ্চক্রায়ন)</span>
+        </p>
+        <h3>আমাদের করণীয়:</h3>
+        <ul>
+            <li>বেশি করে গাছ লাগানো (সামাজিক বনায়ন)।</li>
+            <li>প্লাস্টিকের বদলে চটের ব্যাগ ব্যবহার করা।</li>
+            <li>অপ্রয়োজনে আলো-পাখা বন্ধ রাখা।</li>
+        </ul>
+    </div>
+
+    <div class="card" style="background: #eceff1; border-top-color: #546e7a;">
+        <h2>১১. গুরুত্বপূর্ণ পরিভাষা</h2>
+        <div style="columns: 2;">
+            <p>🔹 <b>বায়োম:</b> বৃহৎ বাস্তুতন্ত্র।</p>
+            <p>🔹 <b>ট্রফিক স্তর:</b> খাদ্যের ধাপ।</p>
+            <p>🔹 <b>ওজন স্তর:</b> ক্ষতিকর রশ্মি প্রতিরোধক।</p>
+            <p>🔹 <b>বায়োডিগ্রেডেবল:</b> যা পচে যায়।</p>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>স্মার্ট লার্নিং ড্যাশবোর্ড ২০২৬ | প্রকৃতি বাঁচলে, আমরা বাঁচব ✨</p>
+</footer>
+
+</body>
+</html>

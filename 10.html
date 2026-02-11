@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় কুইজ - অষ্টম শ্রেণি</title>
+    <style>
+        :root { --primary: #16a085; --secondary: #1abc9c; --success: #27ae60; --danger: #e74c3c; --bg: #f2fbf9; }
+        body { background-color: var(--bg); margin: 0; padding: 10px; font-family: 'SolaimanLipi', Arial, sans-serif; }
+        .quiz-container { max-width: 750px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 8px solid var(--primary); }
+        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        input[type="text"] { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; }
+        .option { display: block; background: #fdfdfd; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .option:hover { background: #e8f8f5; border-color: var(--primary); transform: translateX(5px); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; }
+        .score-box { font-size: 24px; font-weight: bold; color: var(--success); text-align: center; margin: 15px 0; padding: 20px; background: #f1f9f1; border-radius: 10px; border: 1px solid #d4edda; }
+        .time-box { text-align: center; font-size: 18px; color: var(--primary); margin-bottom: 15px; font-weight: bold; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fafafa; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9f7f5; border-radius: 5px; font-size: 14px; color: #444; border-left: 3px solid var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2>অধ্যায় ১০: অম্ল, ক্ষারক ও লবণ</h2>
+        <p style="text-align:center; color:#666;">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ পরিমার্জিত সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার নাম লিখুন...">
+        <button class="btn" onclick="startQuiz()">কুইজ শুরু করুন</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color:#7f8c8d;"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div class="score-box" id="final-score"></div>
+        <p id="db-status" style="text-align:center; color: #27ae60; font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" onclick="location.reload()" style="background:#7f8c8d; margin-top:20px;">আবার চেষ্টা করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "নীল লিটমাসকে লাল করে কোনটি?", a: ["ক্ষারক", "লবণ", "অম্ল বা এসিড", "পানি"], c: 2, e: "এসিড নীল লিটমাসকে লাল বর্ণে পরিণত করে।" },
+    { q: "লাল লিটমাসকে নীল করে কোনটি?", a: ["এসিড", "ক্ষারক", "লবণ", "চিনি"], c: 1, e: "ক্ষারক লাল লিটমাসকে নীল বর্ণে পরিণত করে।" },
+    { q: "এসিডে কোন মৌলের পরমাণু অবশ্যই থাকে?", a: ["অক্সিজেন", "হাইড্রোজেন", "নাইট্রোজেন", "কার্বন"], c: 1, e: "এসিড পানিতে হাইড্রোজেন আয়ন ($H^+$) দান করে।" },
+    { q: "নিচের কোনটি শক্তিশালী এসিড?", a: ["সাইট্রিক এসিড", "টারটারিক এসিড", "সালফিউরিক এসিড", "অক্সালিক এসিড"], c: 2, e: "সালফিউরিক এসিড ($H_2SO_4$) একটি খনিজ এসিড এবং এটি তীব্র এসিড।" },
+    { q: "পাকা আম বা লেবুতে কোন এসিড থাকে?", a: ["ম্যালিক এসিড", "সাইট্রিক এসিড", "এসিটিক এসিড", "টারটারিক এসিড"], c: 1, e: "লেবু ও টক জাতীয় ফলে সাইট্রিক এসিড বিদ্যমান।" },
+    { q: "তেঁতুলে কোন এসিড থাকে?", a: ["টারটারিক এসিড", "সাইট্রিক এসিড", "অক্সালিক এসিড", "ল্যাকটিক এসিড"], c: 0, e: "তেঁতুলের প্রধান উপাদান হলো টারটারিক এসিড।" },
+    { q: "ক্ষারকের বৈশিষ্ট্য কোনটি?", a: ["টক স্বাদযুক্ত", "কটু স্বাদযুক্ত ও পিচ্ছিল", "নীল লিটমাস লাল করে", "পানিতে $H^+$ দেয়"], c: 1, e: "ক্ষারক সাবানের মতো পিচ্ছিল এবং স্বাদ কটু বা তিতকুটে হয়।" },
+    { q: "পানিতে দ্রবণীয় ক্ষারকগুলোকে কী বলে?", a: ["লবণ", "ক্ষার", "নির্দেশক", "মিশ্ৰণ"], c: 1, e: "সব ক্ষার ক্ষারক, কিন্তু সব ক্ষারক ক্ষার নয় (শুধুমাত্র যারা পানিতে দ্রবীভূত হয়)।" },
+    { q: "নিচের কোনটি ক্ষারকের উদাহরণ?", a: ["HCl", "NaOH", "H2SO4", "HNO3"], c: 1, e: "সোডিয়াম হাইড্রক্সাইড ($NaOH$) একটি শক্তিশালী ক্ষার।" },
+    { q: "এসিড ও ক্ষারকের বিক্রিয়ায় কী উৎপন্ন হয়?", a: ["শুধু পানি", "শুধু লবণ", "লবণ ও পানি", "গ্যাস"], c: 2, e: "একে প্রশমন বিক্রিয়া বলে, যেখানে লবণ ও পানি তৈরি হয়।" },
+    { q: "লিটমাস কাগজ তৈরি হয় কোন গাছ থেকে?", a: ["লাইকেন", "ফার্ন", "শ্যাওলা", "বট"], c: 0, e: "লাইকেন নামক এক ধরণের গাছ থেকে লিটমাস নির্দেশক তৈরি করা হয়।" },
+    { q: "আমাদের পাকস্থলীতে কোন এসিড থাকে যা খাদ্য হজমে সাহায্য করে?", a: ["সালফিউরিক এসিড", "হাইড্রোক্লোরিক এসিড", "নাইট্রিক এসিড", "কার্বনিক এসিড"], c: 1, e: "পাকস্থলীর হাইড্রোক্লোরিক এসিড ($HCl$) জীবাণু ধ্বংস ও হজমে সাহায্য করে।" },
+    { q: "এসিডিটি হলে আমরা কোন ওষুধ খাই?", a: ["এন্টিসেপটিক", "এন্টাসিড", "এন্টিবায়োটিক", "প্যারাসিটামল"], c: 1, e: "এন্টাসিড হলো ম্যাগনেসিয়াম বা অ্যালুমিনিয়াম হাইড্রক্সাইড যা ক্ষারক ধর্মী।" },
+    { q: "মৌমাছি কামড়ালে ক্ষতস্থানে কী দিলে আরাম পাওয়া যায়?", a: ["লেবুর রস", "চুন বা ক্যালামাইন লোশন", "ভিনেগার", "পানি"], c: 1, e: "মৌমাছির হুলে এসিড থাকে, চুন (ক্ষারক) তা প্রশমিত করে।" },
+    { q: "ভিনেগারের রাসায়নিক নাম কী?", a: ["এসিটিক এসিড", "মিথানয়িক এসিড", "ফরমিক এসিড", "সাইট্রিক এসিড"], c: 0, e: "৪-১০% এসিটিক এসিডের জলীয় দ্রবণকে ভিনেগার বলে।" },
+    { q: "কাপড় কাচার সোডার সংকেত কোনটি?", a: ["NaOH", "Na2CO3", "NaHCO3", "NaCl"], c: 1, e: "সোডিয়াম কার্বনেট ($Na_2CO_3$) কাপড় ধোয়ার কাজে ব্যবহৃত হয়।" },
+    { q: "খাবার লবণের রাসায়নিক নাম কী?", a: ["সোডিয়াম বাইকার্বনেট", "সোডিয়াম ক্লোরাইড", "ক্যালসিয়াম সালফেট", "ম্যাগনেসিয়াম ক্লোরাইড"], c: 1, e: "সোডিয়াম ক্লোরাইড ($NaCl$) হলো আমাদের খাদ্য লবণ।" },
+    { q: "চুনের পানির সংকেত কী?", a: ["CaO", "Ca(OH)2", "CaCO3", "HCl"], c: 1, e: "ক্যালসিয়াম হাইড্রক্সাইডই হলো চুনের পানি।" },
+    { q: "নিচের কোনটি নির্দেশক নয়?", a: ["মিথাইল অরেঞ্জ", "ফেনলফথ্যালিন", "লিটমাস", "চিনি"], c: 3, e: "চিনি একটি নিরপেক্ষ পদার্থ।" },
+    { q: "টমেটোতে কোন এসিড পাওয়া যায়?", a: ["ম্যালিক এসিড", "অক্সালিক এসিড", "টারটারিক এসিড", "সাইট্রিক এসিড"], c: 1, e: "টমেটোতে অক্সালিক এসিড থাকে।" },
+    { q: "পানির pH মান কত হলে তা নিরপেক্ষ হয়?", a: ["০", "৫", "৭", "১৪"], c: 2, e: "pH স্কেলে ৭ মানটি নিরপেক্ষ মাধ্যম নির্দেশ করে।" },
+    { q: "ক্ষারকের pH মান কত হয়?", a: ["৭ এর নিচে", "৭ এর উপরে", "ঠিক ৭", "০"], c: 1, e: "৭ এর বেশি pH মান মানে সেটি ক্ষারীয়।" },
+    { q: "দুধে কোন এসিড থাকে?", a: ["সাইট্রিক এসিড", "ল্যাকটিক এসিড", "অক্সালিক এসিড", "ম্যালিক এসিড"], c: 1, e: "দুধে ল্যাকটিক এসিড থাকে।" },
+    { q: "স্বর্ণ পরিষ্কার করতে কোন এসিড ব্যবহৃত হয়?", a: ["সালফিউরিক", "নাইট্রিক", "হাইড্রোক্লোরিক", "অ্যাকোয়া রেজিয়া"], c: 3, e: "রাজঅম্ল সোনা গলাতে ব্যবহৃত হয়।" },
+    { q: "সার কারখানায় কোন এসিড সবচেয়ে বেশি ব্যবহৃত হয়?", a: ["টারটারিক", "সালফিউরিক", "এসিটিক", "সাইট্রিক"], c: 1, e: "সালফিউরিক এসিডকে এসিডের রাজা বলা হয়।" },
+    { q: "ব্লিচিং পাউডার তৈরিতে কোনটি ব্যবহৃত হয়?", a: ["চুনের পানি", "শুষ্ক চুন", "ক্ষার", "লবণ"], c: 1, e: "শুষ্ক ক্যালসিয়াম হাইড্রক্সাইড ব্যবহৃত হয়।" },
+    { q: "এসিড বৃষ্টি মাটির উর্বরতা—", a: ["বাড়ায়", "কমায়", "অপরিবর্তিত রাখে", "সবগুলো"], c: 1, e: "এসিড বৃষ্টি মাটির pH কমিয়ে মাটি নষ্ট করে।" },
+    { q: "আচার সংরক্ষণে কোনটি ব্যবহৃত হয়?", a: ["চিনি", "ভিনেগার", "চুন", "ক্ষারক"], c: 1, e: "ভিনেগার খাদ্য সংরক্ষক হিসেবে কাজ করে।" },
+    { q: "মিল্ক অফ ম্যাগনেসিয়া আসলে কী?", a: ["MgO", "Mg(OH)2", "MgSO4", "MgCl2"], c: 1, e: "এটি এন্টাসিড হিসেবে ব্যবহৃত হয়।" },
+    { q: "ক্যালসিয়াম অক্সাইড ($CaO$) কোন ধরনের পদার্থ?", a: ["এসিড", "ক্ষারক", "লবণ", "নির্দেশক"], c: 1, e: "এটি একটি ক্ষারকীয় অক্সাইড।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m}:${s < 10 ? '0'+s : s}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<h3>${qData.q}</h3>${opts}`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function saveToHistory(got, total) {
+    let resultData = { subject: "অধ্যায় ১০: অম্ল, ক্ষারক ও লবণ", score: got + " / " + total, date: new Date().toLocaleString('bn-BD') };
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push(resultData);
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds / 60)}m ${totalSeconds % 60}s`;
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName} | <b>শ্রেণি:</b> অষ্টম`;
+    document.getElementById("final-score").innerText = `প্রাপ্ত নম্বর: ${score} / ${quizData.length}`;
+    saveToHistory(score, quizData.length);
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরমালা:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><b>ব্যাখ্যা:</b> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => document.getElementById("db-status").innerText = "✓ ফলাফল সফলভাবে জমা হয়েছে।");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় ১৩: খাদ্য ও পুষ্টি কুইজ</title>
+    <style>
+        :root { --primary: #27ae60; --secondary: #2ecc71; --bg: #f9fdfa; --text: #2c3e50; }
+        body { font-family: 'SolaimanLipi', Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .quiz-container { max-width: 750px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 8px solid var(--primary); }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 5px; }
+        p.sub-title { text-align: center; color: #666; margin-bottom: 25px; }
+        input[type="text"] { width: 100%; padding: 14px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .option { display: block; background: #fff; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; font-size: 17px; }
+        .option:hover { background: #e8f8f0; border-color: var(--primary); transform: translateX(5px); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; margin-bottom: 10px; }
+        .btn:hover { background: var(--secondary); }
+        .time-box { text-align: center; font-weight: bold; color: #27ae60; margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #eee; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fdfdfd; }
+        .explanation { margin-top: 10px; padding: 10px; background: #eef9f2; border-radius: 5px; font-size: 14px; color: #555; border-left: 3px solid var(--primary); }
+        .history-box { margin-top: 20px; background: #fff; padding: 15px; border-radius: 10px; border: 1px solid #ddd; }
+        .history-item { padding: 8px; border-bottom: 1px dashed #eee; font-size: 14px; display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2>অধ্যায় ১৩: খাদ্য ও পুষ্টি</h2>
+        <p class="sub-title">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ পরিমার্জিত সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার পূর্ণ নাম লিখুন">
+        <button class="btn" style="width:100%" onclick="startQuiz()">কুইজ শুরু করুন</button>
+        
+        <div class="history-box" id="history-box" style="display:none;">
+            <strong style="color:var(--primary)">আগের পরীক্ষার রেকর্ড:</strong>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color: var(--primary);"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div id="final-score" style="font-size: 26px; text-align: center; font-weight: bold; color: var(--primary); margin: 15px 0;"></div>
+        <p id="db-status" style="text-align:center; color: var(--primary); font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" style="width:100%; background:#7f8c8d; margin-top:20px;" onclick="location.reload()">আবার চেষ্টা করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "খাদ্যের প্রধান উপাদান কয়টি?", a: ["৩টি", "৪টি", "৬টি", "৫টি"], c: 0, e: "খাদ্যের প্রধান উপাদান ৩টি (শর্করা, আমিষ ও স্নেহ)। বাকি ৩টি সহায়ক উপাদান।" },
+    { q: "দেহে শক্তি উৎপাদনে প্রধান ভূমিকা রাখে কোনটি?", a: ["আমিষ", "শর্করা", "ভিটামিন", "লবণ"], c: 1, e: "শর্করা আমাদের দেহের প্রধান কর্মশক্তি যোগায়।" },
+    { q: "দেহের ক্ষয়পূরণ ও বৃদ্ধিসাধন করে কোনটি?", a: ["শর্করা", "স্নেহ", "আমিষ", "পানি"], c: 2, e: "আমিষ বা প্রোটিন পেশি ও হাড় গঠনে সহায়তা করে।" },
+    { q: "নিচের কোনটি শর্করার উৎস?", a: ["মাছ", "ভাত", "মাংস", "ডাল"], c: 1, e: "ভাত, আটা, আলু ইত্যাদি শর্করা জাতীয় খাদ্য।" },
+    { q: "উদ্ভিজ্জ আমিষের উদাহরণ কোনটি?", a: ["ডিম", "দুধ", "ডাল", "মাছ"], c: 2, e: "ডাল, সিমের বিচি ও বাদাম উদ্ভিজ্জ আমিষের প্রধান উৎস।" },
+    { q: "অভাবে রাতকানা রোগ হয় কোন ভিটামিনের?", a: ["ভিটামিন বি", "ভিটামিন সি", "ভিটামিন এ", "ভিটামিন ডি"], c: 2, e: "ভিটামিন এ-এর অভাবে রাতকানা রোগ হয়।" },
+    { q: "টক জাতীয় ফলে কোন ভিটামিন প্রচুর থাকে?", a: ["ভিটামিন এ", "ভিটামিন বি", "ভিটামিন সি", "ভিটামিন কে"], c: 2, e: "ভিটামিন সি টক ফলে পাওয়া যায়।" },
+    { q: "স্কার্ভি রোগ হয় কোনটির অভাবে?", a: ["ভিটামিন সি", "ক্যালসিয়াম", "লৌহ", "ভিটামিন ডি"], c: 0, e: "ভিটামিন সি-এর অভাবে মাড়ি থেকে রক্ত পড়ে।" },
+    { q: "সূর্যের আলোতে কোন ভিটামিন পাওয়া যায়?", a: ["ভিটামিন সি", "ভিটামিন এ", "ভিটামিন ডি", "ভিটামিন ই"], c: 2, e: "সূর্যের অতিবেগুনি রশ্মির প্রভাবে ত্বকে ভিটামিন ডি তৈরি হয়।" },
+    { q: "রক্তশূন্যতা হয় কোনটির অভাবে?", a: ["আয়োডিন", "লৌহ", "পটাশিয়াম", "ম্যাগনেসিয়াম"], c: 1, e: "হিমোগ্লোবিন তৈরির জন্য লৌহ বা আয়রনের প্রয়োজন।" },
+    { q: "গলগণ্ড রোগ হয় কিসের অভাবে?", a: ["লৌহ", "ক্যালসিয়াম", "আয়োডিন", "ফসফরাস"], c: 2, e: "আয়োডিনের অভাবে থাইরয়েড গ্রন্থি ফুলে যায়।" },
+    { q: "সুষম খাদ্যে শর্করা, আমিষ ও স্নেহর অনুপাত কত হওয়া ভালো?", a: ["৪:১:১", "১:১:১", "৩:২:১", "২:১:২"], c: 0, e: "আদর্শ খাদ্যে শর্করার পরিমাণ সবচেয়ে বেশি থাকে।" },
+    { q: "১ গ্রাম শর্করা থেকে কত ক্যালরি শক্তি পাওয়া যায়?", a: ["৯ ক্যালরি", "৪ ক্যালরি", "৬ ক্যালরি", "৭ ক্যালরি"], c: 1, e: "শর্করা ও আমিষ থেকে ৪ কিলোক্যালরি পাওয়া যায়।" },
+    { q: "দুধকে কেন আদর্শ খাদ্য বলা হয়?", a: ["সুস্বাদু বলে", "খাদ্যের সব উপাদান থাকে বলে", "সাদা বলে", "তরল বলে"], c: 1, e: "দুধে খাদ্যের ছয়টি উপাদানই সঠিক অনুপাতে থাকে।" },
+    { q: "কোন ভিটামিন তাপে নষ্ট হয়ে যায়?", a: ["ভিটামিন এ", "ভিটামিন ডি", "ভিটামিন সি", "ভিটামিন ই"], c: 2, e: "ভিটামিন সি রান্নার তাপে দ্রুত নষ্ট হয়।" },
+    { q: "অস্থি ও দাঁতের গঠনে সাহায্য করে কোনটি?", a: ["লৌহ", "ক্যালসিয়াম ও ফসফরাস", "আয়োডিন", "সোডিয়াম"], c: 1, e: "হাড় মজবুত করতে ক্যালসিয়াম অপরিহার্য।" },
+    { q: "কোষ্ঠকাঠিন্য দূর করতে সাহায্য করে কোনটি?", a: ["স্নেহ", "শর্করা", "আঁশযুক্ত খাদ্য (রাফেজ)", "ভিটামিন"], c: 2, e: "আঁশযুক্ত খাবার পরিপাক ও মলত্যাগে সহায়তা করে।" },
+    { q: "রক্ত জমাট বাঁধতে সাহায্য করে কোন ভিটামিন?", a: ["ভিটামিন এ", "ভিটামিন ডি", "ভিটামিন কে", "ভিটামিন ই"], c: 2, e: "ভিটামিন কে-এর অভাবে রক্তক্ষরণ বন্ধ হতে দেরি হয়।" },
+    { q: "একজন সুস্থ মানুষের দৈনিক কত গ্লাস পানি পান করা উচিত?", a: ["২-৩ গ্লাস", "৭-৮ গ্লাস", "১২-১৫ গ্লাস", "১ গ্লাস"], c: 1, e: "সুস্থ থাকতে দৈনিক প্রায় ২-৩ লিটার বা ৭-৮ গ্লাস পানি প্রয়োজন।" },
+    { q: "বিএমআর (BMR) কী প্রকাশ করে?", a: ["মোট শক্তি", "বিশ্রামরত অবস্থায় ব্যয়িত শক্তি", "কাজের শক্তি", "ওজন"], c: 1, e: "পূর্ণ বিশ্রামে থাকা অবস্থায় শরীরের অভ্যন্তরীণ কাজ সম্পাদনের শক্তিই হলো BMR।" },
+    { q: "BMI দিয়ে কী নির্ণয় করা হয়?", a: ["রক্তের চাপ", "শরীরের ওজন ও উচ্চতার সামঞ্জস্য", "দৃষ্টিশক্তি", "হজম শক্তি"], c: 1, e: "BMI শরীরের স্থূলতা পরিমাপের একক।" },
+    { q: "ভিটামিন বি-কমপ্লেক্স এর কয়টি ভিটামিন আছে?", a: ["৫টি", "৮টি", "১০টি", "১২টি"], c: 3, e: "ভিটামিন বি-গ্রুপে মোট ১২টি ভিটামিন আছে।" },
+    { q: "চাল পালিশ করলে কোন ভিটামিন নষ্ট হয়?", a: ["ভিটামিন এ", "ভিটামিন বি১ (থায়ামিন)", "ভিটামিন সি", "ভিটামিন ডি"], c: 1, e: "চালের ওপরের স্তরে ভিটামিন বি১ থাকে।" },
+    { q: "শিশুদের রিকেটস রোগ হয় কোনটির অভাবে?", a: ["ভিটামিন এ", "ভিটামিন ডি", "ভিটামিন সি", "লৌহ"], c: 1, e: "ভিটামিন ডি-এর অভাবে শিশুদের হাড় বেঁকে যায়।" },
+    { q: "চর্বিতে দ্রবণীয় ভিটামিন কোনগুলো?", a: ["বি ও সি", "এ, ডি, ই ও কে", "সবগুলো", "কোনোটিই নয়"], c: 1, e: "A, D, E এবং K চর্বিতে দ্রবীভূত হয়।" },
+    { q: "নিচের কোনটি প্রাণীজ আমিষ?", a: ["মসুর ডাল", "বাদাম", "ছানা বা পনির", "সয়াবিন"], c: 2, e: "প্রাণী থেকে প্রাপ্ত আমিষই প্রাণীজ আমিষ।" },
+    { q: "শর্করার শনাক্তকারী পরীক্ষা কোনটি?", a: ["আয়োডিন পরীক্ষা", "কপার পরীক্ষা", "সোডিয়াম পরীক্ষা", "এসিড পরীক্ষা"], c: 0, e: "শর্করার ওপর আয়োডিন দিলে তা নীল বর্ণ ধারণ করে।" },
+    { q: "আমিষের অভাবে শিশুদের কোন রোগ হয়?", a: ["রিকেটস", "রাতকানা", "কোয়াশিওরকর", "স্কার্ভি"], c: 2, e: "আমিষের তীব্র অভাবে কোয়াশিওরকর রোগ হয়।" },
+    { q: "কোনটি দেহকে রোগমুক্ত রাখতে সাহায্য করে?", a: ["শর্করা", "আমিষ", "ভিটামিন ও খনিজ লবণ", "স্নেহ"], c: 2, e: "এগুলো শরীরের রোগ প্রতিরোধ ক্ষমতা বাড়ায়।" },
+    { q: "কিসে সবচেয়ে বেশি তাপ ও শক্তি উৎপন্ন হয়?", a: ["শর্করা", "আমিষ", "স্নেহ বা চর্বি", "পানি"], c: 2, e: "১ গ্রাম চর্বি থেকে ৯ কিলোক্যালরি শক্তি পাওয়া যায়।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+window.onload = function() { renderHistory(); };
+
+function renderHistory() {
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    if(history.length > 0) {
+        document.getElementById("history-box").style.display = "block";
+        let listHTML = history.slice(-5).reverse().map(h => 
+            `<div class="history-item"><span>${h.date} (${h.subject})</span> <b>${h.score}</b></div>`
+        ).join("");
+        document.getElementById("history-list").innerHTML = listHTML;
+    }
+}
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<h3>${qData.q}</h3>${opts}`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds/60)}m ${totalSeconds%60}s`;
+    
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName}`;
+    document.getElementById("final-score").innerText = `প্রাপ্ত নম্বর: ${score} / ${quizData.length}`;
+    
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push({ subject: "খাদ্য ও পুষ্টি", score: score + "/" + quizData.length, date: new Date().toLocaleDateString('bn-BD') });
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরমালা:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><b>ব্যাখ্যা:</b> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => document.getElementById("db-status").innerText = "✓ ফলাফল ডাটাবেসে সফলভাবে জমা হয়েছে।");
+}
+</script>
+</body>
+</html>

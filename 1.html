@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় কুইজ - প্রাণীর শ্রেণিবিন্যাস</title>
+    <style>
+        :root { --primary: #8e44ad; --secondary: #3498db; --success: #27ae60; --danger: #e74c3c; }
+        body { background-color: #f4f7f6; margin: 0; padding: 10px; }
+        .quiz-container { max-width: 750px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-family: 'SolaimanLipi', Arial, sans-serif; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        input[type="text"] { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; }
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.4s; }
+        .option { display: block; background: #f9f9f9; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .option:hover { background: #f0f4f8; border-color: var(--secondary); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; }
+        .score-box { font-size: 24px; font-weight: bold; color: var(--success); text-align: center; margin: 15px 0; padding: 20px; background: #f1f9f1; border-radius: 10px; border: 1px solid #d4edda; }
+        .time-box { text-align: center; font-size: 18px; color: #e67e22; margin-bottom: 15px; font-weight: bold; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fafafa; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e8f4fd; border-radius: 5px; font-size: 14px; color: #444; border-left: 3px solid var(--secondary); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2 id="chapter-title">প্রাণীর শ্রেণিবিন্যাস</h2>
+        <p style="text-align:center; color:#666;">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার নাম লিখুন...">
+        <button type="button" class="btn" onclick="startQuiz()">কুইজ শুরু করুন</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color:#7f8c8d;"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div class="score-box" id="final-score"></div>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" onclick="location.reload()" style="background:#7f8c8d; margin-top:20px;">আবার শুরু করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "শ্রেণিবিন্যাসের জনক কে?", a: ["ক্যারোলাস লিনিয়াস", "এরিস্টটল", "ডারউইন", "ল্যামার্ক"], c: 0, e: "প্রকৃতিবিজ্ঞানী ক্যারোলাস লিনিয়াসকে শ্রেণিবিন্যাস এর জনক বলা হয়।" },
+    { q: "আধুনিক শ্রেণিবিন্যাসে সকল প্রাণী কোন জগতের অন্তর্ভুক্ত?", a: ["প্লান্টি", "মনেরা", "অ্যানিম্যালিয়া", "প্রটিস্টা"], c: 2, e: "আধুনিক শ্রেণিবিন্যাসে সকল প্রাণী অ্যানিম্যালিয়া জগতের অন্তর্ভুক্ত।" },
+    { q: "অ্যানিম্যালিয়া জগতকে কয়টি পর্বে ভাগ করা হয়েছে?", a: ["৭টি", "৮টি", "৯টি", "১০টি"], c: 2, e: "অ্যানিম্যালিয়া জগতকে ৯টি প্রধান পর্বে ভাগ করা হয়েছে।" },
+    { q: "পরিফেরা পর্বের প্রাণীরা সাধারণত কি নামে পরিচিত?", a: ["হাইড্রা", "স্পঞ্জ", "কোরাল", "কৃমি"], c: 1, e: "পরিফেরা পর্বের প্রাণীরা সাধারণভাবে স্পঞ্জ নামে পরিচিত।" },
+    { q: "কোন পর্বের প্রাণীর দেহপ্রাচীর অসংখ্য ছিদ্রযুক্ত?", a: ["নিডারিয়া", "অ্যানেলিডা", "পরিফেরা", "মলাস্কা"], c: 2, e: "পরিফেরা পর্বের প্রাণীদের দেহপ্রাচীর অসংখ্য ছিদ্রযুক্ত।" },
+    { q: "নিডারিয়া পর্বের প্রাণীর দেহ গহ্বরকে কি বলে?", a: ["হিমোসিল", "সিলেন্টরন", "সিলোম", "নেফ্রিডিয়া"], c: 1, e: "নিডারিয়া পর্বের প্রাণীর দেহ গহ্বরকে সিলেন্টরন বলে।" },
+    { q: "শিকার ধরা ও আত্মরক্ষার জন্য নিডারিয়াদের কী থাকে?", a: ["সিটা", "নিডোব্লাস্ট", "চোষক", "আংটা"], c: 1, e: "নিডারিয়াদের নিডোব্লাস্ট নামক বিশেষ কোষ থাকে যা আত্মরক্ষায় সাহায্য করে।" },
+    { q: "প্লাটিহেলমিনথেস পর্বের প্রাণীদের রেচন অঙ্গের নাম কী?", a: ["নেফ্রিডিয়া", "শিখা অঙ্গ", "ফুসফুস", "ত্বক"], c: 1, e: "প্লাটিহেলমিনথেসদের রেচন অঙ্গ হলো শিখা কোষ।" },
+    { q: "যকৃত কৃমি কোন পর্বের প্রাণী?", a: ["নেমাটোডা", "অ্যানেলিডা", "প্লাটিহেলমিনথেস", "মলাস্কা"], c: 2, e: "যকৃত কৃমি প্লাটিহেলমিনথেস পর্বের অন্তর্ভুক্ত।" },
+    { q: "গোল কৃমি কোন পর্বের অন্তর্ভুক্ত?", a: ["নেমাটোডা", "পরিফেরা", "আর্থোপোডা", "নিডারিয়া"], c: 0, e: "গোল কৃমি নেমাটোডা পর্বের অন্তর্ভুক্ত।" },
+    { q: "কোন পর্বের প্রাণীদের দেহ নলাকার ও খণ্ডায়িত?", a: ["মলাস্কা", "অ্যানেলিডা", "কর্ডাটা", "একাইনডার্মাটা"], c: 1, e: "অ্যানেলিডা পর্বের প্রাণীদের দেহ নলাকার ও খণ্ডায়িত।" },
+    { q: "কেঁচোর চলাচলে সাহায্য করে কোনটি?", a: ["পা", "সিটা", "পাখনা", "টিউব ফিট"], c: 1, e: "কেঁচোর সিটা চলাচলে সাহায্য করে।" },
+    { q: "প্রাণিজগতের সবচেয়ে বড় পর্ব কোনটি?", a: ["মলাস্কা", "আর্থোপোডা", "কর্ডাটা", "অ্যানেলিডা"], c: 1, e: "প্রাণিজগতের বৃহত্তম পর্ব হলো আর্থোপোডা।" },
+    { q: "আর্থোপোডা পর্বের প্রাণীদের রক্তপূর্ণ দেহ গহ্বরকে কি বলে?", a: ["সিলেন্টরন", "হিমোসিল", "সিলোম", "ভ্যাকুওল"], c: 1, e: "আর্থোপোডা পর্বের রক্তপূর্ণ দেহ গহ্বরকে হিমোসিল বলে।" },
+    { q: "শামুক ও ঝিনুক কোন পর্বের প্রাণী?", a: ["মলাস্কা", "একাইনডার্মাটা", "নিডারিয়া", "অ্যানেলিডা"], c: 0, e: "শামুক ও ঝিনুক মলাস্কা পর্বের অন্তর্গত।" },
+    { q: "কোন প্রাণীর দেহ 'ম্যান্টল' নামক পাতলা আবরণে ঢাকা থাকে?", a: ["চিংড়ি", "শামুক", "তারা মাছ", "কেঁচো"], c: 1, e: "মলাস্কা পর্বের প্রাণীদের দেহ ম্যান্টল নামক পাতলা আবরণে ঢাকা।" },
+    { q: "তারা মাছ কোন পর্বের প্রাণী?", a: ["মলাস্কা", "আর্থোপোডা", "একাইনডার্মাটা", "কর্ডাটা"], c: 2, e: "তারা মাছ একাইনডার্মাটা পর্বের প্রাণী।" },
+    { q: "কোন পর্বের প্রাণীদের পানি সংবহনতন্ত্র থাকে?", a: ["পরিফেরা", "একাইনডার্মাটা", "নিডারিয়া", "মলাস্কা"], c: 1, e: "একাইনডার্মাটা পর্বের প্রাণীদের পানি সংবহনতন্ত্র থাকে।" },
+    { q: "নিচের কোনটি অন্তঃপরজীবী?", a: ["জোক", "মশা", "ফিতা কৃমি", "মাছি"], c: 2, e: "ফিতা কৃমি অন্তঃপরজীবী হিসেবে বাস করে।" },
+    { q: "মলাস্কা পর্বের প্রাণীদের পা কেমন হয়?", a: ["সন্ধিযুক্ত", "পেশিবহুল", "কাঁটাযুক্ত", "থাকে না"], c: 1, e: "মলাস্কা পর্বের প্রাণীরা পেশিবহুল পা দিয়ে চলাচল করে।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m}:${s < 10 ? '0'+s : s}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<div class="question-box active"><h3>${qData.q}</h3>${opts}</div>`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds / 60)}m ${totalSeconds % 60}s`;
+
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName} | <b>সময়:</b> ${timeStr}`;
+    document.getElementById("final-score").innerText = `স্কোর: ${score} / ${quizData.length}`;
+    
+    saveToHistory(score, quizData.length);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরপত্র:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><strong>ব্যাখ্যা:</strong> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function saveToHistory(got, total) {
+    let fileName = window.location.pathname.split("/").pop().replace(".html", "");
+    let chapterLabel = "প্রাণীর শ্রেণিবিন্যাস";
+    let resultData = { subject: chapterLabel, score: got + " / " + total, date: new Date().toLocaleString('bn-BD') };
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push(resultData);
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+</script>
+</body>
+</html>

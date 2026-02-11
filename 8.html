@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় কুইজ - অষ্টম শ্রেণি</title>
+    <style>
+        :root { --primary: #c0392b; --secondary: #e74c3c; --success: #27ae60; --danger: #e74c3c; }
+        body { background-color: #fdf2f2; margin: 0; padding: 10px; }
+        .quiz-container { max-width: 750px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-family: 'SolaimanLipi', Arial, sans-serif; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        input[type="text"], select { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; }
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.4s; }
+        .option { display: block; background: #fdfdfd; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .option:hover { background: #fef5f5; border-color: var(--secondary); transform: translateX(5px); }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; }
+        .score-box { font-size: 24px; font-weight: bold; color: var(--success); text-align: center; margin: 15px 0; padding: 20px; background: #f1f9f1; border-radius: 10px; border: 1px solid #d4edda; }
+        .time-box { text-align: center; font-size: 18px; color: #c0392b; margin-bottom: 15px; font-weight: bold; }
+        .review-item { margin-bottom: 20px; padding: 15px; border-radius: 10px; border-left: 6px solid #ccc; background: #fafafa; }
+        .explanation { margin-top: 10px; padding: 10px; background: #fef9f9; border-radius: 5px; font-size: 14px; color: #444; border-left: 3px solid var(--primary); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="start-screen">
+        <h2 id="chapter-title">অধ্যায় ৮: রাসায়নিক বিক্রিয়া</h2>
+        <p style="text-align:center; color:#666;">অষ্টম শ্রেণি - বিজ্ঞান (২০২৬ সংস্করণ)</p>
+        <input type="text" id="username" placeholder="আপনার নাম লিখুন...">
+        <button type="button" class="btn" onclick="startQuiz()">কুইজ শুরু করুন</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div id="timer-display" class="time-box">সময়: 00:00</div>
+        <div id="progress" style="text-align:right; font-weight:bold; margin-bottom:10px; color:#7f8c8d;"></div>
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result-screen" style="display:none;">
+        <h2>ফলাফল কার্ড</h2>
+        <div id="res-info" style="text-align:center; margin-bottom:10px;"></div>
+        <div class="score-box" id="final-score"></div>
+        <p id="db-status" style="text-align:center; color: #27ae60; font-weight: bold;"></p>
+        <hr>
+        <div id="review-section"></div>
+        <button class="btn" onclick="location.reload()" style="background:#7f8c8d; margin-top:20px;">আবার শুরু করুন</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "যে প্রক্রিয়ায় এক বা একাধিক পদার্থ পরিবর্তিত হয়ে নতুন পদার্থ তৈরি করে তাকে কী বলে?", a: ["ভৌত পরিবর্তন", "রাসায়নিক বিক্রিয়া", "গলন", "বাষ্পীভবন"], c: 1, e: "রাসায়নিক বিক্রিয়ায় পদার্থের মূল গঠন পরিবর্তিত হয়ে সম্পূর্ণ নতুন ধর্মী পদার্থ তৈরি হয়।" },
+    { q: "লোহায় মরিচা ধরা কোন ধরনের পরিবর্তন?", a: ["ভৌত পরিবর্তন", "রাসায়নিক পরিবর্তন", "অবস্থার পরিবর্তন", "কোনোটিই নয়"], c: 1, e: "মরিচা হলো জলীয় আয়রন অক্সাইড, যা লোহার চেয়ে আলাদা ধর্মী একটি নতুন পদার্থ।" },
+    { q: "রাসায়নিক বিক্রিয়ায় বাম দিকের পদার্থগুলোকে কী বলা হয়?", a: ["বিক্রিয়ক", "উৎপাদ", "অনুঘটক", "দ্রবণ"], c: 0, e: "বিক্রিয়ায় যারা অংশগ্রহণ করে তাদের বিক্রিয়ক (Reactant) বলে।" },
+    { q: "দুই বা ততোধিক পদার্থ মিলে একটিমাত্র নতুন পদার্থ তৈরি করলে তাকে কোন বিক্রিয়া বলে?", a: ["বিয়োজন", "সংযোজন", "প্রতিস্থাপন", "দহন"], c: 1, e: "একাধিক বিক্রিয়ক মিলে একটি উৎপাদ তৈরি করা হলো সংযোজন (Addition) বিক্রিয়া।" },
+    { q: "একটি যৌগ ভেঙে একাধিক সরল পদার্থ তৈরি হওয়াকে কী বলে?", a: ["সংযোজন", "বিয়োজন", "দহন", "প্রশমন"], c: 1, e: "এটি সংযোজন বিক্রিয়ার ঠিক বিপরীত প্রক্রিয়া।" },
+    { q: "ম্যাগনেসিয়াম রিবন বাতাসে পোড়ালে কোন বিক্রিয়া ঘটে?", a: ["বিয়োজন", "প্রতিস্থাপন", "দহন", "প্রশমন"], c: 2, e: "বাতাসের অক্সিজেনের উপস্থিতিতে কোনো পদার্থ পোড়ানোকে দহন (Combustion) বলে।" },
+    { q: "কোনো মৌল অন্য মৌলকে সরিয়ে নিজে স্থান দখল করলে তাকে কী বলে?", a: ["সংযোজন", "প্রতিস্থাপন", "বিয়োজন", "প্রশমন"], c: 1, e: "বেশি সক্রিয় মৌল কম সক্রিয় মৌলকে সরিয়ে নিজে যৌগ গঠন করাকে প্রতিস্থাপন বলে।" },
+    { q: "চুনাপাথরকে তাপ দিলে কোন গ্যাস নির্গত হয়?", a: ["অক্সিজেন", "কার্বন ডাই-অক্সাইড", "হাইড্রোজেন", "নাইট্রোজেন"], c: 1, e: "ক্যালসিয়াম কার্বনেট তাপ পেয়ে ক্যালসিয়াম অক্সাইড ও কার্বন ডাই-অক্সাইড উৎপন্ন করে।" },
+    { q: "এসিড ও ক্ষারের বিক্রিয়ায় লবণ ও পানি উৎপন্ন হওয়াকে কী বলে?", a: ["দহন", "বিয়োজন", "প্রশমন", "সংযোজন"], c: 2, e: "প্রশমন (Neutralization) বিক্রিয়ায় এসিড ও ক্ষার উভয়ের ধর্ম লোপ পায়।" },
+    { q: "জৈব পদার্থ পচে সার হওয়া কোন ধরনের পরিবর্তন?", a: ["ভৌত", "রাসায়নিক", "জৈব", "সাময়িক"], c: 1, e: "পচনের মাধ্যমে পদার্থের রাসায়নিক গঠন পরিবর্তিত হয়ে যায়।" },
+    { q: "শুষ্ক কোষে (Dry Cell) অ্যানোড হিসেবে কী ব্যবহৃত হয়?", a: ["কার্বন দণ্ড", "দস্তার চং", "তামার পাত", "অ্যালুমিনিয়াম"], c: 1, e: "শুষ্ক কোষে দস্তার তৈরি চংটি ঋণাত্মক ইলেকট্রোড বা অ্যানোড হিসেবে কাজ করে।" },
+    { q: "ড্রাই সেলে অ্যামোনিয়াম ক্লোরাইড ও ম্যাঙ্গানিজ ডাই-অক্সাইডের মিশ্রণকে কী বলা হয়?", a: ["ইলেকট্রোলাইট", "ক্যাথোড", "আধান", "পরিবাহী"], c: 0, e: "এই রাসায়নিক মিশ্রণটি তড়িৎ চালনার মাধ্যম বা ইলেকট্রোলাইট হিসেবে কাজ করে।" },
+    { q: "তড়িৎ বিশ্লেষণ প্রক্রিয়ায় ব্যাটারির ঋণাত্মক প্রান্তের সাথে যুক্ত দণ্ডকে কী বলে?", a: ["অ্যানোড", "ক্যাথোড", "আয়ন", "লবণ"], c: 1, e: "ক্যাথোড হলো ঋণাত্মক আধানযুক্ত ইলেকট্রোড যা ক্যাটায়নকে আকর্ষণ করে।" },
+    { q: "পানির তড়িৎ বিশ্লেষণে ক্যাথোডে কোন গ্যাস জমা হয়?", a: ["অক্সিজেন", "হাইড্রোজেন", "ক্লোরিন", "কার্বন ডাই-অক্সাইড"], c: 1, e: "ক্যাথোডে হাইড্রোজেন আয়ন ইলেকট্রন গ্রহণ করে হাইড্রোজেন গ্যাস তৈরি করে।" },
+    { q: "রাসায়নিক সমীকরণ সমতাকরণের সময় কোনটির সংখ্যা সমান করা হয়?", a: ["ভর", "অণু", "পরমাণু", "যোজনী"], c: 2, e: "বিক্রিয়ক ও উৎপাদ উভয় পাশে প্রতিটি মৌলের পরমাণু সংখ্যা সমান থাকতে হয়।" },
+    { q: "সালফার ও অক্সিজেন পুড়ে সালফার ডাই-অক্সাইড হওয়া কোন ধরনের বিক্রিয়া?", a: ["সংযোজন ও দহন", "বিয়োজন", "প্রতিস্থাপন", "প্রশমন"], c: 0, e: "এটি একই সাথে সংযোজন এবং দহন।" },
+    { q: "চুনের পানির সংকেত কী?", a: ["CaO", "Ca(OH)2", "CaCO3", "HCl"], c: 1, e: "ক্যালসিয়াম হাইড্রক্সাইডের পাতলা দ্রবণকেই লাইম ওয়াটার বলে।" },
+    { q: "কপার সালফেটের নীল রঙ লোহার সংস্পর্শে সবুজ হয় কেন?", a: ["দহন", "প্রতিস্থাপন", "বিয়োজন", "প্রশমন"], c: 1, e: "লোহা কপারকে সরিয়ে ফেরাস সালফেট তৈরি করে যা সবুজ।" },
+    { q: "শুষ্ক কোষে ম্যাঙ্গানিজ ডাই-অক্সাইডের কাজ কী?", a: ["তড়িৎ বাড়ানো", "পোলারায়ন রোধ", "তাপ কমানো", "বিক্রিয়া দ্রুত করা"], c: 1, e: "এটি হাইড্রোজেন গ্যাসকে পানিতে রূপান্তর করে কোষের দক্ষতা বজায় রাখে।" },
+    { q: "কোন বিক্রিয়ায় তাপ উৎপন্ন হয় তাকে কী বলে?", a: ["তাপহারী", "তাপোৎপাদী", "শীতলীকরণ", "বাষ্পীভবন"], c: 1, e: "যেমন দহন বা প্রশমন বিক্রিয়ায় প্রচুর তাপশক্তি নির্গত হয়।" }
+];
+
+let currentIdx = 0, score = 0, userSelections = [], savedName = "", startTime, timerInterval;
+
+function startQuiz() {
+    savedName = document.getElementById("username").value.trim();
+    if (!savedName) { alert("নাম লিখুন!"); return; }
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    loadQuestion();
+}
+
+function updateTimer() {
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(totalSeconds / 60);
+    let s = totalSeconds % 60;
+    document.getElementById("timer-display").innerText = `সময়: ${m}:${s < 10 ? '0'+s : s}`;
+}
+
+function loadQuestion() {
+    const qData = quizData[currentIdx];
+    document.getElementById("progress").innerText = `প্রশ্ন: ${currentIdx + 1} / ${quizData.length}`;
+    let opts = qData.a.map((opt, i) => `<div class="option" onclick="handleAns(${i})">${opt}</div>`).join("");
+    document.getElementById("question-container").innerHTML = `<div class="question-box active"><h3>${qData.q}</h3>${opts}</div>`;
+}
+
+function handleAns(i) {
+    userSelections.push(i);
+    if (i === quizData[currentIdx].c) score++;
+    currentIdx++;
+    if (currentIdx < quizData.length) loadQuestion(); else finish();
+}
+
+function saveToHistory(got, total) {
+    let resultData = { subject: "অধ্যায় ৮: রাসায়নিক বিক্রিয়া", score: got + " / " + total, date: new Date().toLocaleString('bn-BD') };
+    let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    history.push(resultData);
+    localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+function finish() {
+    clearInterval(timerInterval);
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    
+    let totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+    let timeStr = `${Math.floor(totalSeconds / 60)}m ${totalSeconds % 60}s`;
+
+    document.getElementById("res-info").innerHTML = `<b>শিক্ষার্থী:</b> ${savedName} | <b>শ্রেণি:</b> অষ্টম`;
+    document.getElementById("final-score").innerText = `স্কোর: ${score} / ${quizData.length}`;
+    
+    saveToHistory(score, quizData.length);
+    submitToGoogleForm(savedName, timeStr, score);
+
+    let review = "<h3>ব্যাখ্যাসহ উত্তরপত্র:</h3>";
+    quizData.forEach((item, idx) => {
+        let isCorrect = userSelections[idx] === item.c;
+        review += `<div class="review-item" style="border-left-color: ${isCorrect ? '#27ae60' : '#e74c3c'}">
+            <strong>${idx+1}. ${item.q}</strong><br>
+            আপনার উত্তর: ${item.a[userSelections[idx]] || 'N/A'} | সঠিক: ${item.a[item.c]}<br>
+            <div class="explanation"><strong>ব্যাখ্যা:</strong> ${item.e}</div></div>`;
+    });
+    document.getElementById("review-section").innerHTML = review;
+}
+
+function submitToGoogleForm(name, time, mark) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmDqEtcQ0aJblo-yuHx1HJUU2ePVXI5fEkRdO5y5rWHXoleA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1533087260", name);
+    formData.append("entry.106740433", "8");
+    formData.append("entry.349487629", time);
+    formData.append("entry.1940939055", mark + " / " + quizData.length);
+
+    fetch(formURL, { method: "POST", mode: "no-cors", body: formData })
+    .then(() => { document.getElementById("db-status").innerText = "✓ ফলাফল সার্ভারে সংরক্ষিত হয়েছে।"; })
+    .catch(() => { document.getElementById("db-status").innerText = "⚠ ডাটা সেভ করতে সমস্যা হয়েছে।"; });
+}
+</script>
+</body>
+</html>

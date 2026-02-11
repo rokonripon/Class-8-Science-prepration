@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>জীবের বৃদ্ধি ও বংশগতি - নোট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --accent-color: #6c5ce7;
+            --text-color: #2d3436;
+            --gradient-1: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            --gradient-2: linear-gradient(135deg, #00b894, #55efc4);
+            --gradient-3: linear-gradient(135deg, #e17055, #fab1a0);
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+            line-height: 1.6;
+        }
+
+        /* হেডার স্টাইল */
+        header {
+            background: var(--gradient-1);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 { margin: 0; font-size: 28px; }
+        p.sub-title { font-size: 16px; opacity: 0.9; margin-top: 10px; }
+
+        /* কার্ড স্টাইল */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--accent-color);
+            transition: transform 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+        }
+
+        h2::before {
+            content: "🧬";
+            margin-right: 10px;
+        }
+
+        /* টেবিল স্টাইল */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f9f9ff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* হাইলাইট বক্স */
+        .highlight {
+            background: var(--gradient-2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        /* ব্যাজ স্টাইল */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #dfe6e9;
+            border-radius: 20px;
+            font-size: 14px;
+            margin: 4px;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* অ্যানিমেশন */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* মোবাইল অপ্টিমাইজেশন */
+        @media (max-width: 600px) {
+            h1 { font-size: 22px; }
+            h2 { font-size: 18px; }
+            body { padding: 10px; }
+        }
+
+        .dna-icon {
+            text-align: center;
+            font-size: 40px;
+            animation: rotate 4s linear infinite;
+            display: block;
+            margin: 10px 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>জীবের বৃদ্ধি ও বংশগতি</h1>
+        <p class="sub-title">অষ্টম শ্রেণি - বিজ্ঞান (অধ্যায় ২) | পূর্ণাঙ্গ স্মার্ট নোট</p>
+        <div class="dna-icon">🧬</div>
+    </header>
+
+    <div class="section-card">
+        <h2>১. কোষ বিভাজন ও প্রয়োজনীয়তা</h2>
+        <p>একটি কোষ থেকে দুই বা ততোধিক নতুন কোষ সৃষ্টির প্রক্রিয়াই হলো <strong>কোষ বিভাজন</strong>।</p>
+        <div class="highlight">
+            কেন এটি প্রয়োজন? <br>
+            🚀 দৈহিক বৃদ্ধি | 🩹 ক্ষতপূরণ | 🌱 বংশবিস্তার | 🧬 তথ্য বাহন
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2>২. কোষ বিভাজনের প্রকারভেদ</h2>
+        
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+            <h3 style="color: #e67e22;">(ক) অ্যামাইটোসিস (সরল বিভাজন)</h3>
+            <p>নিউক্লিয়াস কোনো মাধ্যম ছাড়াই সরাসরি দুই ভাগে বিভক্ত হয়।</p>
+            <span class="badge">ব্যাকটেরিয়া</span> <span class="badge">অ্যামিবা</span> <span class="badge">ইস্ট</span>
+        </div>
+
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+            <h3 style="color: #27ae60;">(খ) মাইটোসিস (সমীকরণিক বিভাজন)</h3>
+            <p>মাতৃকোষ ও অপত্য কোষের ক্রোমোজোম সংখ্যা সমান থাকে। এটি উদ্ভিদের বর্ধনশীল অঞ্চল ও প্রাণীর দেহকোষে ঘটে।</p>
+            <div class="table-container">
+                <table>
+                    <tr><th>ধাপ</th><th>মূল ঘটনা</th></tr>
+                    <tr><td>প্রোফেজ</td><td>ক্রোমোজোম দৃশ্যমান হয়, স্পিণ্ডল তন্তু গঠন শুরু।</td></tr>
+                    <tr><td>মেটাফেজ</td><td>ক্রোমোজোম বিষুবীয় অঞ্চলে (মাঝখানে) থাকে।</td></tr>
+                    <tr><td>অ্যানাফেজ</td><td>ক্রোমাটিডগুলো বিপরীত মেরুতে যাত্রা করে।</td></tr>
+                    <tr><td>টেলোফেজ</td><td>দুটি নতুন নিউক্লিয়াস ও কোষ গঠিত হয়।</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 10px;">
+            <h3 style="color: #2980b9;">(গ) মিয়োসিস (হ্রাসমূলক বিভাজন)</h3>
+            <p>ক্রোমোজোম সংখ্যা অর্ধেক হয়ে যায়। এটি জননকোষ (গ্যামেট) তৈরির সময় ঘটে।</p>
+            <span class="badge">শুক্রাণু</span> <span class="badge">ডিম্বাণু</span> <span class="badge">পরাগরেণু</span>
+        </div>
+    </div>
+
+    <div class="section-card" style="border-left-color: #e17055;">
+        <h2>৩. বংশগতির মূল ভিত্তি</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <div style="flex: 1; min-width: 150px; background: #fff5f5; padding: 10px; border-radius: 10px;">
+                <strong>DNA:</strong> জিনের প্রধান রাসায়নিক উপাদান। এটি ডাবল হেলিক্স (দ্বিসূত্রক)।
+            </div>
+            <div style="flex: 1; min-width: 150px; background: #f5faff; padding: 10px; border-radius: 10px;">
+                <strong>জিন:</strong> DNA-এর অংশ যা মানুষের বৈশিষ্ট্য (চোখের রং, চুল) নিয়ন্ত্রণ করে।
+            </div>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2>৪. গুরুত্বপূর্ণ শব্দকোষ</h2>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <td><strong>জাইগোট</strong></td>
+                    <td>নিষেকের ফলে সৃষ্ট প্রথম কোষ (2n)।</td>
+                </tr>
+                <tr>
+                    <td><strong>ক্রসিং ওভার</strong></td>
+                    <td>মিয়োসিসে জিনের বিনিময়, যা বৈচিত্র্য আনে।</td>
+                </tr>
+                <tr>
+                    <td><strong>হ্যাপ্লয়েড</strong></td>
+                    <td>এক সেট ক্রোমোজোম (n)।</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-card" style="background: var(--gradient-3); color: white;">
+        <h2 style="color: white; border-bottom-color: rgba(255,255,255,0.3);">৫. মনে রাখার টিপস</h2>
+        <ul>
+            <li>দেহকোষ বৃদ্ধি = <strong>মাইটোসিস</strong></li>
+            <li>জনন কোষ সৃষ্টি = <strong>মিয়োসিস</strong></li>
+            <li>বংশগতির ধারক = <strong>DNA ও জিন</strong></li>
+            <li>মানুষের ক্রোমোজোম = <strong>২৩ জোড়া (৪৬টি)</strong></li>
+        </ul>
+    </div>
+
+    <footer style="text-align: center; margin-top: 20px; color: #7f8c8d; font-size: 14px;">
+        নিবিড়ভাবে পড়ার জন্য ডিজাইন করা হয়েছে ✨
+    </footer>
+
+</body>
+</html>

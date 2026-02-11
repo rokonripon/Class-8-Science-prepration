@@ -15,19 +15,17 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Cordova
-        run: |
-          npm install -g cordova
-          # লেটেস্ট নোড এনভায়রনমেন্ট সেটআপ
+        run: npm install -g cordova
 
       - name: Create and Build Project
         run: |
-          # ১. পুরনো ফাইল থাকলে পরিষ্কার করা
+          # ১. পুরনো ডাটা পরিষ্কার করা
           rm -rf build_dir
           
           # ২. নতুন প্রজেক্ট তৈরি
           cordova create build_dir com.writer.sheshjosna "Shesh Josna"
           
-          # ৩. আপনার সব ফাইল কপি করা
+          # ৩. আপনার সব ফাইল (HTML, PNG, JPG) কপি করা
           cp -r *.html build_dir/www/ || true
           cp -r *.png build_dir/www/ || true
           cp -r *.jpg build_dir/www/ || true
@@ -38,7 +36,7 @@ jobs:
           # ৪. লিঙ্ক সচল করার প্লাগইন যোগ করা
           cordova plugin add cordova-plugin-inappbrowser
           
-          # ৫. অ্যান্ড্রয়েড বিল্ড
+          # ৫. অ্যান্ড্রয়েড বিল্ড শুরু করা
           cordova platform add android
           cordova build android --debug
 

@@ -10,15 +10,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - run: npm install -g cordova
-      - run: |
-          cordova create build_dir com.writer.sheshjosna "SheshJosna"
+      - run: - run: |
+          cordova create build_dir com.writer.sheshjosna "Shesh Josna"
           cp -r * build_dir/www/ || true
-          # লোগোটি সরাসরি www ফোল্ডারে কপি করার কমান্ড
-          cp icon.png build_dir/www/icon.png || true
-          cp config.xml build_dir/config.xml || true
+          cp config.xml build_dir/config.xml
           cd build_dir
+          cordova plugin add cordova-plugin-inappbrowser
           cordova platform add android
-          # গ্র্যাডেল এরর এড়াতে এই কমান্ডটি জরুরি
           cordova build android --debug --device
       - uses: actions/upload-artifact@v4
         with:

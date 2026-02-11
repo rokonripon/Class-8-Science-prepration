@@ -12,7 +12,7 @@ jobs:
       - run: npm install -g cordova
       - run: |
           # ১. প্রজেক্ট তৈরি ও ফাইল কপি
-          cordova create build_dir com.writer.sheshjosna "SheshJosna"
+          cordova create build_dir com.writer.sheshjosna "ScienceHelper"
           cp -r * build_dir/www/ || true
           cp icon.png build_dir/www/icon.png || true
           cp config.xml build_dir/config.xml || true
@@ -22,9 +22,13 @@ jobs:
           # ২. লিঙ্ক সচল করার প্লাগইন যোগ
           cordova plugin add cordova-plugin-inappbrowser
           
-          # ৩. অটো-লিঙ্ক ফিক্সার (আপনার ৩২টি ফাইলের লিঙ্ক ব্রাউজারে ওপেন করার ম্যাজিক লাইন)
-          # এটি সব <a href="..."> কে ব্রাউজারে খোলার উপযোগী করে দেবে
-          find www/ -name "*.html" -exec sed -i 's/<a href="http/<a onclick="window.open(this.href, '"'_system'"'); return false;" href="http/g' {} +
+          # ৩. অটো-প্যাচ স্ক্রিপ্ট: আপনার index.html এর লিঙ্কগুলো অ্যাপে সচল করবে
+          # এটি ক্লিক করলে সরাসরি ফোনের ব্রাউজার ওপেন হবে
+          sed -i 's/window.location.href=/window.open(/g' www/index.html
+          sed -i 's/onclick="window.open(/onclick="window.open(/g' www/index.html
+          
+          # বাইরের সব লিঙ্কে (a href) ব্রাউজার ওপেন ট্যাগ যোগ করা
+          find www/ -name "*.html" -exec sed -i 's/<a /<a onclick="window.open(this.href, '"'_system'"'); return false;" /g' {} +
 
           # ৪. প্ল্যাটফর্ম যোগ ও বিল্ড
           cordova platform add android
@@ -32,5 +36,5 @@ jobs:
           
       - uses: actions/upload-artifact@v4
         with:
-          name: shesh-josna-app
+          name: Science-Helper-App
           path: build_dir/platforms/android/app/build/outputs/apk/debug/app-debug.apk

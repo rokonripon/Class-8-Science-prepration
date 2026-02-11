@@ -2,8 +2,18 @@
 <widget id="com.writer.sheshjosna" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
     <name>Class 8 Science prepration</name>
     <description>For class 8. Science prepration.Note and Exam.Allin one app.</description>
-    <author email="your@email.com">Rokonuzzaman Ripon</author>
+    <author email="rokonripon1@gmail.com">Rokonuzzaman Ripon</author>
     <content src="welcome.html" />
-   <icon src="www/icon.png" />
+    <icon src="icon.png" />
+    
     <access origin="*" />
+    <allow-navigation href="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    
+    <preference name="InAppBrowserStatusBarStyle" value="lightcontent" />
 </widget>

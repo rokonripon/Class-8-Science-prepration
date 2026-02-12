@@ -3,154 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>অফলাইন লাইব্রেরি</title>
+    <title>অধ্যায় ভিত্তিক লাইব্রেরি</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f9; margin: 0; padding: 20px; }
-        .button-container { display: flex; flex-direction: column; gap: 12px; max-width: 450px; margin: auto; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 15px; }
+        h2 { text-align: center; color: #333; }
+        
+        /* অধ্যায় বা চ্যাপ্টার সেকশন */
+        .chapter-container { margin-bottom: 25px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .chapter-header { background: #6e8efb; color: white; padding: 12px 15px; font-weight: bold; font-size: 18px; }
+        
+        .button-list { display: flex; flex-direction: column; padding: 10px; gap: 10px; }
+        
         .pdf-button {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            color: white; border: none; padding: 18px; border-radius: 12px;
-            font-size: 16px; font-weight: bold; cursor: pointer; text-align: left;
+            background: #fff; border: 1px solid #ddd; color: #333; padding: 15px; 
+            border-radius: 8px; font-size: 15px; cursor: pointer; text-align: left;
             display: flex; justify-content: space-between; align-items: center;
+            transition: 0.2s;
         }
-        .status-tag { font-size: 11px; background: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 5px; }
-        #pdfOverlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #323639; z-index: 9999; flex-direction: column; }
-        #toolbar { background: #202124; color: white; padding: 15px; display: flex; justify-content: space-between; }
-        #canvas-holder { flex: 1; overflow: auto; background: #525659; -webkit-overflow-scrolling: touch; }
-        canvas { display: block; margin: 8px auto; width: 100%; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+        .pdf-button:active { background: #f0f0f0; transform: scale(0.98); }
+        .status-tag { font-size: 10px; padding: 3px 7px; border-radius: 4px; background: #eee; color: #666; }
+        .saved { background: #e8f5e9; color: #2e7d32; }
+
+        /* Viewer Styles */
+        #viewerOverlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #323639; z-index: 9999; flex-direction: column; }
+        #toolbar { background: #202124; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        #content-holder { flex: 1; overflow: auto; background: #525659; }
+        canvas { display: block; margin: 8px auto; width: 100%; }
+        iframe { width: 100%; height: 100%; border: none; background: white; }
+        
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 35px; height: 35px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <h2 style="text-align:center">আমার বইপত্র</h2>
-    <div id="msg" style="text-align:center; margin-bottom:10px; color:#555;">চেক করা হচ্ছে...</div>
-    <div class="button-container" id="btnContainer"></div>
+    <h2>আমার লাইব্রেরি</h2>
+    <div id="msg" style="text-align:center; color: #666; margin-bottom: 15px;">ফাইল লোড হচ্ছে...</div>
+    <div id="mainContainer"></div>
 
-    <div id="pdfOverlay">
+    <div id="viewerOverlay">
         <div id="toolbar">
-            <span id="pdf-title">বই</span>
-            <button onclick="closeViewer()" style="background:#e74c3c; color:white; border:none; padding:5px 15px; border-radius:5px; cursor:pointer;">বন্ধ করুন</button>
+            <span id="file-title">বই</span>
+            <button onclick="closeViewer()" style="background:#e74c3c; color:white; border:none; padding:7px 15px; border-radius:5px;">বন্ধ</button>
         </div>
-        <div id="canvas-holder"></div>
+        <div id="content-holder"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx00-QMSO2h03C52xWPitoHFm0EPb6mYGJQw46s1pdBSaf6al40Y-gz8NUkyCGJCcng/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwgfg9G-vGJO8kVr5r7EnAooshIYhryaIuBFDD7RH0oLhDQ8Ran6LA4pUXdHW7hsE3a/exec";
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
 
         let db;
-        const request = indexedDB.open("OfflinePDFs", 1);
-        request.onupgradeneeded = e => e.target.result.createObjectStore("pdfs", { keyPath: "id" });
-        request.onsuccess = e => { db = e.target.result; loadList(); };
+        const request = indexedDB.open("ChapterLibrary", 1);
+        request.onupgradeneeded = e => e.target.result.createObjectStore("files", { keyPath: "id" });
+        request.onsuccess = e => { db = e.target.result; loadFiles(); };
 
-        async function loadList() {
+        async function loadFiles() {
             try {
                 const res = await fetch(SCRIPT_URL);
                 const files = await res.json();
-                renderUI(files);
+                organizeByChapters(files);
             } catch (e) {
-                const tx = db.transaction("pdfs", "readonly");
-                const req = tx.objectStore("pdfs").getAll();
-                req.onsuccess = () => renderUI(req.result, true);
+                const tx = db.transaction("files", "readonly");
+                tx.objectStore("files").getAll().onsuccess = (e) => organizeByChapters(e.target.result, true);
             }
         }
 
-        async function renderUI(files, isOffline = false) {
-            const container = document.getElementById('btnContainer');
-            container.innerHTML = "";
-            for (let f of files) {
-                const saved = await getFromDB(f.id);
-                const btn = document.createElement('button');
-                btn.className = 'pdf-button';
-                btn.innerHTML = `<span>📄 ${f.name}</span> <span class="status-tag">${saved ? 'ফোনে আছে' : 'ডাউনলোড'}</span>`;
-                btn.onclick = () => handleAction(f);
-                container.appendChild(btn);
-            }
+        async function organizeByChapters(files, isOffline = false) {
+            const mainContainer = document.getElementById('mainContainer');
+            mainContainer.innerHTML = "";
             document.getElementById('msg').innerText = isOffline ? "অফলাইন মোড" : "অনলাইন মোড";
+
+            // অধ্যায় অনুযায়ী ডাটা সাজানো
+            const chapters = {};
+            for (const f of files) {
+                // নামের শুরু থেকে সংখ্যা খুঁজে বের করা (যেমন "1. সূচনা" থেকে 1 নিবে)
+                const match = f.name.match(/^\d+/);
+                const chapterNum = match ? match[0] : "অন্যান্য";
+                if (!chapters[chapterNum]) chapters[chapterNum] = [];
+                chapters[chapterNum].push(f);
+            }
+
+            // অধ্যায়গুলো রেন্ডার করা
+            for (const ch in chapters) {
+                const section = document.createElement('div');
+                section.className = 'chapter-container';
+                
+                const header = document.createElement('div');
+                header.className = 'chapter-header';
+                header.innerText = ch === "অন্যান্য" ? "অন্যান্য ফাইল" : `অধ্যায়: ${ch}`;
+                
+                const list = document.createElement('div');
+                list.className = 'button-list';
+
+                for (const f of chapters[ch]) {
+                    const saved = await getFromDB(f.id);
+                    const btn = document.createElement('button');
+                    btn.className = 'pdf-button';
+                    btn.innerHTML = `<span>${f.type === 'pdf' ? '📄' : '🌐'} ${f.name}</span> 
+                                     <span class="status-tag ${saved ? 'saved' : ''}">${saved ? 'ফোনে আছে' : 'ডাউনলোড'}</span>`;
+                    btn.onclick = () => handleAction(f);
+                    list.appendChild(btn);
+                }
+
+                section.appendChild(header);
+                section.appendChild(list);
+                mainContainer.appendChild(section);
+            }
         }
 
         async function handleAction(file) {
             const saved = await getFromDB(file.id);
             if (saved) {
-                showPDF(saved.data, file.name);
+                openFile(saved.data, file.name, file.type);
             } else {
                 document.getElementById('msg').innerText = "ডাউনলোড হচ্ছে...";
                 try {
                     const res = await fetch(`${SCRIPT_URL}?fileId=${file.id}`);
                     const base64 = await res.text();
-                    saveToDB(file.id, file.name, base64);
-                    showPDF(base64, file.name);
-                } catch (e) { alert("ডাউনলোড ব্যর্থ!"); }
+                    saveToDB(file.id, file.name, base64, file.type);
+                    openFile(base64, file.name, file.type);
+                } catch (e) { alert("ব্যর্থ!"); }
             }
         }
 
-        function saveToDB(id, name, data) {
-            const tx = db.transaction("pdfs", "readwrite");
-            tx.objectStore("pdfs").put({ id, name, data });
-            loadList();
+        function saveToDB(id, name, data, type) {
+            const tx = db.transaction("files", "readwrite");
+            tx.objectStore("files").put({ id, name, data, type });
+            loadFiles();
         }
 
         function getFromDB(id) {
             return new Promise(r => {
-                const tx = db.transaction("pdfs", "readonly");
-                const req = tx.objectStore("pdfs").get(id);
+                const tx = db.transaction("files", "readonly");
+                const req = tx.objectStore("files").get(id);
                 req.onsuccess = () => r(req.result);
             });
         }
 
-        async function showPDF(base64, name) {
-            document.getElementById('pdfOverlay').style.display = 'flex';
-            document.getElementById('pdf-title').innerText = name;
-            const holder = document.getElementById('canvas-holder');
+        function openFile(base64, name, type) {
+            document.getElementById('viewerOverlay').style.display = 'flex';
+            document.getElementById('file-title').innerText = name;
+            const holder = document.getElementById('content-holder');
             holder.innerHTML = '<div class="loader"></div>';
 
-            try {
-                const pdfData = atob(base64);
-                const pdf = await pdfjsLib.getDocument({data: pdfData}).promise;
-                holder.innerHTML = "";
-
-                // রেজোলিউশন বাড়ানোর জন্য পিক্সেল রেশিও নেওয়া
-                const scale_factor = window.devicePixelRatio || 1;
-
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    
-                    // স্ক্রিন উইডথ অনুযায়ী ভিউপোর্ট
-                    const base_viewport = page.getViewport({ scale: window.innerWidth / page.getViewport({scale:1}).width });
-                    
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-
-                    // ক্যানভাস সাইজকে পিক্সেল রেশিও দিয়ে গুণ করা (এটিই ক্লিয়ার করবে)
-                    canvas.width = Math.floor(base_viewport.width * scale_factor);
-                    canvas.height = Math.floor(base_viewport.height * scale_factor);
-                    
-                    // ডিসপ্লে সাইজ ঠিক রাখা
-                    canvas.style.width = "100%";
-                    canvas.style.height = "auto";
-
-                    const renderContext = {
-                        canvasContext: context,
-                        viewport: base_viewport,
-                        transform: [scale_factor, 0, 0, scale_factor, 0, 0] // শার্প রেন্ডারিং
-                    };
-
-                    await page.render(renderContext).promise;
-                    holder.appendChild(canvas);
-                }
-                document.getElementById('msg').innerText = "পড়া হচ্ছে: " + name;
-            } catch (e) {
-                console.error(e);
-                alert("পিডিএফ দেখাতে সমস্যা হচ্ছে।");
+            if (type === 'pdf') {
+                renderPDF(base64, holder);
+            } else {
+                renderHTML(base64, holder);
             }
         }
 
-        function closeViewer() { 
-            document.getElementById('pdfOverlay').style.display = 'none'; 
-            document.getElementById('canvas-holder').innerHTML = ""; 
+        async function renderPDF(base64, holder) {
+            const pdfData = atob(base64);
+            const pdf = await pdfjsLib.getDocument({data: pdfData}).promise;
+            holder.innerHTML = "";
+            const dpr = window.devicePixelRatio || 1;
+
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: window.innerWidth / page.getViewport({scale:1}).width });
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.floor(viewport.width * dpr);
+                canvas.height = Math.floor(viewport.height * dpr);
+                canvas.style.width = "100%";
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport, transform: [dpr, 0, 0, dpr, 0, 0] }).promise;
+                holder.appendChild(canvas);
+            }
+        }
+
+        function renderHTML(base64, holder) {
+            const htmlCode = atob(base64);
+            holder.innerHTML = `<iframe id="htmlViewer"></iframe>`;
+            const iframe = document.getElementById('htmlViewer');
+            const doc = iframe.contentWindow.document;
+            doc.open(); doc.write(htmlCode); doc.close();
+        }
+
+        function closeViewer() {
+            document.getElementById('viewerOverlay').style.display = 'none';
+            document.getElementById('content-holder').innerHTML = "";
         }
     </script>
 </body>

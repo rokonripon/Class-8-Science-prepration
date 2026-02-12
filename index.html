@@ -34,9 +34,8 @@
             margin-top: 20px;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        /* -------------------------- */
 
-        #main-app { display: none; } /* শুরুতে মেইন অ্যাপ হাইড থাকবে */
+        #main-app { display: none; } 
 
         header { background: var(--primary); color: white; text-align: center; padding: 20px; border-radius: 0 0 20px 20px; }
         .container { padding: 15px; }
@@ -143,12 +142,11 @@
 </div>
 
 <script>
-    // স্প্ল্যাশ স্ক্রিন কন্ট্রোল
     window.onload = function() {
         setTimeout(function() {
             document.getElementById('splash-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
-        }, 3000); // ৩ সেকেন্ড পর অ্যাপ ওপেন হবে
+        }, 3000);
     };
 
     const chaptersDiv = document.getElementById('chapters');
@@ -168,6 +166,17 @@
             </div>
         `;
     }
+
+    // ১৪টি অধ্যায়ের নিচে বিশেষ রঙিন বাটন
+    chaptersDiv.innerHTML += `
+        <div style="padding: 15px 5px;">
+            <a href="q.html" style="text-decoration: none;">
+                <div style="background: linear-gradient(135deg, #FF512F, #DD2476); color: white; padding: 16px; border-radius: 12px; text-align: center; font-weight: bold; box-shadow: 0 4px 12px rgba(221, 36, 118, 0.4); display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fas fa-file-signature"></i> বিশেষ মডেল টেস্ট (Q.HTML)
+                </div>
+            </a>
+        </div>
+    `;
 
     function showSection(id) {
         document.getElementById('menu').style.display = 'none';

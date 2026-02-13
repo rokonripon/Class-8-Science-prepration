@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>অধ্যায় ভিত্তিক এইচটিএমএল লাইব্রেরি</title>
+    <title>অধ্যায় সমূহ </title>
     <style>
-        /* ফন্ট ফ্যামিলি বাংলা ও ইংরেজি উভয়ের জন্য অপ্টিমাইজড */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'Hind Siliguri', sans-serif; 
-            background: #f0f2f5; margin: 0; padding: 15px; direction: ltr;
+            background: #f0f2f5; margin: 0; padding: 15px; 
         }
-        h2 { text-align: center; color: #333; }
-        
-        #msg { text-align: center; color: #666; margin-bottom: 15px; font-weight: bold; }
+        h2 { text-align: center; color: #2e7d32; margin-bottom: 5px; }
+        #msg { text-align: center; color: #666; margin-bottom: 15px; font-size: 14px; font-weight: bold; }
 
-        /* চ্যাপ্টার ডিজাইন */
         .chapter-container { margin-bottom: 20px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chapter-header { background: #4a90e2; color: white; padding: 12px 18px; font-weight: bold; font-size: 18px; border-left: 5px solid #2c3e50; }
+        .chapter-header { background: #2e7d32; color: white; padding: 12px 18px; font-weight: bold; font-size: 18px; border-left: 5px solid #1b5e20; }
         
         .button-list { display: flex; flex-direction: column; padding: 10px; gap: 8px; }
         
@@ -24,56 +21,40 @@
             background: #fff; border: 1px solid #e0e0e0; color: #333; padding: 14px; 
             border-radius: 8px; font-size: 16px; cursor: pointer; text-align: left;
             display: flex; justify-content: space-between; align-items: center;
-            transition: all 0.2s ease;
         }
-        .html-button:active { background: #eef2f7; transform: translateY(2px); }
+        .html-button:active { background: #e8f5e9; transform: translateY(2px); }
         
         .status-tag { font-size: 11px; padding: 4px 8px; border-radius: 6px; background: #f1f1f1; color: #888; }
         .saved { background: #d4edda; color: #155724; font-weight: bold; }
 
-        /* ফুল স্ক্রিন ভিউয়ার */
-        #viewerOverlay { 
-            display: none; position: fixed; top: 0; left: 0; 
-            width: 100vw; height: 100vh; background: #fff; 
-            z-index: 9999; flex-direction: column; 
-        }
-        #toolbar { 
-            background: #202124; color: white; padding: 15px; 
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        #content-holder { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; }
-        
+        #viewerOverlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fff; z-index: 9999; flex-direction: column; }
+        #toolbar { background: #1b5e20; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        #content-holder { flex: 1; overflow: auto; }
         iframe { width: 100%; height: 100%; border: none; }
 
-        .loader { 
-            border: 4px solid #f3f3f3; border-top: 4px solid #3498db; 
-            border-radius: 50%; width: 30px; height: 30px; 
-            animation: spin 1s linear infinite; margin: 20px auto; 
-        }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #2e7d32; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <h2>একবার ডাউনলোড করুন</h2>
-    <div id="msg">সিঙ্ক করা হচ্ছে...</div>
+    <h2>বিজ্ঞান (একবার ডাউনলোড করতে হবে)</h2>
+    <div id="msg">লোড হচ্ছে...</div>
     <div id="mainContainer"></div>
 
     <div id="viewerOverlay">
         <div id="toolbar">
-            <span id="file-title" style="font-size: 16px; font-weight: 500;">লোড হচ্ছে...</span>
+            <span id="file-title">লোড হচ্ছে...</span>
             <button onclick="closeViewer()" style="background:#ff4757; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight: bold;">বন্ধ করুন</button>
         </div>
         <div id="content-holder"></div>
     </div>
 
     <script>
-        // আপনার সঠিক URL দিন
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyj4uKE_78hNR-ZGixB7_MJ5N5alAnOWvtkYz3WTYulHT3bmC-qI0_Vn5nObrPPP9o/exec"; 
 
         let db;
-        const request = indexedDB.open("HtmlOfflineLibrary", 1);
+        const request = indexedDB.open("BiologyLibraryV2", 1);
         request.onupgradeneeded = e => e.target.result.createObjectStore("html_files", { keyPath: "id" });
         request.onsuccess = e => { db = e.target.result; syncContent(); };
 
@@ -93,14 +74,24 @@
             container.innerHTML = "";
             document.getElementById('msg').innerText = isOffline ? "অফলাইন মোড" : "অনলাইন মোড";
 
-            // অধ্যায় অনুযায়ী গ্রুপিং (নামের শুরুর সংখ্যা দেখে)
             const chapters = {};
+            let hasFiles = false;
+
             files.forEach(f => {
-                const numMatch = f.name.match(/^\d+/);
-                const chName = numMatch ? "অধ্যায়: " + numMatch[0] : "অন্যান্য";
-                if (!chapters[chName]) chapters[chName] = [];
-                chapters[chName].push(f);
+                const match = f.name.match(/^(\d+)\s*৮ম/);
+                if (match) {
+                    hasFiles = true;
+                    const chNum = match[1];
+                    const chName = "অধ্যায়: " + chNum;
+                    if (!chapters[chName]) chapters[chName] = [];
+                    chapters[chName].push(f);
+                }
             });
+
+            if (!hasFiles) {
+                container.innerHTML = "<p style='text-align:center; color:red;'>কোনো জীববিজ্ঞান ফাইল পাওয়া যায়নি!</p>";
+                return;
+            }
 
             for (const ch in chapters) {
                 const section = document.createElement('div');
@@ -112,9 +103,12 @@
 
                 for (const f of chapters[ch]) {
                     const saved = await getFromDB(f.id);
+                    // এখানে .html রিমুভ করা হচ্ছে
+                    const displayName = f.name.replace(/\.[^/.]+$/, ""); 
+                    
                     const btn = document.createElement('button');
                     btn.className = 'html-button';
-                    btn.innerHTML = `<span>🌐 ${f.name}</span> 
+                    btn.innerHTML = `<span>🌿 ${displayName}</span> 
                                      <span class="status-tag ${saved ? 'saved' : ''}">${saved ? 'ফোনে আছে' : 'ডাউনলোড'}</span>`;
                     btn.onclick = () => handleFile(f);
                     list.appendChild(btn);
@@ -126,22 +120,25 @@
 
         async function handleFile(file) {
             const saved = await getFromDB(file.id);
+            // ভিউয়ারের টাইটেল থেকেও .html মুছে ফেলা
+            const cleanTitle = file.name.replace(/\.[^/.]+$/, "");
+
             if (saved) {
-                openHTML(saved.data, file.name);
+                openHTML(saved.data, cleanTitle);
             } else {
                 document.getElementById('msg').innerText = "ডাউনলোড হচ্ছে...";
                 try {
                     const res = await fetch(`${SCRIPT_URL}?fileId=${file.id}`);
                     const b64 = await res.text();
                     saveToDB(file.id, file.name, b64);
-                    openHTML(b64, file.name);
+                    openHTML(b64, cleanTitle);
                 } catch (e) { alert("ডাউনলোড ব্যর্থ!"); }
             }
         }
 
         function saveToDB(id, name, data) {
             const tx = db.transaction("html_files", "readwrite");
-            tx.objectStore("html_files").put({ id, name, data });
+            tx.objectStore("files").put({ id, name, data }); // এখানে ছোট ভুল ঠিক করা হয়েছে
             syncContent();
         }
 
@@ -153,14 +150,11 @@
             });
         }
 
-        function openHTML(base64, name) {
+        function openHTML(base64, cleanTitle) {
             document.getElementById('viewerOverlay').style.display = 'flex';
-            document.getElementById('file-title').innerText = name;
+            document.getElementById('file-title').innerText = cleanTitle;
             const holder = document.getElementById('content-holder');
-            
-            // Base64 থেকে টেক্সট রূপান্তর (UTF-8 সাপোর্টসহ)
             const htmlContent = decodeURIComponent(escape(atob(base64)));
-            
             holder.innerHTML = `<iframe id="viewer"></iframe>`;
             const iframe = document.getElementById('viewer');
             const doc = iframe.contentWindow.document;
@@ -172,7 +166,7 @@
         function closeViewer() {
             document.getElementById('viewerOverlay').style.display = 'none';
             document.getElementById('content-holder').innerHTML = "";
-            document.getElementById('msg').innerText = "অনলাইন মোড";
+            document.getElementById('msg').innerText = "জীববিজ্ঞান লাইব্রেরি";
         }
     </script>
 </body>
